@@ -46,22 +46,26 @@ export const API_ENDPOINTS = {
     },
     RESTAURANTS: {
         MAIN: '/restaurants',
-        ID: (restaurantId: string) => `/restaurants/${restaurantId}`,
+        ID: (restaurantId: string) =>
+            `/restaurants/${encodeURIComponent(restaurantId)}`,
         HOURS: (restaurantId: string) => `/restaurants/${restaurantId}/hours`,
     },
     MENU: {
-        MAIN: (restaurantId: string) => `/restaurants/${restaurantId}/menu`,
+        MAIN: (restaurantId: string) =>
+            `/restaurants/${encodeURIComponent(restaurantId)}/menu`,
         FOODID: (restaurantId: string, foodId: string) =>
-            `/restaurants/${restaurantId}/menu/${foodId}`,
+            `/restaurants/${restaurantId}/menu/${encodeURIComponent(foodId)}`,
         STOCK: (restaurantId: string, foodId: string) =>
-            `/restaurants/${restaurantId}/menu/${foodId}/stock`,
+            `/restaurants/${restaurantId}/menu/${encodeURIComponent(foodId)}/stock`,
     },
     CART: {
-        MAIN: (userId: string) => `/cart/${userId}`,
+        MAIN: (userId: string) => `/cart/${encodeURIComponent(userId)}`,
     },
     ORDER: {
-        CUSTOMER: (customerId: string) => `/order/${customerId}`,
-        OWNER: (ownerId: string) => `/order/${ownerId}`,
-        STATUS: (customerId: string) => `/order/${customerId}/status`,
+        CUSTOMER: (customerId: string) =>
+            `/order/${encodeURIComponent(customerId)}`,
+        OWNER: (ownerId: string) => `/order/${encodeURIComponent(ownerId)}`,
+        STATUS: (customerId: string) =>
+            `/order/${encodeURIComponent(customerId)}/status`,
     },
 };

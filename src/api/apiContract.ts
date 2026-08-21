@@ -74,7 +74,7 @@ export const API_CONTRACT = {
         },
         STOREHOURS: {
             METHOD: HTTPS_METHODS.PUT,
-            ENDPOINT: API_ENDPOINTS.RESTAURANTS.ID,
+            ENDPOINT: API_ENDPOINTS.RESTAURANTS.HOURS,
             SUCCESS: HTTPS_CODES.OK,
             ERROR: [
                 HTTPS_CODES.FORBIDDEN,
@@ -131,7 +131,7 @@ export const API_CONTRACT = {
         },
         STOCK: {
             METHOD: HTTPS_METHODS.PUT,
-            ENDPOINT: API_ENDPOINTS.MENU.FOODID,
+            ENDPOINT: API_ENDPOINTS.MENU.STOCK,
             SUCCESS: HTTPS_CODES.OK,
             ERROR: [
                 HTTPS_CODES.FORBIDDEN,
