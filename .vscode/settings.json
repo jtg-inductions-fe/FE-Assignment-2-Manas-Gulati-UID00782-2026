@@ -2,5 +2,6 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "always",
         "editor.formatOnSave": "always"
-    }
+    },
+    "cSpell.words": ["CHANGESTATUS", "CONTRASTTEXT", "FOODID", "STOREHOURS"]
 }
