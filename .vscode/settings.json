@@ -3,5 +3,19 @@
         "source.fixAll.eslint": "always",
         "editor.formatOnSave": "always"
     },
-    "cSpell.words": ["CHANGESTATUS", "CONTRASTTEXT", "FOODID", "STOREHOURS"]
+    "cSpell.words": [
+        "CHANGESTATUS",
+        "clickaway",
+        "CONTRASTTEXT",
+        "ERRORMESSAGES",
+        "FOODID",
+        "Meishi",
+        "PASSWORDNOMATCH",
+        "sanjay",
+        "STOREHOURS",
+        "SUCCESSMESSAGES",
+        "USEREXIST",
+        "USERNOTFOUND",
+        "WRONGPASSWORD"
+    ]
 }
