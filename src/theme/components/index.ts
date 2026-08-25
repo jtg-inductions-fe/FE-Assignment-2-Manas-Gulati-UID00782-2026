@@ -12,7 +12,7 @@ const fontFaceDeclarations = `
         @font-face {
             font-display: swap; 
             font-family: 'Inter';
-            font-style: normal;
+            font-style: light;
             font-weight: 400;
             src: url(${InterLightWOFF2}) format('woff2');
         }
@@ -26,21 +26,21 @@ const fontFaceDeclarations = `
         @font-face {
             font-display: swap; 
             font-family: 'Inter';
-            font-style: normal;
+            font-style: regular;
             font-weight: 600;
             src: url(${InterMediumWOFF2}) format('woff2');
         }
         @font-face {
             font-display: swap; 
             font-family: 'Inter';
-            font-style: normal;
+            font-style: semibold;
             font-weight: 700;
             src: url(${InterSemiBoldWOFF2}) format('woff2');
         }
         @font-face {
             font-display: swap; 
             font-family: 'Inter';
-            font-style: normal;
+            font-style: bold;
             font-weight: 900;
             src: url(${InterBoldWOFF2}) format('woff2');
         };
@@ -49,11 +49,9 @@ const fontFaceDeclarations = `
 //export custom fonts to use as default css
 export const components: Components = {
     MuiCssBaseline: {
-        styleOverrides: {
+        styleOverrides: `${fontFaceDeclarations}
             html: {
-                fontSize: '62.5%',
-            },
-            fontFaceDeclarations,
-        },
+                fontSize: 62.5%,
+            }`,
     },
 };

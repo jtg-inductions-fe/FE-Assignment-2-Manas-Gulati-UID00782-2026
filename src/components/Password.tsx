@@ -31,12 +31,17 @@ const CustomTextField = styled(OutlinedInput)<OutlinedInputProps>(
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderColor: theme.palette.common.black,
         },
+        '& .MuiOutlinedInput-input': {
+            fontSize: '20px',
+        },
     }),
 );
 
 const CustomInputLabel = styled(InputLabel)(({ theme }) => ({
     color: theme.palette.grey[700],
-
+    '&.MuiInputLabel-root': {
+        fontSize: '20px',
+    },
     '&.Mui-focused': {
         color: theme.palette.common.black,
     },
@@ -69,6 +74,7 @@ export default function FormPassword({
                     <CustomTextField
                         {...field}
                         id={id}
+                        size="small"
                         type={showPassword ? 'text' : 'password'}
                         endAdornment={
                             <InputAdornment position="end">
@@ -85,9 +91,11 @@ export default function FormPassword({
                                     edge="end"
                                 >
                                     {showPassword ? (
-                                        <VisibilityOff />
+                                        <VisibilityOff
+                                            sx={{ fontSize: '35px' }}
+                                        />
                                     ) : (
-                                        <Visibility />
+                                        <Visibility sx={{ fontSize: '35px' }} />
                                     )}
                                 </IconButton>
                             </InputAdornment>

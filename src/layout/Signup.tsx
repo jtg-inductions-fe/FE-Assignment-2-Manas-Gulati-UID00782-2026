@@ -62,6 +62,10 @@ const CustomRadio = styled(Radio)(({ theme }) => ({
     '&.Mui-checked': {
         color: theme.palette.common.black,
     },
+
+    '& .MuiSvgIcon-root': {
+        fontSize: 20,
+    },
 }));
 
 function Signup() {
@@ -100,132 +104,148 @@ function Signup() {
         } else {
             setSnackbar({
                 open: true,
-                message: ERRORMESSAGES.USEREXIST,
+                message: ERRORMESSAGES.USERNOTFOUND,
                 severity: 'error',
             });
         }
     };
 
     return (
-        <Stack
-            spacing={4}
-            sx={{
-                justifyContent: 'center',
-                alignItems: 'stretch',
-            }}
-        >
-            <FormProvider {...methods}>
-                <h2>SignUp Form</h2>
+        <>
+            <Stack
+                spacing={6}
+                sx={{
+                    justifyContent: 'center',
+                    alignItems: 'stretch',
+                }}
+            >
+                <FormProvider {...methods}>
+                    <h3>SignUp Form</h3>
 
-                <form
-                    className="signupForm"
-                    onSubmit={(e) => {
-                        void methods.handleSubmit(onSubmit)(e);
-                    }}
-                >
-                    <Stack spacing={8}>
-                        <FormTextField
-                            name="name"
-                            id="signupName"
-                            rules={{
-                                required: 'Name is required',
-                                maxLength: {
-                                    value: 30,
-                                    message: 'Name cannot exceed 30 characters',
-                                },
-                            }}
-                        ></FormTextField>
-                        <FormTextField
-                            name="email"
-                            id="signupEmail"
-                            rules={{
-                                required: 'Email is required',
-                                maxLength: {
-                                    value: 50,
-                                    message:
-                                        'Email cannot exceed 50 characters',
-                                },
-                                pattern: {
-                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                    message: 'Invalid email address format',
-                                },
-                            }}
-                        ></FormTextField>
-                        <FormPassword
-                            name="password"
-                            id="signupPassword"
-                            rules={{
-                                validate: {
-                                    minLength: (value: string) =>
-                                        value.length >= 8 ||
-                                        'Password must be at least 8 characters',
-
-                                    uppercase: (value: string) =>
-                                        /[A-Z]/.test(value) ||
-                                        'Password must contain an uppercase letter',
-
-                                    lowercase: (value: string) =>
-                                        /[a-z]/.test(value) ||
-                                        'Password must contain a lowercase letter',
-
-                                    number: (value: string) =>
-                                        /[0-9]/.test(value) ||
-                                        'Password must contain a number',
-
-                                    special: (value: string) =>
-                                        /[^A-Za-z0-9]/.test(value) ||
-                                        'Password must contain a special character',
-                                },
-                            }}
-                        ></FormPassword>
-                        <FormPassword
-                            name="confirmPassword"
-                            id="signupConfirmPassword"
-                            label="Confirm Password"
-                        ></FormPassword>
-                        <FormControl>
-                            <FormLabel
-                                id="signupUserRole"
-                                sx={(theme) => ({
-                                    '&.Mui-focused': {
-                                        color: theme.palette.common.black,
+                    <form
+                        className="signupForm"
+                        onSubmit={(e) => {
+                            void methods.handleSubmit(onSubmit)(e);
+                        }}
+                    >
+                        <Stack spacing={4}>
+                            <FormTextField
+                                name="name"
+                                id="signupName"
+                                rules={{
+                                    required: 'Name is required',
+                                    maxLength: {
+                                        value: 30,
+                                        message:
+                                            'Name cannot exceed 30 characters',
                                     },
-                                })}
+                                }}
+                            ></FormTextField>
+                            <FormTextField
+                                name="email"
+                                id="signupEmail"
+                                rules={{
+                                    required: 'Email is required',
+                                    maxLength: {
+                                        value: 50,
+                                        message:
+                                            'Email cannot exceed 50 characters',
+                                    },
+                                    pattern: {
+                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                        message: 'Invalid email address format',
+                                    },
+                                }}
+                            ></FormTextField>
+                            <FormPassword
+                                name="password"
+                                id="signupPassword"
+                                rules={{
+                                    validate: {
+                                        minLength: (value: string) =>
+                                            value.length >= 8 ||
+                                            'Password must be at least 8 characters',
+
+                                        uppercase: (value: string) =>
+                                            /[A-Z]/.test(value) ||
+                                            'Password must contain an uppercase letter',
+
+                                        lowercase: (value: string) =>
+                                            /[a-z]/.test(value) ||
+                                            'Password must contain a lowercase letter',
+
+                                        number: (value: string) =>
+                                            /[0-9]/.test(value) ||
+                                            'Password must contain a number',
+
+                                        special: (value: string) =>
+                                            /[^A-Za-z0-9]/.test(value) ||
+                                            'Password must contain a special character',
+                                    },
+                                }}
+                            ></FormPassword>
+                            <FormPassword
+                                name="confirmPassword"
+                                id="signupConfirmPassword"
+                                label="Confirm Password"
+                            ></FormPassword>
+                            <FormControl>
+                                <FormLabel
+                                    id="signupUserRole"
+                                    sx={(theme) => ({
+                                        '&.Mui-focused': {
+                                            color: theme.palette.common.black,
+                                        },
+                                        '&.MuiFormLabel-root': {
+                                            fontSize: '23px',
+                                        },
+                                    })}
+                                >
+                                    Role
+                                </FormLabel>
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="signupUserRole"
+                                    {...methods.register('role', {
+                                        required: 'Please select a role',
+                                    })}
+                                >
+                                    <FormControlLabel
+                                        value="customer"
+                                        control={<CustomRadio />}
+                                        label="Customer"
+                                        sx={{
+                                            '& .MuiFormControlLabel-label': {
+                                                fontSize: '20px',
+                                            },
+                                        }}
+                                    />
+                                    <FormControlLabel
+                                        value="owner"
+                                        control={<CustomRadio />}
+                                        label="Owner"
+                                        sx={{
+                                            '& .MuiFormControlLabel-label': {
+                                                fontSize: '20px',
+                                            },
+                                        }}
+                                    />
+                                </RadioGroup>
+                                <FormHelperText error={!!errors.role}>
+                                    {errors.role?.message}
+                                </FormHelperText>
+                            </FormControl>
+                            <CustomButton
+                                variant="outlined"
+                                type="submit"
+                                size="medium"
                             >
-                                Role
-                            </FormLabel>
-                            <RadioGroup
-                                row
-                                aria-labelledby="User Role"
-                                {...methods.register('role', {
-                                    required: 'Please select a role',
-                                })}
-                            >
-                                <FormControlLabel
-                                    value="customer"
-                                    control={<CustomRadio />}
-                                    label="Customer"
-                                />
-                                <FormControlLabel
-                                    value="owner"
-                                    control={<CustomRadio />}
-                                    label="Owner"
-                                />
-                            </RadioGroup>
-                            <FormHelperText error={!!errors.role}>
-                                {errors.role?.message}
-                            </FormHelperText>
-                        </FormControl>
-                        <CustomButton
-                            variant="outlined"
-                            type="submit"
-                            size="large"
-                        >
-                            SignUp
-                        </CustomButton>
-                    </Stack>
-                </form>
-            </FormProvider>
+                                SignUp
+                            </CustomButton>
+                        </Stack>
+                    </form>
+                </FormProvider>
+            </Stack>
             <CustomizedSnackbar
                 severity={snackbar.severity}
                 message={snackbar.message}
@@ -237,7 +257,7 @@ function Signup() {
                     }))
                 }
             />
-        </Stack>
+        </>
     );
 }
 

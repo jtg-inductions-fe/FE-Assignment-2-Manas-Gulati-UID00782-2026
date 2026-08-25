@@ -9,6 +9,7 @@ const CustomButton = styled(Button, {
     shouldForwardProp: (prop) => prop !== 'selected',
 })<{ selected: boolean }>(({ theme, selected }) => ({
     width: '50%',
+    maxWidth: '250px',
     borderRadius: '12px 12px 0 0',
     border: `4px solid ${theme.palette.grey[900]}`,
     borderBottom: selected ? 'none' : `4px solid ${theme.palette.grey[500]}`,
@@ -33,20 +34,21 @@ const FormContainer = styled(Box)(({ theme }) => ({
     border: `4px solid ${theme.palette.grey[900]}`,
     borderTop: 'none',
     backgroundColor: theme.palette.common.white,
+    maxWidth: '500px',
 }));
 
-const AuthPage = styled(Box)(({ theme }) => ({
+const AuthPage = styled(Box)(() => ({
     backgroundImage: "url('/Assets/restaurant 1.webp')",
     width: '100%',
-    maxWidth: '2300px',
-    height: '100vh',
+    margin: '0 auto',
+    maxWidth: '2000px',
+    minHeight: '100vh',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: theme.spacing(16),
 }));
 
 const AuthContent = styled(Box)(({ theme }) => ({
@@ -54,13 +56,9 @@ const AuthContent = styled(Box)(({ theme }) => ({
     display: 'flex',
     textAlign: 'center',
     flexDirection: 'column',
-    maxWidth: '40vw',
     justifyContent: 'space-around',
-
-    gap: theme.spacing(2),
-    [theme.breakpoints.up('md')]: {
-        gap: theme.spacing(8),
-    },
+    alignItems: 'center',
+    gap: theme.spacing(4),
 }));
 
 export default function Auth() {
@@ -77,19 +75,15 @@ export default function Auth() {
     return (
         <AuthPage>
             <AuthContent>
-                <Typography variant="h1" sx={{ fontSize: '100px !important' }}>
-                    Meishi
-                </Typography>
-                <Typography variant="h2" sx={{ fontSize: '40px !important' }}>
-                    An exotic Sushi Restaurant
-                </Typography>
-                <Typography variant="h6" sx={{ fontSize: '20px !important' }}>
+                <Typography variant="h1">Meishi</Typography>
+                <Typography variant="h2">An exotic Sushi Restaurant</Typography>
+                <Typography variant="h5" sx={{ maxWidth: '50vw' }}>
                     People eat with their eyes and Sushi creates an easy way for
                     customers to order when they can see beautiful photos of
                     your food
                 </Typography>
             </AuthContent>
-            <Stack minWidth="25vw">
+            <Stack sx={{ maxWidth: '500px', margin: '0 auto' }}>
                 <Stack direction="row" width="100%">
                     <CustomButton
                         selected={login}

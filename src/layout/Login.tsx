@@ -85,14 +85,14 @@ function Login() {
     return (
         <>
             <Stack
-                spacing={4}
+                spacing={6}
                 sx={{
                     justifyContent: 'center',
                     alignItems: 'stretch',
                 }}
             >
                 <FormProvider {...methods}>
-                    <h2>Login Form</h2>
+                    <h3>Login Form</h3>
 
                     <form
                         className="loginForm"
@@ -100,7 +100,7 @@ function Login() {
                             void methods.handleSubmit(onSubmit)(e);
                         }}
                     >
-                        <Stack spacing={8}>
+                        <Stack spacing={4}>
                             <FormTextField
                                 name="email"
                                 id="loginEmail"
@@ -124,7 +124,7 @@ function Login() {
                             <CustomButton
                                 variant="outlined"
                                 type="submit"
-                                size="large"
+                                size="medium"
                             >
                                 LogIn
                             </CustomButton>

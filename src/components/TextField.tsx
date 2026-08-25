@@ -15,6 +15,7 @@ const CustomTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
     },
 
     '& .MuiOutlinedInput-root': {
+        fontSize: '20px',
         '& .MuiOutlinedInput-notchedOutline': {
             borderColor: theme.palette.grey[700],
         },
@@ -27,6 +28,7 @@ const CustomTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
             borderColor: theme.palette.common.black,
         },
     },
+    '& .MuiInputLabel-root': { fontSize: '20px' },
 }));
 
 export default function FromTextField({ name, rules, id }: LabelProps) {
@@ -42,6 +44,7 @@ export default function FromTextField({ name, rules, id }: LabelProps) {
                 <CustomTextField
                     {...field}
                     id={id}
+                    size="small"
                     label={name}
                     variant="outlined"
                     error={!!fieldState.error}
