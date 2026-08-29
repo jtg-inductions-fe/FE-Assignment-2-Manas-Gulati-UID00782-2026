@@ -6,15 +6,17 @@ interface LabelProps {
     name: string;
     rules: RegisterOptions;
     id: string;
+    defaultVal?: string;
 }
 
-export default function FromTextField({ name, rules, id }: LabelProps) {
+export default function FromTextField({ name, rules, id, defaultVal }: LabelProps) {
     const { control } = useFormContext();
     return (
         <Controller
             name={name}
             control={control}
             rules={rules}
+            defaultValue={defaultVal}
             render={(
                 { field, fieldState }, //field automatically configure all onChange, onBlur, ref and value
             ) => (

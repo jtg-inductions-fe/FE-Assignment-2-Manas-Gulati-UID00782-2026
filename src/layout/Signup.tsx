@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import FormPassword from 'components/Password.component';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FormTextField from 'components/TextField.component';
 import { FormProvider, useForm } from 'react-hook-form';
+import { signin } from 'store/authSlice';
+import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { CustomButton } from 'styles/AuthFormButton.styles';
 import { CustomRadio } from 'styles/Radio.styles';
 
@@ -19,31 +21,7 @@ import Stack from '@mui/material/Stack';
 
 import { FONT_SIZE } from '@constant';
 
-import { ERRORMESSAGES, SUCCESSMESSAGES, VALIDATION } from '../constants';
-
-//defining user data schema
-interface User {
-    name: string;
-    email: string;
-    password: string;
-    role: string;
-}
-
-//creating preset values
-const mockData: Record<string, User> = {
-    'm@gmail.com': {
-        name: 'manas',
-        email: 'm@gmail.com',
-        password: 'abs',
-        role: 'customer',
-    },
-    's@gmail.com': {
-        name: 'sanjay',
-        email: 's@gmail.com',
-        password: 'abc',
-        role: 'owner',
-    },
-};
+import { SUCCESSMESSAGES, VALIDATION } from '../constants';
 
 //signup form data schema
 interface SignupFormData {
@@ -56,6 +34,10 @@ interface SignupFormData {
 
 function Signup() {
     //setup initial snackbar state
+    const dispatch = useTypeDispatch();
+    const { isCreated, message, signupAttempt } = useTypeSelector(
+        (state) => state.auth,
+    );
     const [snackbar, setSnackbar] = useState({
         open: false,
         message: '',
@@ -67,36 +49,24 @@ function Signup() {
     } = methods;
 
     const onSubmit = (data: SignupFormData) => {
-        //form data validations
-        if (!mockData[data.email]) {
-            if (data.confirmPassword === data.password) {
-                mockData[data.email] = {
-                    name: data.name,
-                    email: data.email,
-                    password: data.password,
-                    role: data.role,
-                };
+        dispatch(signin(data));
+    };
 
-                setSnackbar({
-                    open: true,
-                    message: SUCCESSMESSAGES.SIGNUP,
-                    severity: 'success',
-                });
-            } else {
-                setSnackbar({
-                    open: true,
-                    message: ERRORMESSAGES.PASSWORDNOMATCH,
-                    severity: 'error',
-                });
-            }
-        } else {
+    useEffect(() => {
+        if (isCreated) {
             setSnackbar({
                 open: true,
-                message: ERRORMESSAGES.USERNOTFOUND,
+                message: SUCCESSMESSAGES.SIGNUP,
+                severity: 'success',
+            });
+        } else if (message) {
+            setSnackbar({
+                open: true,
+                message,
                 severity: 'error',
             });
         }
-    };
+    }, [isCreated, message, signupAttempt]);
 
     return (
         <>

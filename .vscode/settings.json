@@ -4,6 +4,8 @@
         "editor.formatOnSave": "always"
     },
     "cSpell.words": [
+        "Bagh",
+        "Billu",
         "CHANGESTATUS",
         "clickaway",
         "CONTRASTTEXT",
@@ -12,6 +14,14 @@
         "ERRORMESSAGES",
         "FOODID",
         "INVALIDEMAIL",
+        "dhaba",
+        "Dwarka",
+        "ERRORMESSAGES",
+        "FOODID",
+        "homestyle",
+        "Janakpuri",
+        "Kake",
+        "Kunj",
         "Meishi",
         "NAMEREQUIRED",
         "NAMEXCEED",
@@ -22,11 +32,19 @@
         "PASSWORDSHORT",
         "PASSWORDSPECIAL",
         "PASSWORDUPPER",
+        "Pitampura",
+        "Rajouri",
+        "Rasoi",
+        "Rohini",
+        "Saket",
         "sanjay",
+        "Shalimar",
         "STOREHOURS",
         "SUCCESSMESSAGES",
+        "Tadka",
         "USEREXIST",
         "USERNOTFOUND",
+        "Vasant",
         "WRONGPASSWORD"
     ]
 }

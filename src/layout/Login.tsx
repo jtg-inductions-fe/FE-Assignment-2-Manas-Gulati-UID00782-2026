@@ -1,39 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import FormPassword from 'components/Password.component';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FormTextField from 'components/TextField.component';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { login } from 'store/authSlice';
+import { useTypeDispatch, useTypeSelector } from 'store/hooks';
+import { get } from 'store/restaurantSlice';
 import { CustomButton } from 'styles/AuthFormButton.styles';
 
 import { AlertColor } from '@mui/material';
 import Stack from '@mui/material/Stack';
 
-import { ERRORMESSAGES, SUCCESSMESSAGES, VALIDATION } from '../constants';
+import { SUCCESSMESSAGES, VALIDATION } from '../constants';
 
-//defining schema of User data
-interface User {
-    name: string;
-    email: string;
-    password: string;
-    role: string;
-}
 
-//creating preset values
-const mockData: Record<string, User> = {
-    'm@gmail.com': {
-        name: 'manas',
-        email: 'm@gmail.com',
-        password: 'abs',
-        role: 'customer',
-    },
-    's@gmail.com': {
-        name: 'sanjay',
-        email: 's@gmail.com',
-        password: 'abc',
-        role: 'owner',
-    },
-};
 
 //determining login form data
 interface LoginFormData {
@@ -43,45 +25,50 @@ interface LoginFormData {
 
 function Login() {
     //set initial hidden state of snackbar
+    const dispatch = useTypeDispatch();
+    const navigate = useNavigate();
+    const { isAuthenticated, message, loginAttempt } = useTypeSelector(
+        (state) => state.auth,
+    );
     const [snackbar, setSnackbar] = useState({
         open: false,
         message: '',
         severity: 'success' as AlertColor,
     });
+    const auth = useTypeSelector((state) => state.auth);
 
     const methods = useForm<LoginFormData>(); //create rhf hook to manage form
 
     const onSubmit = (data: LoginFormData) => {
-        //fetch existing user data
-        const userData = mockData[data.email];
-        //cross verification
-        if (userData) {
-            if (userData.password === data.password) {
-                setSnackbar({
-                    open: true,
-                    message: SUCCESSMESSAGES.LOGIN,
-                    severity: 'success',
-                });
-                //login persist
-                localStorage.setItem(
-                    'user',
-                    JSON.stringify(mockData[data.email]),
-                );
-            } else {
-                setSnackbar({
-                    open: true,
-                    message: ERRORMESSAGES.WRONGPASSWORD,
-                    severity: 'error',
-                });
-            }
-        } else {
+        dispatch(login(data));
+    };
+    useEffect(() => {
+        if (auth.user) {
+            dispatch(
+                get({
+                    role: auth.user.role,
+                    userId: auth.user.userId,
+                }),
+            );
+        }
+    }, [auth.user, dispatch]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
             setSnackbar({
                 open: true,
-                message: ERRORMESSAGES.USERNOTFOUND,
+                message: SUCCESSMESSAGES.LOGIN,
+                severity: 'success',
+            });
+            void navigate('/dashboard', { replace: true });
+        } else if (message) {
+            setSnackbar({
+                open: true,
+                message,
                 severity: 'error',
             });
         }
-    };
+    }, [isAuthenticated, message, loginAttempt, navigate]);
 
     return (
         <>
