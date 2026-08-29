@@ -1,5 +1,9 @@
 import { API_ENDPOINTS, HTTPS_CODES, HTTPS_METHODS } from './apiConstants';
 
+/**
+ * API Contract
+ * @constant
+ */
 export const API_CONTRACT = {
     AUTH: {
         LOGIN: {

@@ -16,6 +16,7 @@ declare module '@mui/material/styles' {
     }
 }
 
+/*create type interface to declare semibold category and value it can take*/
 declare module '@mui/material/styles/createTypography' {
     interface Typography {
         fontWeightSemiBold: number;

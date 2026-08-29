@@ -44,10 +44,9 @@ const fontFaceDeclarations = `
             font-weight: 900;
             src: url(${InterBoldWOFF2}) format('woff2');
         };
-
-        
     `;
 
+//export custom fonts to use as default css
 export const components: Components = {
     MuiCssBaseline: {
         styleOverrides: {

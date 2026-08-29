@@ -30,32 +30,32 @@ const typographyStyle = (): TypographyOptions => ({
     fontWeightBold: FONT_WEIGHT.BOLD,
 
     h1: {
-        fontSize: typographyUtil.pxToRem(FONT_SIZE.XL),
+        fontSize: typographyUtil.pxToRem(FONT_SIZE['5XL']),
         fontWeight: FONT_WEIGHT.BOLD,
         lineHeight: LINE_HEIGHT.HEADING,
     },
     h2: {
-        fontSize: typographyUtil.pxToRem(FONT_SIZE.LG),
+        fontSize: typographyUtil.pxToRem(FONT_SIZE['4XL']),
         fontWeight: FONT_WEIGHT.BOLD,
         lineHeight: LINE_HEIGHT.HEADING,
     },
     h3: {
-        fontSize: typographyUtil.pxToRem(FONT_SIZE.LG),
+        fontSize: typographyUtil.pxToRem(FONT_SIZE['3XL']),
         fontWeight: FONT_WEIGHT.SEMIBOLD,
         lineHeight: LINE_HEIGHT.HEADING,
     },
     h4: {
-        fontSize: typographyUtil.pxToRem(FONT_SIZE.MD),
+        fontSize: typographyUtil.pxToRem(FONT_SIZE['2XL']),
         fontWeight: FONT_WEIGHT.BOLD,
         lineHeight: LINE_HEIGHT.HEADING,
     },
     h5: {
-        fontSize: typographyUtil.pxToRem(FONT_SIZE.MD),
+        fontSize: typographyUtil.pxToRem(FONT_SIZE.XL),
         fontWeight: FONT_WEIGHT.SEMIBOLD,
         lineHeight: LINE_HEIGHT.HEADING,
     },
     h6: {
-        fontSize: typographyUtil.pxToRem(FONT_SIZE.SM),
+        fontSize: typographyUtil.pxToRem(FONT_SIZE.MD),
         fontWeight: FONT_WEIGHT.BOLD,
         lineHeight: LINE_HEIGHT.HEADING,
     },

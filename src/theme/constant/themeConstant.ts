@@ -50,11 +50,15 @@ export const FONT_WEIGHT = {
  * @constant
  */
 export const FONT_SIZE = {
-    XS: 8,
-    SM: 16,
-    MD: 24,
-    LG: 32,
-    XL: 64,
+    XS: 12,
+    SM: 14,
+    MD: 16,
+    LG: 18,
+    XL: 20,
+    '2XL': 24,
+    '3XL': 30,
+    '4XL': 32,
+    '5XL': 48,
 };
 
 /**
