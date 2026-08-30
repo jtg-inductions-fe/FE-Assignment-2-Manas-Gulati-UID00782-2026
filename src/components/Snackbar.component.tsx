@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import Alert, { AlertColor } from '@mui/material/Alert';
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 
@@ -6,7 +7,7 @@ interface SnackbarProps {
     severity: AlertColor;
     message: string;
     state: boolean;
-    onClose: () => void;
+    onClose: () => void; //child tells the parent to just close itself: necessary for remounting
 }
 
 export default function CustomizedSnackbar({
@@ -19,6 +20,7 @@ export default function CustomizedSnackbar({
         _event?: React.SyntheticEvent | Event,
         reason?: SnackbarCloseReason,
     ) => {
+        //don't close snackbar when user touch anywhere outside snackbar
         if (reason === 'clickaway') {
             return;
         }
@@ -26,7 +28,7 @@ export default function CustomizedSnackbar({
     };
 
     return (
-        <div>
+        <Box>
             <Snackbar
                 open={state}
                 autoHideDuration={6000}
@@ -41,6 +43,6 @@ export default function CustomizedSnackbar({
                     {message}
                 </Alert>
             </Snackbar>
-        </div>
+        </Box>
     );
 }

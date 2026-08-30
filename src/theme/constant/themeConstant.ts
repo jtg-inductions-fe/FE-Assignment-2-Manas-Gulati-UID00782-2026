@@ -56,7 +56,7 @@ export const FONT_SIZE = {
     LG: 18,
     XL: 20,
     '2XL': 24,
-    '3XL': 30,
+    '3XL': 28,
     '4XL': 32,
     '5XL': 48,
 };

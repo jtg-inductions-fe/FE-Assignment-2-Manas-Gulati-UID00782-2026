@@ -2,64 +2,12 @@ import { useState } from 'react';
 
 import Login from 'layout/Login';
 import Signup from 'layout/Signup';
+import { AuthContent } from 'styles/AuthContentBox.styles';
+import { FormContainer } from 'styles/AuthFormContainer.styles';
+import { AuthPage } from 'styles/AuthPageBox.styles';
+import { CustomButton } from 'styles/AuthPageButton.styles';
 
-import { Box, Button, Stack, styled, Typography } from '@mui/material';
-
-const CustomButton = styled(Button, {
-    shouldForwardProp: (prop) => prop !== 'selected',
-})<{ selected: boolean }>(({ theme, selected }) => ({
-    width: '50%',
-    maxWidth: '250px',
-    borderRadius: '12px 12px 0 0',
-    border: `4px solid ${theme.palette.grey[900]}`,
-    borderBottom: selected ? 'none' : `4px solid ${theme.palette.grey[500]}`,
-    backgroundColor: selected
-        ? theme.palette.common.white
-        : theme.palette.grey[300],
-    color: selected ? theme.palette.common.black : theme.palette.grey[600],
-    cursor: selected ? 'default' : 'pointer',
-
-    transition: 'all 0.1s ease',
-
-    '&:hover': {
-        backgroundColor: selected
-            ? theme.palette.common.white
-            : theme.palette.grey[400],
-    },
-}));
-
-const FormContainer = styled(Box)(({ theme }) => ({
-    padding: theme.spacing(5),
-    borderRadius: '0 0 20px 20px',
-    border: `4px solid ${theme.palette.grey[900]}`,
-    borderTop: 'none',
-    backgroundColor: theme.palette.common.white,
-    maxWidth: '500px',
-}));
-
-const AuthPage = styled(Box)(() => ({
-    backgroundImage: "url('/Assets/restaurant 1.webp')",
-    width: '100%',
-    margin: '0 auto',
-    maxWidth: '2000px',
-    minHeight: '100vh',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-}));
-
-const AuthContent = styled(Box)(({ theme }) => ({
-    color: theme.palette.common.white,
-    display: 'flex',
-    textAlign: 'center',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    gap: theme.spacing(4),
-}));
+import { Stack, Typography } from '@mui/material';
 
 export default function Auth() {
     const [login, setLoginFrom] = useState(true);
@@ -102,7 +50,7 @@ export default function Auth() {
                     </CustomButton>
                 </Stack>
                 <FormContainer width="100%">
-                    {login === true ? <Login></Login> : <Signup></Signup>}
+                    {login === true ? <Login /> : <Signup />}
                 </FormContainer>
             </Stack>
         </AuthPage>

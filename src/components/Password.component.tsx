@@ -1,14 +1,16 @@
 import { useState } from 'react';
 
+import { VALIDATION } from 'constants/formValidationConstants';
 import { Controller, RegisterOptions, useFormContext } from 'react-hook-form';
+import { CustomInputLabel, CustomTextField } from 'styles/Password.styles';
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { FormControl, FormHelperText, InputLabel, styled } from '@mui/material';
+import { FormControl, FormHelperText } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import { type OutlinedInputProps } from '@mui/material/OutlinedInput';
+
+import { FONT_SIZE } from '@constant';
 
 //defining props for password component
 interface PasswordProps {
@@ -17,65 +19,41 @@ interface PasswordProps {
     label?: string;
     rules?: RegisterOptions;
 }
-
-const CustomTextField = styled(OutlinedInput)<OutlinedInputProps>(
-    ({ theme }) => ({
-        '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.grey[700],
-        },
-
-        '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.common.black,
-        },
-
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.common.black,
-        },
-        '& .MuiOutlinedInput-input': {
-            fontSize: '20px',
-        },
-    }),
-);
-
-const CustomInputLabel = styled(InputLabel)(({ theme }) => ({
-    color: theme.palette.grey[700],
-    '&.MuiInputLabel-root': {
-        fontSize: '20px',
-    },
-    '&.Mui-focused': {
-        color: theme.palette.common.black,
-    },
-}));
-
 export default function FormPassword({
     name,
     id,
     label,
     rules,
 }: PasswordProps) {
-    const { control } = useFormContext();
+    const { control } = useFormContext(); //constraint rhf to specific form
+
+    //to manage show/hide password functionality
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     return (
         <Controller
             name={name}
-            control={control}
+            control={control} //RHF management
             rules={{
-                required: 'Password is required',
+                required: VALIDATION.PASSWORDREQUIRED,
                 ...rules,
             }}
             render={({ field, fieldState }) => (
                 <FormControl error={!!fieldState.error}>
+                    {' '}
+                    {/*set current state of form */}
+                    {/* add label to password text field */}
                     <CustomInputLabel htmlFor={id}>
                         {label || 'Password'}
                     </CustomInputLabel>
-
                     <CustomTextField
                         {...field}
                         id={id}
                         size="small"
+                        //show/hide password functionality
                         type={showPassword ? 'text' : 'password'}
+                        //set position of icon
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
@@ -92,10 +70,12 @@ export default function FormPassword({
                                 >
                                     {showPassword ? (
                                         <VisibilityOff
-                                            sx={{ fontSize: '35px' }}
+                                            sx={{ fontSize: FONT_SIZE['4XL'] }}
                                         />
                                     ) : (
-                                        <Visibility sx={{ fontSize: '35px' }} />
+                                        <Visibility
+                                            sx={{ fontSize: FONT_SIZE['4XL'] }}
+                                        />
                                     )}
                                 </IconButton>
                             </InputAdornment>
@@ -103,7 +83,7 @@ export default function FormPassword({
                         label={label || 'Password'}
                         error={!!fieldState.error}
                     />
-
+                    {/* display error message */}
                     <FormHelperText>{fieldState.error?.message}</FormHelperText>
                 </FormControl>
             )}

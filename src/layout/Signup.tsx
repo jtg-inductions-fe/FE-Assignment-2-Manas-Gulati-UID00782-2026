@@ -1,32 +1,35 @@
 import { useState } from 'react';
 
-import FormPassword from 'components/Password';
-import CustomizedSnackbar from 'components/Snackbar';
-import FormTextField from 'components/TextField';
+import FormPassword from 'components/Password.component';
+import CustomizedSnackbar from 'components/Snackbar.component';
+import FormTextField from 'components/TextField.component';
 import { FormProvider, useForm } from 'react-hook-form';
+import { CustomButton } from 'styles/AuthFormButton.styles';
+import { CustomRadio } from 'styles/Radio.styles';
 
 import { AlertColor } from '@mui/material';
 import {
-    Button,
-    ButtonProps,
     FormControl,
     FormControlLabel,
     FormHelperText,
     FormLabel,
-    Radio,
     RadioGroup,
-    styled,
 } from '@mui/material';
 import Stack from '@mui/material/Stack';
 
-import { ERRORMESSAGES, SUCCESSMESSAGES } from '../constants';
+import { FONT_SIZE } from '@constant';
 
+import { ERRORMESSAGES, SUCCESSMESSAGES, VALIDATION } from '../constants';
+
+//defining user data schema
 interface User {
     name: string;
     email: string;
     password: string;
     role: string;
 }
+
+//creating preset values
 const mockData: Record<string, User> = {
     'm@gmail.com': {
         name: 'manas',
@@ -42,6 +45,7 @@ const mockData: Record<string, User> = {
     },
 };
 
+//signup form data schema
 interface SignupFormData {
     name: string;
     email: string;
@@ -50,25 +54,8 @@ interface SignupFormData {
     role: string;
 }
 
-const CustomButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-    borderColor: theme.palette.common.black,
-    borderRadius: 20,
-}));
-
-const CustomRadio = styled(Radio)(({ theme }) => ({
-    color: theme.palette.common.black,
-    '&.Mui-checked': {
-        color: theme.palette.common.black,
-    },
-
-    '& .MuiSvgIcon-root': {
-        fontSize: 20,
-    },
-}));
-
 function Signup() {
+    //setup initial snackbar state
     const [snackbar, setSnackbar] = useState({
         open: false,
         message: '',
@@ -80,6 +67,7 @@ function Signup() {
     } = methods;
 
     const onSubmit = (data: SignupFormData) => {
+        //form data validations
         if (!mockData[data.email]) {
             if (data.confirmPassword === data.password) {
                 mockData[data.email] = {
@@ -133,30 +121,28 @@ function Signup() {
                                 name="name"
                                 id="signupName"
                                 rules={{
-                                    required: 'Name is required',
+                                    required: VALIDATION.NAMEREQUIRED,
                                     maxLength: {
                                         value: 30,
-                                        message:
-                                            'Name cannot exceed 30 characters',
+                                        message: VALIDATION.NAMEXCEED,
                                     },
                                 }}
-                            ></FormTextField>
+                            />
                             <FormTextField
                                 name="email"
                                 id="signupEmail"
                                 rules={{
-                                    required: 'Email is required',
+                                    required: VALIDATION.EMAILREQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message:
-                                            'Email cannot exceed 50 characters',
+                                        message: VALIDATION.EMAILEXCEED,
                                     },
                                     pattern: {
                                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                        message: 'Invalid email address format',
+                                        message: VALIDATION.INVALIDEMAIL,
                                     },
                                 }}
-                            ></FormTextField>
+                            />
                             <FormPassword
                                 name="password"
                                 id="signupPassword"
@@ -164,31 +150,31 @@ function Signup() {
                                     validate: {
                                         minLength: (value: string) =>
                                             value.length >= 8 ||
-                                            'Password must be at least 8 characters',
+                                            VALIDATION.PASSWORDSHORT,
 
                                         uppercase: (value: string) =>
                                             /[A-Z]/.test(value) ||
-                                            'Password must contain an uppercase letter',
+                                            VALIDATION.PASSWORDUPPER,
 
                                         lowercase: (value: string) =>
                                             /[a-z]/.test(value) ||
-                                            'Password must contain a lowercase letter',
+                                            VALIDATION.PASSWORDLOWER,
 
                                         number: (value: string) =>
                                             /[0-9]/.test(value) ||
-                                            'Password must contain a number',
+                                            VALIDATION.PASSWORDNUM,
 
                                         special: (value: string) =>
                                             /[^A-Za-z0-9]/.test(value) ||
-                                            'Password must contain a special character',
+                                            VALIDATION.PASSWORDSPECIAL,
                                     },
                                 }}
-                            ></FormPassword>
+                            />
                             <FormPassword
                                 name="confirmPassword"
                                 id="signupConfirmPassword"
                                 label="Confirm Password"
-                            ></FormPassword>
+                            />
                             <FormControl>
                                 <FormLabel
                                     id="signupUserRole"
@@ -197,7 +183,7 @@ function Signup() {
                                             color: theme.palette.common.black,
                                         },
                                         '&.MuiFormLabel-root': {
-                                            fontSize: '23px',
+                                            fontSize: FONT_SIZE['2XL'],
                                         },
                                     })}
                                 >
@@ -216,7 +202,7 @@ function Signup() {
                                         label="Customer"
                                         sx={{
                                             '& .MuiFormControlLabel-label': {
-                                                fontSize: '20px',
+                                                fontSize: FONT_SIZE.XL,
                                             },
                                         }}
                                     />
@@ -226,7 +212,7 @@ function Signup() {
                                         label="Owner"
                                         sx={{
                                             '& .MuiFormControlLabel-label': {
-                                                fontSize: '20px',
+                                                fontSize: FONT_SIZE.XL,
                                             },
                                         }}
                                     />

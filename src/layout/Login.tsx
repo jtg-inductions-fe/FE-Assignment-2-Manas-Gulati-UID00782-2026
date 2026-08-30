@@ -1,22 +1,25 @@
 import { useState } from 'react';
 
-import FormPassword from 'components/Password';
-import CustomizedSnackbar from 'components/Snackbar';
-import FormTextField from 'components/TextField';
+import FormPassword from 'components/Password.component';
+import CustomizedSnackbar from 'components/Snackbar.component';
+import FormTextField from 'components/TextField.component';
 import { FormProvider, useForm } from 'react-hook-form';
+import { CustomButton } from 'styles/AuthFormButton.styles';
 
-import { Button, ButtonProps, styled } from '@mui/material';
 import { AlertColor } from '@mui/material';
 import Stack from '@mui/material/Stack';
 
-import { ERRORMESSAGES, SUCCESSMESSAGES } from '../constants';
+import { ERRORMESSAGES, SUCCESSMESSAGES, VALIDATION } from '../constants';
 
+//defining schema of User data
 interface User {
     name: string;
     email: string;
     password: string;
     role: string;
 }
+
+//creating preset values
 const mockData: Record<string, User> = {
     'm@gmail.com': {
         name: 'manas',
@@ -32,29 +35,26 @@ const mockData: Record<string, User> = {
     },
 };
 
+//determining login form data
 interface LoginFormData {
     email: string;
     password: string;
 }
 
-const CustomButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: theme.palette.common.white,
-    backgroundColor: theme.palette.common.black,
-    borderColor: theme.palette.common.black,
-    borderRadius: 20,
-}));
-
 function Login() {
+    //set initial hidden state of snackbar
     const [snackbar, setSnackbar] = useState({
         open: false,
         message: '',
         severity: 'success' as AlertColor,
     });
 
-    const methods = useForm<LoginFormData>();
+    const methods = useForm<LoginFormData>(); //create rhf hook to manage form
 
     const onSubmit = (data: LoginFormData) => {
+        //fetch existing user data
         const userData = mockData[data.email];
+        //cross verification
         if (userData) {
             if (userData.password === data.password) {
                 setSnackbar({
@@ -62,6 +62,7 @@ function Login() {
                     message: SUCCESSMESSAGES.LOGIN,
                     severity: 'success',
                 });
+                //login persist
                 localStorage.setItem(
                     'user',
                     JSON.stringify(mockData[data.email]),
@@ -105,18 +106,17 @@ function Login() {
                                 name="email"
                                 id="loginEmail"
                                 rules={{
-                                    required: 'Email is required',
+                                    required: VALIDATION.EMAILREQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message:
-                                            'Email cannot exceed 50 characters',
+                                        message: VALIDATION.EMAILEXCEED,
                                     },
                                     pattern: {
                                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                        message: 'Invalid email address format',
+                                        message: VALIDATION.INVALIDEMAIL,
                                     },
                                 }}
-                            ></FormTextField>
+                            />
                             <FormPassword
                                 name="password"
                                 id="loginPassword"
