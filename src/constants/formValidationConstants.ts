@@ -1,5 +1,5 @@
 /**
- * Success Messages
+ * Validation Messages
  * @constant
  */
 export const VALIDATION = {

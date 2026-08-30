@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import FromTextField from 'components/TextField';
+import FromTextField from 'components/TextField.component';
+import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import RestaurantCard from 'layout/RestaurantCard';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
@@ -22,6 +23,8 @@ import {
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
 
+import { FONT_SIZE } from '@constant';
+
 interface AddFormData {
     img: string;
     alt: string;
@@ -36,6 +39,7 @@ export default function AutoGrid() {
     const data = useTypeSelector((state) => state.restaurant);
     const methods = useForm<AddFormData>();
     const dispatch = useTypeDispatch();
+    const role = useTypeSelector((state) => state?.auth?.user?.role);
 
     const handleClose = () => {
         setAddOpen(false);
@@ -58,59 +62,61 @@ export default function AutoGrid() {
                             <RestaurantCard data={item} />
                         </Grid>
                     ))}
-                    <Grid
-                        size={{ md: 6, lg: 4 }}
-                        sx={{ display: 'flex', justifyContent: 'center' }}
-                    >
-                        <Card
-                            onClick={() => {
-                                setAddOpen(true);
-                            }}
-                            sx={{
-                                width: '90%',
-                                minHeight: 400,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                filter: 'grayscale(100%)',
-                                cursor: 'pointer',
-                                opacity: 0.7,
-                                transition: '0.3s',
-                                border: '2px solid black',
-
-                                '&:hover': {
-                                    opacity: 1,
-                                    filter: 'grayscale(0%)',
-                                },
-                            }}
+                    {role === 'owner' && (
+                        <Grid
+                            size={{ md: 6, lg: 4 }}
+                            sx={{ display: 'flex', justifyContent: 'center' }}
                         >
-                            <CardContent
+                            <Card
+                                onClick={() => {
+                                    setAddOpen(true);
+                                }}
                                 sx={{
+                                    width: '90%',
+                                    minHeight: 400,
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    textAlign: 'center',
+                                    filter: 'grayscale(100%)',
+                                    cursor: 'pointer',
+                                    opacity: 0.7,
+                                    transition: '0.3s',
+                                    border: '2px solid black',
+
+                                    '&:hover': {
+                                        opacity: 1,
+                                        filter: 'grayscale(0%)',
+                                    },
                                 }}
                             >
-                                <AddIcon
+                                <CardContent
                                     sx={{
-                                        fontSize: 60,
-                                        color: 'text.secondary',
-                                        mb: 1,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        flex: 1,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        textAlign: 'center',
                                     }}
-                                />
-
-                                <Typography
-                                    variant="h4"
-                                    component="div"
-                                    color="text.secondary"
                                 >
-                                    Add More Item
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                                    <AddIcon
+                                        sx={{
+                                            fontSize: 60,
+                                            color: 'text.secondary',
+                                            mb: 1,
+                                        }}
+                                    />
+
+                                    <Typography
+                                        variant="h4"
+                                        component="div"
+                                        color="text.secondary"
+                                    >
+                                        Add More Item
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    )}
                 </Grid>
             </Box>
             <Dialog
@@ -139,11 +145,10 @@ export default function AutoGrid() {
                                 name="heading"
                                 id="heading"
                                 rules={{
-                                    required: 'Restaurant name is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message:
-                                            'Restaurant name cannot exceed 50 characters',
+                                        message: RESTAURANT_VALIDATION.LIMIT,
                                     },
                                 }}
                             ></FromTextField>
@@ -151,35 +156,35 @@ export default function AutoGrid() {
                                 name="img"
                                 id="img"
                                 rules={{
-                                    required: 'Restaurant name is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                             ></FromTextField>
                             <FromTextField
                                 name="alt"
                                 id="alt"
                                 rules={{
-                                    required: 'Restaurant name is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                             ></FromTextField>
                             <FromTextField
                                 name="location"
                                 id="location"
                                 rules={{
-                                    required: 'Restaurant name is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                             ></FromTextField>
                             <FromTextField
                                 name="description"
                                 id="description"
                                 rules={{
-                                    required: 'Restaurant name is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                             ></FromTextField>
                             <Controller
                                 name="category"
                                 control={methods.control}
                                 rules={{
-                                    required: 'Category is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 render={({ field, fieldState }) => (
                                     <TextField
@@ -192,10 +197,10 @@ export default function AutoGrid() {
                                         helperText={fieldState.error?.message}
                                         sx={(theme) => ({
                                             '& .MuiSelect-select': {
-                                                fontSize: '20px',
+                                                fontSize: FONT_SIZE.XL,
                                             },
                                             '& .MuiInputLabel-root': {
-                                                fontSize: '20px',
+                                                fontSize: FONT_SIZE.XL,
                                             },
                                             '& .MuiInputLabel-root.Mui-focused':
                                                 {
@@ -221,7 +226,7 @@ export default function AutoGrid() {
                                                 },
                                             '& MuiButtonBase-root-MuiMenuItem-root':
                                                 {
-                                                    fontSize: '20px',
+                                                    fontSize: FONT_SIZE.XL,
                                                 },
                                         })}
                                     >
@@ -229,7 +234,7 @@ export default function AutoGrid() {
                                             value="veg"
                                             sx={{
                                                 '&.MuiMenuItem-root': {
-                                                    fontSize: '20px',
+                                                    fontSize: FONT_SIZE.XL,
                                                 },
                                             }}
                                         >
@@ -239,7 +244,7 @@ export default function AutoGrid() {
                                             value="non-veg"
                                             sx={{
                                                 '&.MuiMenuItem-root': {
-                                                    fontSize: '20px',
+                                                    fontSize: FONT_SIZE.XL,
                                                 },
                                             }}
                                         >

@@ -15,8 +15,6 @@ import Stack from '@mui/material/Stack';
 
 import { SUCCESSMESSAGES, VALIDATION } from '../constants';
 
-
-
 //determining login form data
 interface LoginFormData {
     email: string;

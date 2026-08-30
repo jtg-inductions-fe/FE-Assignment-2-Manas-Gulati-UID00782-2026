@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+//schema for restaurant data required
 interface RestaurantData {
     restaurantId: number;
     img: string;
@@ -118,8 +119,10 @@ const mockData: Record<number, RestaurantData[]> = {
     ],
 };
 
+//initial state
 const initialState: RestaurantData[] = [];
 
+//schema for form data
 interface FormRestaurantData {
     img: string;
     alt: string;

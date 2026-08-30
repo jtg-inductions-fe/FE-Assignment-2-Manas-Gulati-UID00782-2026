@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import FromTextField from 'components/TextField.component';
+import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
@@ -20,7 +22,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import FromTextField from '../components/TextField';
+import { FONT_SIZE } from '@constant';
 
 interface CardData {
     restaurantId: number;
@@ -46,12 +48,15 @@ interface CardProps {
 }
 
 export default function MultiActionAreaCard({ data }: CardProps) {
+    //handle open/close modals
     const [open, setOpen] = useState(false);
     const [delOpen, setDelOpen] = useState(false);
+
     const methods = useForm<EditFormData>();
     const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
 
+    //set initial form state for adding new restaurant
     const [formData, setFormData] = useState({
         img: '',
         alt: '',
@@ -61,6 +66,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
         category: '',
     });
 
+    //set initial form state for editing restaurant
     const editHandler = () => {
         setFormData({
             img: data.img,
@@ -170,13 +176,17 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                     aria-label="edit"
                                     onClick={editHandler}
                                 >
-                                    <EditIcon sx={{ fontSize: '30px' }} />
+                                    <EditIcon
+                                        sx={{ fontSize: FONT_SIZE['3XL'] }}
+                                    />
                                 </IconButton>
                                 <IconButton
                                     aria-label="delete"
                                     onClick={deleteHandler}
                                 >
-                                    <DeleteIcon sx={{ fontSize: '30px' }} />
+                                    <DeleteIcon
+                                        sx={{ fontSize: FONT_SIZE['3XL'] }}
+                                    />
                                 </IconButton>
                             </Stack>
                         )}
@@ -204,11 +214,10 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                 name="heading"
                                 id="heading"
                                 rules={{
-                                    required: 'Restaurant name is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message:
-                                            'Restaurant name cannot exceed 50 characters',
+                                        message: RESTAURANT_VALIDATION.LIMIT,
                                     },
                                 }}
                                 defaultVal={formData.heading}
@@ -217,7 +226,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                 name="img"
                                 id="img"
                                 rules={{
-                                    required: 'Restaurant name is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 defaultVal={formData.img}
                             ></FromTextField>
@@ -225,7 +234,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                 name="alt"
                                 id="alt"
                                 rules={{
-                                    required: 'Restaurant name is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 defaultVal={formData.alt}
                             ></FromTextField>
@@ -233,7 +242,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                 name="location"
                                 id="location"
                                 rules={{
-                                    required: 'Restaurant name is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 defaultVal={formData.location}
                             ></FromTextField>
@@ -241,7 +250,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                 name="description"
                                 id="description"
                                 rules={{
-                                    required: 'Restaurant name is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 defaultVal={formData.description}
                             ></FromTextField>
@@ -250,7 +259,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                 control={methods.control}
                                 defaultValue={formData.category}
                                 rules={{
-                                    required: 'Category is required',
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 render={({ field, fieldState }) => (
                                     <TextField
@@ -263,10 +272,10 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                         helperText={fieldState.error?.message}
                                         sx={(theme) => ({
                                             '& .MuiSelect-select': {
-                                                fontSize: '20px',
+                                                fontSize: FONT_SIZE['XL'],
                                             },
                                             '& .MuiInputLabel-root': {
-                                                fontSize: '20px',
+                                                fontSize: FONT_SIZE['XL'],
                                             },
                                             '& .MuiInputLabel-root.Mui-focused':
                                                 {
@@ -292,7 +301,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                                 },
                                             '& MuiButtonBase-root-MuiMenuItem-root':
                                                 {
-                                                    fontSize: '20px',
+                                                    fontSize: FONT_SIZE['XL'],
                                                 },
                                         })}
                                     >
@@ -300,7 +309,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                             value="veg"
                                             sx={{
                                                 '&.MuiMenuItem-root': {
-                                                    fontSize: '20px',
+                                                    fontSize: FONT_SIZE['XL'],
                                                 },
                                             }}
                                         >
@@ -310,7 +319,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                             value="non-veg"
                                             sx={{
                                                 '&.MuiMenuItem-root': {
-                                                    fontSize: '20px',
+                                                    fontSize: FONT_SIZE['XL'],
                                                 },
                                             }}
                                         >

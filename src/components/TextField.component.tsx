@@ -9,7 +9,12 @@ interface LabelProps {
     defaultVal?: string;
 }
 
-export default function FromTextField({ name, rules, id, defaultVal }: LabelProps) {
+export default function FromTextField({
+    name,
+    rules,
+    id,
+    defaultVal,
+}: LabelProps) {
     const { control } = useFormContext();
     return (
         <Controller
