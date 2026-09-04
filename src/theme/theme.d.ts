@@ -8,11 +8,27 @@ export declare module '@mui/material/styles/createMixins' {
 /* we will only consider mobile, tablet and desktop breakpoints for our project*/
 declare module '@mui/material/styles' {
     interface BreakpointOverrides {
-        xs: false;
+        xs: true;
         sm: true;
         md: true;
         lg: true;
         xl: false;
+    }
+
+    interface Palette {
+        faded?: {
+            light?: string;
+            main?: string;
+            dark?: string;
+        };
+    }
+
+    interface PaletteOptions {
+        faded?: {
+            light?: string;
+            main?: string;
+            dark?: string;
+        };
     }
 }
 
