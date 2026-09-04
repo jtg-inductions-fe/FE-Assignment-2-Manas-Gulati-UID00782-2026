@@ -1,14 +1,8 @@
-import { Box } from '@mui/material';
-import Alert, { AlertColor } from '@mui/material/Alert';
-import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
+import { SnackbarProps } from 'types';
 
-//defining props for the Snackbar component
-interface SnackbarProps {
-    severity: AlertColor;
-    message: string;
-    state: boolean;
-    onClose: () => void; //child tells the parent to just close itself: necessary for remounting
-}
+import { Box } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 
 export default function CustomizedSnackbar({
     severity,

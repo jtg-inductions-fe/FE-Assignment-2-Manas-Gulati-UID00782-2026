@@ -20,4 +20,9 @@ export const palette: PaletteOptions = {
         light: COLORS.INFO.LIGHT,
         dark: COLORS.INFO.DARK,
     },
+    faded: {
+        light: COLORS.FADED.LIGHT,
+        main: COLORS.FADED.MAIN,
+        dark: COLORS.FADED.DARK,
+    },
 };

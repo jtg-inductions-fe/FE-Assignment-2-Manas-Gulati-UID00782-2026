@@ -1,6 +1,7 @@
 import type { Components } from '@mui/material/styles';
 
 //import all local font files
+import InterRegularTTF from '/src/assets/fonts/inter/inter.regular.ttf';
 import InterBoldWOFF2 from '/src/assets/fonts/inter/Inter-Bold.woff2';
 import InterMediumWOFF2 from '/src/assets/fonts/inter/Inter-Medium.woff2';
 import InterRegularWOFF2 from '/src/assets/fonts/inter/Inter-Regular.woff2';
@@ -29,6 +30,7 @@ const fontFaceDeclarations = `
             font-style: regular;
             font-weight: 600;
             src: url(${InterMediumWOFF2}) format('woff2');
+                url(${InterRegularTTF}) format('truetype');
         }
         @font-face {
             font-display: swap; 

@@ -11,11 +11,16 @@ import ReusableDialog, {
     ReusableDialogTitle,
 } from 'components/Dialog.component';
 import FromTextField from 'components/TextField.component';
+import { MESSAGES } from 'constants/restaurantSnackbarConstant';
 import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+//import { initializeRestaurant } from 'store/cartSlice';
+import { get } from 'store/fooditemSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { del, edit } from 'store/restaurantSlice';
+import { selectRestaurant } from 'store/selectRestaurantSlice';
 import {
     StyledCard,
     StyledCardActionArea,
@@ -25,40 +30,26 @@ import {
     StyledDescription,
     StyledMenuItem,
 } from 'styles/Restaurant.styles';
+import { RestaurantCardProps, RestaurantFormData } from 'types';
 
 import { FONT_SIZE } from '@constant';
 
-interface CardData {
-    restaurantId: number;
-    img: string;
-    alt: string;
-    heading: string;
-    location: string;
-    description: string;
-    category: string;
-}
-
-interface EditFormData {
-    img: string;
-    alt: string;
-    heading: string;
-    location: string;
-    description: string;
-    category: string;
-}
-
-interface CardProps {
-    data: CardData;
-}
-
-export default function MultiActionAreaCard({ data }: CardProps) {
+export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
     //handle open/close modals
     const [open, setOpen] = useState(false);
     const [delOpen, setDelOpen] = useState(false);
 
-    const methods = useForm<EditFormData>();
+    const methods = useForm<RestaurantFormData>();
+    const navigate = useNavigate();
     const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
+
+    //set snackbar
+    const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: '',
+        severity: 'success' as AlertColor,
+    });
 
     //set initial form state for adding new restaurant
     const [formData, setFormData] = useState({
@@ -89,6 +80,11 @@ export default function MultiActionAreaCard({ data }: CardProps) {
 
     const confirmDeleteHandler = () => {
         dispatch(del(data.restaurantId));
+        setSnackbar({
+            open: true,
+            message: MESSAGES.DELETE,
+            severity: 'success',
+        });
         setDelOpen(false);
     };
 
@@ -99,20 +95,34 @@ export default function MultiActionAreaCard({ data }: CardProps) {
         setDelOpen(false);
     };
 
-    const onSubmit = (editFormData: EditFormData) => {
+    const onSubmit = (editFormData: RestaurantFormData) => {
         dispatch(
             edit({
                 id: data.restaurantId,
                 data: editFormData,
             }),
         );
-
+        setSnackbar({
+            open: true,
+            message: MESSAGES.EDIT,
+            severity: 'success',
+        });
         setOpen(false);
     };
+
+    const selectRestaurantHandler = () => {
+        dispatch(
+            selectRestaurant({ id: data.restaurantId, name: data.heading }),
+        );
+        dispatch(get(data.restaurantId));
+        //dispatch(initializeRestaurant(data.restaurantId));
+        void navigate(`/dashboard/${data.restaurantId}`);
+    };
+
     return (
         <>
             <StyledCard>
-                <StyledCardActionArea>
+                <StyledCardActionArea onClick={selectRestaurantHandler}>
                     <CardMedia
                         component="img"
                         height="250"
@@ -147,7 +157,14 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                 />
                             )}
                         </Stack>
-                        <Stack direction="row" alignItems="center" gap={1}>
+                        <Stack
+                            direction="row"
+                            alignItems="center"
+                            gap={1}
+                            sx={(theme) => ({
+                                color: theme.palette.faded?.main,
+                            })}
+                        >
                             <PlaceOutlinedIcon
                                 sx={{ fontSize: FONT_SIZE.LG }}
                             />

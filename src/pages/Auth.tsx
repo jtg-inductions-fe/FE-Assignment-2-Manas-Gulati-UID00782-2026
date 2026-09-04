@@ -15,6 +15,8 @@ import {
     FormContainer,
 } from 'styles/Auth.styles';
 
+
+
 export default function Auth() {
     const [login, setLoginFrom] = useState(true);
 
@@ -42,6 +44,7 @@ export default function Auth() {
                     <Stack direction="row" width="100%">
                         <CustomButton
                             selected={login}
+                            onClick={toggleStateHandler}
                             aria-pressed={login}
                             id="login"
                         >

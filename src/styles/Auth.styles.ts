@@ -92,7 +92,7 @@ export const CustomButton = styled(Button, {
     borderBottom: `4px solid ${selected ? theme.palette.primary.main : theme.palette.grey[200]}`,
 
     letterSpacing: '0.04em',
-
+    color: selected ? theme.palette.primary.main : theme.palette.faded?.dark,
     cursor: selected ? 'default' : 'pointer',
 
     transition: 'all 0.1s ease',
