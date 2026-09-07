@@ -1,6 +1,7 @@
 import Auth from 'pages/Auth';
 import Dashboard from 'pages/Dashboard';
 import FoodItems from 'pages/FoodItems';
+import Orders from 'pages/Orders';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { ROUTES } from '../constants';
@@ -21,6 +22,14 @@ export const router = createBrowserRouter([
             {
                 path: ROUTES.FOOD,
                 element: <FoodItems />,
+            },
+            {
+                path: '/dashboard/cart/:userId',
+                //element: <Cart />,
+            },
+            {
+                path: '/dashboard/order',
+                element: <Orders />,
             },
         ],
     },

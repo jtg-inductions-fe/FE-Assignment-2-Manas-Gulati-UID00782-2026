@@ -68,6 +68,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
         heading: '',
         description: '',
         ingredients: '',
+        price: 0,
         stock: 0,
     });
 
@@ -82,6 +83,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
             heading: data.heading,
             description: data.description,
             ingredients: data.ingredients,
+            price: data.price,
             stock: data.stock,
         });
         setOpen(true);
@@ -327,6 +329,14 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 defaultVal={formData.ingredients}
+                            />
+                            <FromTextField
+                                name="price"
+                                id="price"
+                                rules={{
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
+                                }}
+                                defaultVal={formData.price}
                             />
                             <FromTextField
                                 name="stock"

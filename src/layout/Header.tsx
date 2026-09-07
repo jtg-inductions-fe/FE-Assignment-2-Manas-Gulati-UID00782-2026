@@ -1,6 +1,24 @@
 import { useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { logout } from 'store/authSlice';
+import { useTypeDispatch, useTypeSelector } from 'store/hooks';
+import {
+    Search,
+    SearchIconWrapper,
+    StyledAppBar,
+    StyledBadge,
+    StyledInputBase,
+    StyledShoppingCartIcon,
+    StyledToolbar,
+    StyledUserBox,
+} from 'styles/Header.styles.ts';
+import { HeaderProps } from 'types';
+
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import SearchIcon from '@mui/icons-material/Search';
+//import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -19,13 +37,15 @@ import {
 } from 'styles/Header.styles.ts';
 
 import { FONT_SIZE } from '@constant';
-
 import { ROUTES } from '../constants';
 
-export default function PrimarySearchAppBar() {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); //to handle opening and closing of menu
+export default function PrimarySearchAppBar({
+    searchValue = '',
+    onSearchChange,
+    searchPlaceholder = 'Search…',
+}: HeaderProps) {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const isMenuOpen = Boolean(anchorEl);
-
     const dispatch = useTypeDispatch();
     const navigate = useNavigate();
     const cartFoodItem = useTypeSelector((state) => state.cart.food);
@@ -63,7 +83,7 @@ export default function PrimarySearchAppBar() {
     };
 
     const handleOrders = () => {
-        //handle orders part
+        void navigate('/dashboard/order');
     };
 
     const userId = useTypeSelector((state) => state.auth.user?.userId);
@@ -126,7 +146,22 @@ export default function PrimarySearchAppBar() {
                     >
                         Meishi
                     </Typography>
-                    <Box sx={{ flexGrow: 1 }} />{' '}
+                    {onSearchChange && (
+                        <Search>
+                            <SearchIconWrapper>
+                                <SearchIcon fontSize="small" />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                value={searchValue}
+                                placeholder={searchPlaceholder}
+                                inputProps={{ 'aria-label': searchPlaceholder }}
+                                onChange={(event) =>
+                                    onSearchChange(event.target.value)
+                                }
+                            />
+                        </Search>
+                    )}
+                    <Box sx={{ flexGrow: 1 }} />
                     {/* Act as justify content: space between(provided by mui itself) */}
                     <StyledUserBox>
                         {role === 'customer' && (

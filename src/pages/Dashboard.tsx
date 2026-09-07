@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import { ToggleButton } from '@mui/material';
-import { Stack, Typography } from '@mui/material';
+import { useDebouncedValue } from 'hooks/debounceHook';
 import AutoGrid from 'layout/RestaurantDetail';
 import { useTypeSelector } from 'store/hooks';
 import {
@@ -28,7 +27,11 @@ export default function Dashboard() {
             ? name.charAt(0).toUpperCase() + name.slice(1)
             : 'Guest';
     const restaurantData = useTypeSelector((state) => state.restaurant);
-    let filterData;
+    const [searchValue, setSearchValue] = useState('');
+    const debouncedSearchValue = useDebouncedValue(searchValue, 200);
+    const query = debouncedSearchValue.trim().toLowerCase();
+
+    let filterData = restaurantData;
     if (option) {
         if (option === 'veg') {
             filterData = restaurantData.filter(
@@ -41,12 +44,20 @@ export default function Dashboard() {
         } else {
             filterData = restaurantData;
         }
-    } else {
-        filterData = restaurantData;
     }
+    if (query) {
+        filterData = filterData.filter((item) =>
+            item.heading.toLowerCase().includes(query),
+        );
+    }
+
     return (
         <StyledDashboardWrapper>
-            <Header />
+            <Header 
+                searchValue={searchValue}
+                onSearchChange={setSearchValue}
+                searchPlaceholder="Search restaurants…"
+            />
             <StyledRestaurantDetailWrapper>
                 <Stack
                     direction={{ sm: 'column', md: 'row' }}

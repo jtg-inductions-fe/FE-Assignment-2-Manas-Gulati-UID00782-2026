@@ -59,8 +59,9 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                         alt={data.alt}
                         sx={{
                             objectFit: 'cover',
-                            width: { sm: 88, md: 120 },
-                            height: { sm: 88, md: 120 },
+                            gridRow: { xs: '1', sm: '1 / span 2' },
+                            width: { xs: 72, sm: 100, md: 120 },
+                            height: { xs: 72, sm: 100, md: 120 },
                             borderRadius: 2,
                         }}
                     />
@@ -71,10 +72,11 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                             component="div"
                             sx={{
                                 fontSize: {
-                                    sm: FONT_SIZE.MD,
+                                    xs: FONT_SIZE.MD,
                                     md: FONT_SIZE.XL,
                                 },
-                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: { xs: 'normal', sm: 'nowrap' },
                             }}
                         >
                             {data.heading}
@@ -84,28 +86,46 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                             sx={(theme) => ({
                                 mt: 1,
                                 color: theme.palette.faded?.main,
+                                extOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
                             })}
                         >
                             {restaurantName}
                         </Typography>
-                        <StyledCartPrice variant="body2">
-                            &#8377; {data.price}
-                        </StyledCartPrice>
                     </Box>
                     <Stack
                         direction="row"
                         mt="auto"
                         alignItems="center"
                         gap="2.5"
+                        sx={{
+                            gridColumn: { xs: '1 / -1', sm: '2' },
+                        }}
                     >
-                        <Counter
-                            count={count}
-                            increaseHandler={increaseHandler}
-                            decreaseHandler={decreaseHandler}
-                        />
-                        <IconButton aria-label="delete" onClick={deleteHandler}>
-                            <StyledCartDeleteIcon />
-                        </IconButton>
+                        <StyledCartPrice>
+                            &#8377; {data.price}
+                        </StyledCartPrice>
+                        <Stack
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="flex-end"
+                            gap={{ xs: 0.5, sm: 1.5 }}
+                            sx={{ ml: 'auto', flexShrink: 0 }}
+                        >
+                            <Counter
+                                count={count}
+                                increaseHandler={increaseHandler}
+                                decreaseHandler={decreaseHandler}
+                            />
+                            <IconButton
+                                aria-label="delete"
+                                onClick={deleteHandler}
+                                sx={{ p: { xs: 0.75, sm: 1 } }}
+                            >
+                                <StyledCartDeleteIcon/>
+                            </IconButton>
+                        </Stack>
                     </Stack>
                 </StyledCartItem>
             </StyledCartCard>
