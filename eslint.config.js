@@ -76,7 +76,7 @@ export default tseslint.config(
                 },
                 {
                     selector: 'function',
-                    format: ['camelCase'],
+                    format: ['camelCase', 'PascalCase'], //added pascal case to bypass error while creating react component
                 },
                 {
                     selector: 'typeLike',

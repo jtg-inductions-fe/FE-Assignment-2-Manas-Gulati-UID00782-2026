@@ -48,13 +48,14 @@ export const API_ENDPOINTS = {
         MAIN: '/restaurants',
         ID: (restaurantId: string) =>
             `/restaurants/${encodeURIComponent(restaurantId)}`,
-        HOURS: (restaurantId: string) => `/restaurants/${restaurantId}/hours`,
+        HOURS: (restaurantId: string) =>
+            `/restaurants/${encodeURIComponent(restaurantId)}/hours`,
     },
     MENU: {
         MAIN: (restaurantId: string) =>
             `/restaurants/${encodeURIComponent(restaurantId)}/menu`,
         FOODID: (restaurantId: string, foodId: string) =>
-            `/restaurants/${restaurantId}/menu/${encodeURIComponent(foodId)}`,
+            `/restaurants/${encodeURIComponent(restaurantId)}/menu/${encodeURIComponent(foodId)}`,
         STOCK: (restaurantId: string, foodId: string) =>
             `/restaurants/${restaurantId}/menu/${encodeURIComponent(foodId)}/stock`,
     },
