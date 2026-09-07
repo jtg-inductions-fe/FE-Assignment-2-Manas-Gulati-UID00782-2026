@@ -4,28 +4,32 @@ import FromTextField from 'components/TextField.component';
 import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import RestaurantCard from 'layout/RestaurantCard';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { useTypeDispatch, useTypeSelector } from 'store/hooks';
-import { add } from 'store/restaurantSlice';
+import { useTypeSelector } from 'store/hooks';
+import {
+    CustomCardGrid,
+    CustomGridWrapper,
+    StyledAddIcon,
+    StyledAddMoreCard,
+    StyledCardContent,
+    StyledCategoryTextfield,
+    StyledDialogContent,
+    StyledMenuItem,
+    StyledRestaurantWrapper,
+} from 'styles/Restaurant.styles';
 
-import AddIcon from '@mui/icons-material/Add';
+//import { RestaurantAutoGridProps, RestaurantFormData } from 'types';
 import {
     Button,
-    Card,
-    CardContent,
     Dialog,
     DialogActions,
-    DialogContent,
     DialogTitle,
-    MenuItem,
-    TextField,
     Typography,
 } from '@mui/material';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid2';
 
-import { FONT_SIZE } from '@constant';
-
-interface AddFormData {
+//---------------------------------------
+//Please note that this section has already been moved to types folder in next PR, but due to merge conflict, I had to declare types here for the working of this section of code
+interface CardData {
+    restaurantId: number;
     img: string;
     alt: string;
     heading: string;
@@ -34,77 +38,70 @@ interface AddFormData {
     category: string;
 }
 
-export default function AutoGrid() {
-    const [addOpen, setAddOpen] = useState(false);
-    const data = useTypeSelector((state) => state.restaurant);
-    const methods = useForm<AddFormData>();
-    const dispatch = useTypeDispatch();
+export interface RestaurantFormData {
+    img: string;
+    alt: string;
+    heading: string;
+    location: string;
+    description: string;
+    category: string;
+}
+
+export interface RestaurantCardProps {
+    data: CardData;
+}
+
+export interface RestaurantAutoGridProps {
+    data: CardData[];
+}
+
+//--------------------------------------
+
+export default function AutoGrid({ data }: RestaurantAutoGridProps) {
+    const [addOpen, setAddOpen] = useState(false); //for add restaurant dialog box
+    const methods = useForm<RestaurantFormData>();
+    //const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
 
     const handleClose = () => {
         setAddOpen(false);
     };
-    const onSubmit = (addFormData: AddFormData) => {
-        dispatch(add(addFormData));
-        setAddOpen(false);
-    };
+    // const onSubmit = (addFormData: AddFormData) => {
+    //     dispatch(add(addFormData));
+    //     setAddOpen(false);
+    // };
 
     return (
         <>
-            <Box sx={{ width: '100%', display: 'flex', flexGrow: 1 }}>
-                <Grid container rowGap={18} sx={{ mx: 'auto', mt: '50px' }}>
+            <StyledRestaurantWrapper>
+                <CustomGridWrapper
+                    container
+                    spacing={{ sm: 3, md: 4 }}
+                    rowGap={18}
+                >
                     {data.map((item, index) => (
-                        <Grid
+                        <CustomCardGrid
                             key={index}
-                            size={{ md: 6, lg: 4 }}
-                            sx={{ display: 'flex', justifyContent: 'center' }}
+                            size={{ sm: 12, md: 6, lg: 4 }}
                         >
                             <RestaurantCard data={item} />
-                        </Grid>
+                        </CustomCardGrid>
                     ))}
                     {role === 'owner' && (
-                        <Grid
-                            size={{ md: 6, lg: 4 }}
-                            sx={{ display: 'flex', justifyContent: 'center' }}
-                        >
-                            <Card
+                        <CustomCardGrid size={{ sm: 12, md: 6, lg: 4 }}>
+                            <StyledAddMoreCard
                                 onClick={() => {
                                     setAddOpen(true);
                                 }}
-                                sx={{
-                                    width: '90%',
-                                    minHeight: 400,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    filter: 'grayscale(100%)',
-                                    cursor: 'pointer',
-                                    opacity: 0.7,
-                                    transition: '0.3s',
-                                    border: '2px solid black',
-
-                                    '&:hover': {
-                                        opacity: 1,
-                                        filter: 'grayscale(0%)',
-                                    },
-                                }}
                             >
-                                <CardContent
+                                <StyledCardContent
                                     sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        flex: 1,
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         textAlign: 'center',
                                     }}
                                 >
-                                    <AddIcon
-                                        sx={{
-                                            fontSize: 60,
-                                            color: 'text.secondary',
-                                            mb: 1,
-                                        }}
-                                    />
+                                    <StyledAddIcon />
 
                                     <Typography
                                         variant="h4"
@@ -113,12 +110,12 @@ export default function AutoGrid() {
                                     >
                                         Add More Item
                                     </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
+                                </StyledCardContent>
+                            </StyledAddMoreCard>
+                        </CustomCardGrid>
                     )}
-                </Grid>
-            </Box>
+                </CustomGridWrapper>
+            </StyledRestaurantWrapper>
             <Dialog
                 open={addOpen}
                 onClose={handleClose}
@@ -127,20 +124,13 @@ export default function AutoGrid() {
             >
                 <FormProvider {...methods}>
                     <form
-                        onSubmit={(e) => {
-                            void methods.handleSubmit(onSubmit)(e);
-                        }}
+                    // onSubmit={(e) => {
+                    //     void methods.handleSubmit(onSubmit)(e);
+                    // }}
                     >
                         <DialogTitle>Edit Restaurant</DialogTitle>
 
-                        <DialogContent
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '20px',
-                                mt: '20px',
-                            }}
-                        >
+                        <StyledDialogContent>
                             <FromTextField
                                 name="heading"
                                 id="heading"
@@ -187,7 +177,7 @@ export default function AutoGrid() {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 render={({ field, fieldState }) => (
-                                    <TextField
+                                    <StyledCategoryTextfield
                                         {...field}
                                         required
                                         size="small"
@@ -195,65 +185,17 @@ export default function AutoGrid() {
                                         label="Category"
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
-                                        sx={(theme) => ({
-                                            '& .MuiSelect-select': {
-                                                fontSize: FONT_SIZE.XL,
-                                            },
-                                            '& .MuiInputLabel-root': {
-                                                fontSize: FONT_SIZE.XL,
-                                            },
-                                            '& .MuiInputLabel-root.Mui-focused':
-                                                {
-                                                    color: theme.palette.common
-                                                        .black,
-                                                },
-                                            '& .MuiOutlinedInput-notchedOutline':
-                                                {
-                                                    borderColor:
-                                                        theme.palette.grey[700],
-                                                },
-                                            '&:hover .MuiOutlinedInput-notchedOutline':
-                                                {
-                                                    borderColor:
-                                                        theme.palette.common
-                                                            .black,
-                                                },
-                                            '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
-                                                {
-                                                    borderColor:
-                                                        theme.palette.common
-                                                            .black,
-                                                },
-                                            '& MuiButtonBase-root-MuiMenuItem-root':
-                                                {
-                                                    fontSize: FONT_SIZE.XL,
-                                                },
-                                        })}
                                     >
-                                        <MenuItem
-                                            value="veg"
-                                            sx={{
-                                                '&.MuiMenuItem-root': {
-                                                    fontSize: FONT_SIZE.XL,
-                                                },
-                                            }}
-                                        >
+                                        <StyledMenuItem value="veg">
                                             Veg
-                                        </MenuItem>
-                                        <MenuItem
-                                            value="non-veg"
-                                            sx={{
-                                                '&.MuiMenuItem-root': {
-                                                    fontSize: FONT_SIZE.XL,
-                                                },
-                                            }}
-                                        >
+                                        </StyledMenuItem>
+                                        <StyledMenuItem value="non-veg">
                                             Non-Veg
-                                        </MenuItem>
-                                    </TextField>
+                                        </StyledMenuItem>
+                                    </StyledCategoryTextfield>
                                 )}
                             />
-                        </DialogContent>
+                        </StyledDialogContent>
 
                         <DialogActions>
                             <Button

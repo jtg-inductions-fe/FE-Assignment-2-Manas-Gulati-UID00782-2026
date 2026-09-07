@@ -6,20 +6,29 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { del, edit } from 'store/restaurantSlice';
+//import { selectRestaurant } from 'store/selectRestaurantSlice';
+import {
+    StyledCard,
+    StyledCardActionArea,
+    StyledCardContent,
+    StyledCategoryBox,
+    StyledCategoryTextfield,
+    StyledDescription,
+    StyledDialogContent,
+    StyledMenuItem,
+    StyledOwnerDeleteButton,
+    StyledOwnerEditButton,
+} from 'styles/Restaurant.styles';
 
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { Box, IconButton, Stack } from '@mui/material';
-import { MenuItem } from '@mui/material';
+//import { RestaurantCardProps, RestaurantFormData } from 'types';
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import { Box, Stack } from '@mui/material';
+//import { AlertColor } from '@mui/material';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { FONT_SIZE } from '@constant';
@@ -107,92 +116,90 @@ export default function MultiActionAreaCard({ data }: CardProps) {
     };
     return (
         <>
-            <Card
-                sx={{
-                    maxWidth: '90%',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}
-            >
-                <CardMedia
-                    component="img"
-                    height="250"
-                    image={data.img}
-                    alt={data.alt}
-                />
-                <CardContent
-                    sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}
-                >
-                    <Typography gutterBottom variant="h3" component="div">
-                        {data.heading}
-                    </Typography>
-                    <Typography
-                        variant="subtitle2"
-                        sx={{ color: 'text.primary' }}
-                    >
-                        {data.location}
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        sx={(theme) => ({
-                            color: 'text.secondary',
-                            mb: '17px',
-                            ...theme.mixins.lineClamp(3),
-                        })}
-                    >
-                        {data.description}
-                    </Typography>
-                    <Box
-                        display="flex"
-                        mt="auto"
-                        justifyContent="space-between"
-                    >
-                        {data.category === 'non-veg' && (
-                            <Box
-                                component="img"
-                                src="/Assets/images (1).webp"
-                                alt="restaurant icon"
-                                sx={{
-                                    width: 20,
-                                    objectFit: 'contain',
-                                }}
+            <StyledCard>
+                <StyledCardActionArea>
+                    <CardMedia
+                        component="img"
+                        height="250"
+                        image={data.img}
+                        alt={data.alt}
+                        sx={{ objectFit: 'cover' }}
+                    />
+                    <StyledCardContent>
+                        <Stack
+                            direction="row"
+                            alignItems="flex-start"
+                            justifyContent="space-between"
+                            gap={2}
+                        >
+                            <Typography
+                                gutterBottom
+                                variant="h3"
+                                component="h4"
+                            >
+                                {data.heading}
+                            </Typography>
+                            {data.category === 'non-veg' && (
+                                <StyledCategoryBox
+                                    src="/Assets/images (1).webp"
+                                    alt="restaurant icon"
+                                />
+                            )}
+                            {data.category === 'veg' && (
+                                <StyledCategoryBox
+                                    src="/Assets/veg.webp"
+                                    alt="restaurant icon"
+                                />
+                            )}
+                        </Stack>
+                        <Stack
+                            direction="row"
+                            alignItems="center"
+                            gap={1}
+                            // sx={(theme) => ({
+                            //     color: theme.palette.faded?.main,
+                            // })}
+                        >
+                            <PlaceOutlinedIcon
+                                sx={{ fontSize: FONT_SIZE.LG }}
                             />
-                        )}
-                        {data.category === 'veg' && (
-                            <Box
-                                component="img"
-                                src="/Assets/veg.webp"
-                                alt="restaurant icon"
-                                sx={{
-                                    width: 20,
-                                    objectFit: 'contain',
-                                }}
-                            />
-                        )}
-                        {role === 'owner' && (
-                            <Stack direction="row" spacing={1}>
-                                <IconButton
-                                    aria-label="edit"
-                                    onClick={editHandler}
-                                >
-                                    <EditIcon
-                                        sx={{ fontSize: FONT_SIZE['3XL'] }}
-                                    />
-                                </IconButton>
-                                <IconButton
-                                    aria-label="delete"
-                                    onClick={deleteHandler}
-                                >
-                                    <DeleteIcon
-                                        sx={{ fontSize: FONT_SIZE['3XL'] }}
-                                    />
-                                </IconButton>
-                            </Stack>
-                        )}
-                    </Box>
-                </CardContent>
-            </Card>
+                            <Typography variant="subtitle2">
+                                {data.location}
+                            </Typography>
+                        </Stack>
+
+                        <StyledDescription variant="body2">
+                            {data.description}
+                        </StyledDescription>
+                        <Box display="flex" mt="auto" justifyContent="flex-end">
+                            {role === 'owner' && (
+                                <Stack direction="row" spacing={4}>
+                                    <StyledOwnerEditButton
+                                        variant="contained"
+                                        size="small"
+                                        onClick={(e) => {
+                                            editHandler();
+                                            e.stopPropagation();
+                                        }}
+                                    >
+                                        Edit
+                                    </StyledOwnerEditButton>
+                                    <StyledOwnerDeleteButton
+                                        variant="outlined"
+                                        size="small"
+                                        onClick={(e) => {
+                                            deleteHandler();
+                                            e.stopPropagation();
+                                        }}
+                                    >
+                                        Delete
+                                    </StyledOwnerDeleteButton>
+                                </Stack>
+                            )}
+                        </Box>
+                    </StyledCardContent>
+                </StyledCardActionArea>
+            </StyledCard>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <FormProvider {...methods}>
                     <form
@@ -202,14 +209,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                     >
                         <DialogTitle>Edit Restaurant</DialogTitle>
 
-                        <DialogContent
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '20px',
-                                mt: '20px',
-                            }}
-                        >
+                        <StyledDialogContent>
                             <FromTextField
                                 name="heading"
                                 id="heading"
@@ -262,7 +262,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 render={({ field, fieldState }) => (
-                                    <TextField
+                                    <StyledCategoryTextfield
                                         {...field}
                                         required
                                         size="small"
@@ -270,65 +270,17 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                         label="Category"
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
-                                        sx={(theme) => ({
-                                            '& .MuiSelect-select': {
-                                                fontSize: FONT_SIZE['XL'],
-                                            },
-                                            '& .MuiInputLabel-root': {
-                                                fontSize: FONT_SIZE['XL'],
-                                            },
-                                            '& .MuiInputLabel-root.Mui-focused':
-                                                {
-                                                    color: theme.palette.common
-                                                        .black,
-                                                },
-                                            '& .MuiOutlinedInput-notchedOutline':
-                                                {
-                                                    borderColor:
-                                                        theme.palette.grey[700],
-                                                },
-                                            '&:hover .MuiOutlinedInput-notchedOutline':
-                                                {
-                                                    borderColor:
-                                                        theme.palette.common
-                                                            .black,
-                                                },
-                                            '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
-                                                {
-                                                    borderColor:
-                                                        theme.palette.common
-                                                            .black,
-                                                },
-                                            '& MuiButtonBase-root-MuiMenuItem-root':
-                                                {
-                                                    fontSize: FONT_SIZE['XL'],
-                                                },
-                                        })}
                                     >
-                                        <MenuItem
-                                            value="veg"
-                                            sx={{
-                                                '&.MuiMenuItem-root': {
-                                                    fontSize: FONT_SIZE['XL'],
-                                                },
-                                            }}
-                                        >
+                                        <StyledMenuItem value="veg">
                                             Veg
-                                        </MenuItem>
-                                        <MenuItem
-                                            value="non-veg"
-                                            sx={{
-                                                '&.MuiMenuItem-root': {
-                                                    fontSize: FONT_SIZE['XL'],
-                                                },
-                                            }}
-                                        >
+                                        </StyledMenuItem>
+                                        <StyledMenuItem value="non-veg">
                                             Non-Veg
-                                        </MenuItem>
-                                    </TextField>
+                                        </StyledMenuItem>
+                                    </StyledCategoryTextfield>
                                 )}
                             />
-                        </DialogContent>
+                        </StyledDialogContent>
 
                         <DialogActions>
                             <Button
@@ -358,14 +310,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
             >
                 <DialogTitle>Delete Restaurant</DialogTitle>
 
-                <DialogContent
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '20px',
-                        mt: '20px',
-                    }}
-                >
+                <StyledDialogContent>
                     <Typography variant="body1">
                         Are you sure you want to delete this restaurant
                     </Typography>
@@ -375,7 +320,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                     >
                         *this action can&apos;t be reversed
                     </Typography>
-                </DialogContent>
+                </StyledDialogContent>
 
                 <DialogActions>
                     <Button
