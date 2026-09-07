@@ -28,15 +28,6 @@ import {
 
 //---------------------------------------
 //Please note that this section has already been moved to types folder in next PR, but due to merge conflict, I had to declare types here for the working of this section of code
-interface CardData {
-    restaurantId: number;
-    img: string;
-    alt: string;
-    heading: string;
-    location: string;
-    description: string;
-    category: string;
-}
 
 export interface RestaurantFormData {
     img: string;
@@ -46,18 +37,10 @@ export interface RestaurantFormData {
     description: string;
     category: string;
 }
-
-export interface RestaurantCardProps {
-    data: CardData;
-}
-
-export interface RestaurantAutoGridProps {
-    data: CardData[];
-}
-
 //--------------------------------------
 
-export default function AutoGrid({ data }: RestaurantAutoGridProps) {
+export default function AutoGrid() {
+    const data = useTypeSelector((state) => state.restaurant);
     const [addOpen, setAddOpen] = useState(false); //for add restaurant dialog box
     const methods = useForm<RestaurantFormData>();
     //const dispatch = useTypeDispatch();
