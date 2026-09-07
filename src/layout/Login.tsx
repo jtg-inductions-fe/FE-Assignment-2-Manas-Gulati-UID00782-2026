@@ -33,25 +33,28 @@ function Login() {
         message: '',
         severity: 'success' as AlertColor,
     });
-    const auth = useTypeSelector((state) => state.auth);
+    const auth = useTypeSelector((state) => state.auth); //to send user data forward
 
     const methods = useForm<LoginFormData>(); //create rhf hook to manage form
 
     const onSubmit = (data: LoginFormData) => {
-        dispatch(login(data));
+        dispatch(login(data)); //update login attempt and checks authN
     };
+
     useEffect(() => {
         if (auth.user) {
             dispatch(
                 get({
                     role: auth.user.role,
                     userId: auth.user.userId,
-                }),
+                }), //to initialize restaurant to show to user
             );
+            //dispatch(initializeUser(auth.user.userId)); //to set user for the cart
         }
     }, [auth.user, dispatch]);
 
     useEffect(() => {
+        //to generate snackbar at every login attempt
         if (isAuthenticated) {
             setSnackbar({
                 open: true,

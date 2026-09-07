@@ -1,35 +1,36 @@
-import * as React from 'react';
 import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { logout } from 'store/authSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import {
-    Search,
-    SearchIconWrapper,
+    //Search,
+    //SearchIconWrapper,
+    StyledAppBar,
     StyledBadge,
-    StyledInputBase,
+    //StyledInputBase,
+    StyledShoppingCartIcon,
+    StyledToolbar,
+    StyledUserBox,
 } from 'styles/Header.styles.ts';
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AppBar from '@mui/material/AppBar';
+//import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
-import { common } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import { FONT_SIZE } from '@constant';
 
 export default function PrimarySearchAppBar() {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); //to handle opening and closing of menu
+    const isMenuOpen = Boolean(anchorEl);
+
     const dispatch = useTypeDispatch();
     const navigate = useNavigate();
-    const isMenuOpen = Boolean(anchorEl);
 
     const handleProfileMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(e.currentTarget);
@@ -46,7 +47,8 @@ export default function PrimarySearchAppBar() {
     };
 
     const menuId = 'primary-search-account-menu';
-    //to show/hide profile
+
+    //to show/hide profile options
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
@@ -72,41 +74,54 @@ export default function PrimarySearchAppBar() {
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );
+    const cartHandler = () => {
+        //handle cart logic
+    };
     //to display/hide cart
     const role = useTypeSelector((state) => state?.auth?.user?.role);
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar sx={{ p: 2 }}>
+        <Box>
+            <StyledAppBar position="sticky">
+                <StyledToolbar>
                     <Typography
                         variant="h5"
+                        component={RouterLink}
                         noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' }, ml: 2 }}
+                        to="/dashboard"
+                        sx={(theme) => ({
+                            ml: theme.spacing(1),
+                            textDecoration: 'none',
+                            color: theme.palette.common.black,
+                        })}
                     >
                         Meishi
                     </Typography>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon fontSize="small" />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ display: 'flex', gap: 3 }}>
+                    {/* {onSearchChange && (
+                        <Search>
+                            <SearchIconWrapper>
+                                <SearchIcon fontSize="small" />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                value={searchValue}
+                                placeholder={searchPlaceholder}
+                                inputProps={{ 'aria-label': searchPlaceholder }}
+                                onChange={(event) =>
+                                    onSearchChange(event.target.value)
+                                }
+                            />
+                        </Search>
+                    )} */}
+                    <Box sx={{ flexGrow: 1 }} />{' '}
+                    {/* Act as justify content: space between(provided by mui itself) */}
+                    <StyledUserBox>
                         {role === 'customer' && (
-                            <IconButton aria-label="cart">
-                                <StyledBadge badgeContent={4} color="success">
-                                    <ShoppingCartIcon
-                                        sx={{
-                                            fontSize: FONT_SIZE['4XL'],
-                                            color: common.black,
-                                        }}
-                                    />
+                            <IconButton aria-label="cart" onClick={cartHandler}>
+                                <StyledBadge
+                                    //badgeContent={quantity}
+                                    color="success"
+                                >
+                                    <StyledShoppingCartIcon />
                                 </StyledBadge>
                             </IconButton>
                         )}
@@ -121,9 +136,9 @@ export default function PrimarySearchAppBar() {
                         >
                             <AccountCircle />
                         </IconButton>
-                    </Box>
-                </Toolbar>
-            </AppBar>
+                    </StyledUserBox>
+                </StyledToolbar>
+            </StyledAppBar>
             {renderMenu}
         </Box>
     );

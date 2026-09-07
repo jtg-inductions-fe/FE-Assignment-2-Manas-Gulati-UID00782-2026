@@ -49,10 +49,11 @@ function Signup() {
     } = methods;
 
     const onSubmit = (data: SignupFormData) => {
-        dispatch(signin(data));
+        dispatch(signin(data)); //update signup attempt at every signup attempt and check signup validations
     };
 
     useEffect(() => {
+        //throws snackbar at every signup attempt
         if (isCreated) {
             setSnackbar({
                 open: true,
