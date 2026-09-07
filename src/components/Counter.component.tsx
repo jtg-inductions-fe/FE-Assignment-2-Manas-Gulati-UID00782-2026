@@ -19,7 +19,17 @@ export default function Counter({
     };
 
     return (
-        <Box display="flex" alignItems="center" gap={2}>
+        <Box
+            display="flex"
+            alignItems="center"
+            gap={{ sm: 0.25, md: 2 }}
+            sx={(theme) => ({
+                flexShrink: 0,
+                p: 0.25,
+                borderRadius: 2,
+                backgroundColor: theme.palette.faded?.light,
+            })}
+        >
             <IconButton
                 onClick={decreaseHandler}
                 color="error"

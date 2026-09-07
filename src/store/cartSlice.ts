@@ -42,10 +42,13 @@ const CartSlice = createSlice({
                 );
             }
         },
+        removeFoodData: (state) => {
+            state.food = [];
+        },
     },
 });
 
-export const { initializeUser, initializeRestaurant, addFood } =
+export const { initializeUser, initializeRestaurant, addFood, removeFoodData } =
     CartSlice.actions;
 
 export default CartSlice.reducer;

@@ -29,4 +29,6 @@ export interface CartFooditemData {
     alt: string;
     heading: string;
     price: number;
+export interface CartAutoGridProps {
+    data: CardData[];
 }

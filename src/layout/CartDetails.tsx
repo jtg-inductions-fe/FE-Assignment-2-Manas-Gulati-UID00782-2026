@@ -1,5 +1,7 @@
 import { CardContent, Divider, Stack, Typography } from '@mui/material';
-import { useTypeSelector } from 'store/hooks';
+import { removeFoodData } from 'store/cartSlice';
+import { useTypeDispatch, useTypeSelector } from 'store/hooks';
+import { initializeOrder } from 'store/orderSlice';
 import {
     StyledCartConfirmButton,
     StyledCartSummaryWrapper,
@@ -7,13 +9,15 @@ import {
     StyledEmptyCart,
     StyledTotalText,
 } from 'styles/Cart.styles';
-import { AutoGridProps } from 'types';
+import { CartAutoGridProps } from 'types';
 
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
 import CartFoodCard from './CartFoodCard';
 
-export default function AutoGrid({ data }: AutoGridProps) {
+export default function AutoGrid({ data }: CartAutoGridProps) {
+    const dispatch = useTypeDispatch();
+
     const food = useTypeSelector((state) => state.cart.food);
     let subtotal = 0;
     food.forEach((foodItem) => {
@@ -21,7 +25,33 @@ export default function AutoGrid({ data }: AutoGridProps) {
         subtotal += price;
     });
 
+    //initializing required variables
+    const restaurantId = useTypeSelector(
+        (state) => state.cart.restaurantId ?? 0,
+    );
+    const userId = useTypeSelector((state) => state.cart.userId ?? 0);
+    const cartFood = useTypeSelector((state) => state.cart.food);
+
     const total = subtotal + 50;
+
+    const handlePlaceOrder = () => {
+        if (cartFood.length > 0) {
+            const date = new Date();
+            const orderId = restaurantId + userId + date.getTime();
+            const orderData = {
+                orderId: orderId,
+                userId: userId,
+                foodItem: cartFood,
+                totalPrice: total,
+                date: date,
+                orderStatus: 'Pending',
+            };
+            dispatch(initializeOrder( orderData ));
+            
+        } else {
+            alert("can't place order");
+        }
+    };
 
     return (
         <>
@@ -121,7 +151,7 @@ export default function AutoGrid({ data }: AutoGridProps) {
                         <StyledCartConfirmButton
                             variant="contained"
                             fullWidth
-                            //onClick={handlePlaceOrder}
+                            onClick={handlePlaceOrder}
                         >
                             Place Order
                         </StyledCartConfirmButton>

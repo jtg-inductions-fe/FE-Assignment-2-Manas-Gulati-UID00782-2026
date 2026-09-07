@@ -69,16 +69,15 @@ export const StyledCartItem = styled(Card)(({ theme }) => ({
 }));
 
 export const StyledCartPrice = styled(Typography)(({ theme }) => ({
-    marginTop: theme.spacing(1.5),
+    flexShrink: 0,
     color: theme.palette.primary.main,
     fontWeight: FONT_WEIGHT.BOLD,
-    ...theme.mixins.lineClamp(3),
 }));
 
 export const StyledCartDeleteIcon = styled(DeleteIcon)(({ theme }) => ({
     fontSize: FONT_SIZE['3XL'],
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     color: theme.palette.primary.main,
 }));
 

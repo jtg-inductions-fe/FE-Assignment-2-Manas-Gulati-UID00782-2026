@@ -426,7 +426,7 @@ const FooditemSlice = createSlice({
             });
         },
         get: (_state, action: PayloadAction<number>) =>
-            mockFoodData[action.payload],
+            mockFoodData[action.payload] ?? [],
         del: (state, action: PayloadAction<number>) =>
             state.filter((food) => food.foodId !== action.payload),
     },

@@ -1,6 +1,9 @@
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
 import { Box, Stack, Typography } from '@mui/material';
+import { useState } from 'react';
+
+import { useDebouncedValue } from 'hooks/debounceHook';
 import AutoGrid from 'layout/FoodDetails';
 import { useTypeSelector } from 'store/hooks';
 import {
@@ -30,10 +33,22 @@ export default function FoodItems() {
     );
     const restaurantName = selectedRestaurant.restaurantName;
     const coverImage = restaurant?.img;
-
+    const [searchValue, setSearchValue] = useState('');
+    const debouncedSearchValue = useDebouncedValue(searchValue, 200);
+    const query = debouncedSearchValue.trim().toLowerCase();
+    let filterData = foodData;
+    if (query) {
+        filterData = foodData.filter((item) =>
+            item.heading.toLowerCase().includes(query),
+        );
+    }
     return (
         <StyledFooditemWrapper>
-            <Header />
+            <Header 
+                searchValue={searchValue}
+                onSearchChange={setSearchValue}
+                searchPlaceholder="Search this menu…"
+            />
             <StyledFooditemDetailWrapper>
                 <StyledFooditemBannerWrapper>
                     <Box
@@ -116,7 +131,7 @@ export default function FoodItems() {
                 >
                     <StyledMenuText label="All Menu Items" />
                     <Typography sx={{ fontSize: FONT_SIZE.SM }}>
-                        {foodData.length} items
+                        {filterData.length} items
                     </Typography>
                 </Stack>
 
