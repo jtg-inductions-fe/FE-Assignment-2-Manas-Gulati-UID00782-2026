@@ -1,3 +1,4 @@
+import { Box, Chip, Stack, Typography } from '@mui/material';
 import Header from 'layout/Header';
 import OrdersDetail from 'layout/OrdersDetail';
 import { useTypeSelector } from 'store/hooks';
@@ -6,8 +7,6 @@ import {
     StyledOrderPageWrapper,
 } from 'styles/Orders.styles';
 import { OrderDetails } from 'types';
-
-import { Box, Chip, Stack, Typography } from '@mui/material';
 
 export default function Orders() {
     const user = useTypeSelector((state) => state.auth.user);

@@ -1,8 +1,8 @@
+import { useState } from 'react';
+
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
 import { Box, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
-
 import { useDebouncedValue } from 'hooks/debounceHook';
 import AutoGrid from 'layout/FoodDetails';
 import { useTypeSelector } from 'store/hooks';

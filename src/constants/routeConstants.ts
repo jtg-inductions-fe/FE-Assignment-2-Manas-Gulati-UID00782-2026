@@ -5,5 +5,8 @@
 export const ROUTES = {
     HOME: '/',
     DASHBOARD: '/dashboard',
-    FOOD: '/dashboard/:restaurantId',
+    FOOD: (restaurantId: number | string) => `/dashboard/${restaurantId}`,
+
+    CART: (userId: number | string) => `/dashboard/cart/${userId}`,
+    ORDER: '/dashboard/order',
 };

@@ -36,3 +36,11 @@ export interface OrderCardProps {
 export interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
+
+//different order state for easy management
+export interface OrdersState {
+    byId: Record<number, OrderDetails>; //by order id
+    allIds: number[]; //all orders
+    byCustomerId: Record<number, number[]>; //mapping customer id with their orders
+    byRestaurantId: Record<number, number[]>; //mapping restaurant with their orders
+}

@@ -1,5 +1,12 @@
 import { useState } from 'react';
 
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import SearchIcon from '@mui/icons-material/Search';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import { logout } from 'store/authSlice';
@@ -16,27 +23,8 @@ import {
 } from 'styles/Header.styles.ts';
 import { HeaderProps } from 'types';
 
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import SearchIcon from '@mui/icons-material/Search';
-//import SearchIcon from '@mui/icons-material/Search';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
-import { logout } from 'store/authSlice';
-import { useTypeDispatch, useTypeSelector } from 'store/hooks';
-import {
-    StyledAppBar,
-    StyledBadge,
-    StyledShoppingCartIcon,
-    StyledToolbar,
-    StyledUserBox,
-} from 'styles/Header.styles.ts';
-
 import { FONT_SIZE } from '@constant';
+
 import { ROUTES } from '../constants';
 
 export default function PrimarySearchAppBar({
@@ -83,7 +71,8 @@ export default function PrimarySearchAppBar({
     };
 
     const handleOrders = () => {
-        void navigate('/dashboard/order');
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        navigate(ROUTES.ORDER);
     };
 
     const userId = useTypeSelector((state) => state.auth.user?.userId);
@@ -94,7 +83,7 @@ export default function PrimarySearchAppBar({
      */
     const cartHandler = () => {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        navigate(`/dashboard/cart/${userId}`);
+        navigate(ROUTES.CART(userId ?? 404));
     };
 
     const menuId = 'primary-search-account-menu';
