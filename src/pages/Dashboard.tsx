@@ -1,9 +1,13 @@
 import { useState } from 'react';
 
 import { ToggleButton } from '@mui/material';
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import AutoGrid from 'layout/RestaurantDetail';
 import { useTypeSelector } from 'store/hooks';
+import {
+    StyledDashboardWrapper,
+    StyledRestaurantDetailWrapper,
+} from 'styles/Restaurant.styles';
 import { StyledToggleButtonGroup } from 'styles/ToggleButton.styles';
 
 import Header from '../layout/Header';
@@ -41,22 +45,9 @@ export default function Dashboard() {
         filterData = restaurantData;
     }
     return (
-        <Box
-            sx={{
-                maxWidth: '2000px',
-            }}
-        >
+        <StyledDashboardWrapper>
             <Header />
-            <Box
-                sx={{
-                    width: '100%',
-                    maxWidth: 1700,
-                    mx: 'auto',
-                    px: 5,
-                    pt: 7,
-                    pb: { sm: 10, md: 14 },
-                }}
-            >
+            <StyledRestaurantDetailWrapper>
                 <Stack
                     direction={{ sm: 'column', md: 'row' }}
                     justifyContent="space-between"
@@ -102,7 +93,7 @@ export default function Dashboard() {
                     </StyledToggleButtonGroup>
                 </Stack>
                 <AutoGrid data={filterData} />
-            </Box>
-        </Box>
+            </StyledRestaurantDetailWrapper>
+        </StyledDashboardWrapper>
     );
 }
