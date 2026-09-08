@@ -2,12 +2,14 @@ import { useState } from 'react';
 
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import { Box, Stack } from '@mui/material';
-import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
+import ReusableButton from 'components/Button.component';
+import ReusableDialog, {
+    ReusableDialogActions,
+    ReusableDialogContent,
+    ReusableDialogTitle,
+} from 'components/Dialog.component';
 import FromTextField from 'components/TextField.component';
 import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -21,10 +23,7 @@ import {
     StyledCategoryBox,
     StyledCategoryTextfield,
     StyledDescription,
-    StyledDialogContent,
     StyledMenuItem,
-    StyledOwnerDeleteButton,
-    StyledOwnerEditButton,
 } from 'styles/Restaurant.styles';
 
 import { FONT_SIZE } from '@constant';
@@ -163,42 +162,57 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                         <Box display="flex" mt="auto" justifyContent="flex-end">
                             {role === 'owner' && (
                                 <Stack direction="row" spacing={4}>
-                                    <StyledOwnerEditButton
+                                    <ReusableButton
                                         variant="contained"
                                         size="small"
+                                        sx={{
+                                            fontSize: FONT_SIZE.MD,
+                                            px: 4,
+                                        }}
                                         onClick={(e) => {
                                             editHandler();
                                             e.stopPropagation();
                                         }}
                                     >
                                         Edit
-                                    </StyledOwnerEditButton>
-                                    <StyledOwnerDeleteButton
+                                    </ReusableButton>
+                                    <ReusableButton
                                         variant="outlined"
                                         size="small"
+                                        sx={{
+                                            fontSize: FONT_SIZE.MD,
+                                            px: 4,
+                                        }}
                                         onClick={(e) => {
                                             deleteHandler();
                                             e.stopPropagation();
                                         }}
                                     >
                                         Delete
-                                    </StyledOwnerDeleteButton>
+                                    </ReusableButton>
                                 </Stack>
                             )}
                         </Box>
                     </StyledCardContent>
                 </StyledCardActionArea>
             </StyledCard>
-            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+            <ReusableDialog
+                open={open}
+                onClose={handleClose}
+                fullWidth
+                maxWidth="sm"
+            >
                 <FormProvider {...methods}>
                     <form
                         onSubmit={(e) => {
                             void methods.handleSubmit(onSubmit)(e);
                         }}
                     >
-                        <DialogTitle>Edit Restaurant</DialogTitle>
+                        <ReusableDialogTitle>
+                            Edit Restaurant
+                        </ReusableDialogTitle>
 
-                        <StyledDialogContent>
+                        <ReusableDialogContent>
                             <FromTextField
                                 name="heading"
                                 id="heading"
@@ -273,37 +287,37 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                     </StyledCategoryTextfield>
                                 )}
                             />
-                        </StyledDialogContent>
+                        </ReusableDialogContent>
 
-                        <DialogActions>
-                            <Button
+                        <ReusableDialogActions>
+                            <ReusableButton
                                 size="small"
                                 onClick={handleClose}
                                 color="inherit"
                             >
                                 Cancel
-                            </Button>
+                            </ReusableButton>
 
-                            <Button
+                            <ReusableButton
                                 size="small"
                                 type="submit"
                                 variant="contained"
                             >
                                 Confirm
-                            </Button>
-                        </DialogActions>
+                            </ReusableButton>
+                        </ReusableDialogActions>
                     </form>
                 </FormProvider>
-            </Dialog>
-            <Dialog
+            </ReusableDialog>
+            <ReusableDialog
                 open={delOpen}
                 onClose={handleDelClose}
                 fullWidth
                 maxWidth="sm"
             >
-                <DialogTitle>Delete Restaurant</DialogTitle>
+                <ReusableDialogTitle>Delete Restaurant</ReusableDialogTitle>
 
-                <StyledDialogContent>
+                <ReusableDialogContent>
                     <Typography variant="body1">
                         Are you sure you want to delete this restaurant
                     </Typography>
@@ -313,27 +327,27 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                     >
                         *this action can&apos;t be reversed
                     </Typography>
-                </StyledDialogContent>
+                </ReusableDialogContent>
 
-                <DialogActions>
-                    <Button
+                <ReusableDialogActions>
+                    <ReusableButton
                         size="small"
                         onClick={handleDelClose}
                         color="inherit"
                     >
                         Cancel
-                    </Button>
+                    </ReusableButton>
 
-                    <Button
+                    <ReusableButton
                         size="small"
                         type="button"
                         onClick={confirmDeleteHandler}
                         variant="contained"
                     >
                         Confirm
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                    </ReusableButton>
+                </ReusableDialogActions>
+            </ReusableDialog>
         </>
     );
 }

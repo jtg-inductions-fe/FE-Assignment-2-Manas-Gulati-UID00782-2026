@@ -1,10 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import {
-    Box,
-    Button,
     CardActionArea,
     CardContent,
-    DialogContent,
     MenuItem,
     styled,
     TextField,
@@ -55,24 +52,6 @@ export const StyledDescription = styled(Typography)(({ theme }) => ({
     ...theme.mixins.lineClamp(3),
 }));
 
-export const StyledOwnerEditButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.common.white,
-    fontSize: FONT_SIZE.MD,
-    padding: `0 ${theme.spacing(4)}`,
-}));
-
-export const StyledOwnerDeleteButton = styled(Button)(({ theme }) => ({
-    fontSize: FONT_SIZE.MD,
-    padding: `0 ${theme.spacing(4)}`,
-}));
-
-export const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 20,
-    marginTop: theme.spacing(2),
-}));
-
 export const StyledCategoryTextfield = styled(TextField)(({ theme }) => ({
     '& .MuiSelect-select': {
         fontSize: FONT_SIZE['XL'],
@@ -101,12 +80,6 @@ export const StyledMenuItem = styled(MenuItem)({
     '&.MuiMenuItem-root': {
         fontSize: FONT_SIZE['XL'],
     },
-});
-
-export const StyledRestaurantWrapper = styled(Box)({
-    width: '100%',
-    display: 'flex',
-    flexGrow: 1,
 });
 
 export const CustomCardGrid = styled(Grid)({

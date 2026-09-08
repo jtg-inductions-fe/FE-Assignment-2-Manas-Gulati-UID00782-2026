@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { AlertColor } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import ReusableButton from 'components/Button.component';
 import FormPassword from 'components/Password.component';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FormTextField from 'components/TextField.component';
@@ -10,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import { login } from 'store/authSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { get } from 'store/restaurantSlice';
-import { CustomButton } from 'styles/AuthFormButton.styles';
 
 import { ROUTES, SUCCESSMESSAGES, VALIDATION } from '../constants';
 
@@ -111,13 +111,13 @@ function Login() {
                                 }}
                             />
                             <FormPassword name="password" id="loginPassword" />
-                            <CustomButton
+                            <ReusableButton
                                 variant="outlined"
                                 type="submit"
                                 size="medium"
                             >
                                 LogIn
-                            </CustomButton>
+                            </ReusableButton>
                         </Stack>
                     </form>
                 </FormProvider>

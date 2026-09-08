@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogTitle,
-    Typography,
-} from '@mui/material';
+import { Typography } from '@mui/material';
+import ReusableButton from 'components/Button.component';
+import ReusableDialog, {
+    ReusableDialogActions,
+    ReusableDialogContent,
+    ReusableDialogTitle,
+} from 'components/Dialog.component';
 import FromTextField from 'components/TextField.component';
+import ReusableWrapper from 'components/Wrapper.component';
 import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import RestaurantCard from 'layout/RestaurantCard';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
@@ -19,9 +20,7 @@ import {
     StyledAddMoreCard,
     StyledCardContent,
     StyledCategoryTextfield,
-    StyledDialogContent,
     StyledMenuItem,
-    StyledRestaurantWrapper,
 } from 'styles/Restaurant.styles';
 
 export interface RestaurantFormData {
@@ -45,7 +44,7 @@ export default function AutoGrid() {
 
     return (
         <>
-            <StyledRestaurantWrapper>
+            <ReusableWrapper>
                 <CustomGridWrapper
                     container
                     spacing={{ sm: 3, md: 4 }}
@@ -87,8 +86,8 @@ export default function AutoGrid() {
                         </CustomCardGrid>
                     )}
                 </CustomGridWrapper>
-            </StyledRestaurantWrapper>
-            <Dialog
+            </ReusableWrapper>
+            <ReusableDialog
                 open={addOpen}
                 onClose={handleClose}
                 fullWidth
@@ -96,9 +95,11 @@ export default function AutoGrid() {
             >
                 <FormProvider {...methods}>
                     <form>
-                        <DialogTitle>Edit Restaurant</DialogTitle>
+                        <ReusableDialogTitle>
+                            Edit Restaurant
+                        </ReusableDialogTitle>
 
-                        <StyledDialogContent>
+                        <ReusableDialogContent>
                             <FromTextField
                                 name="heading"
                                 id="heading"
@@ -167,28 +168,28 @@ export default function AutoGrid() {
                                     </StyledCategoryTextfield>
                                 )}
                             />
-                        </StyledDialogContent>
+                        </ReusableDialogContent>
 
-                        <DialogActions>
-                            <Button
+                        <ReusableDialogActions>
+                            <ReusableButton
                                 size="small"
                                 onClick={handleClose}
                                 color="inherit"
                             >
                                 Cancel
-                            </Button>
+                            </ReusableButton>
 
-                            <Button
+                            <ReusableButton
                                 size="small"
                                 type="submit"
                                 variant="contained"
                             >
                                 Confirm
-                            </Button>
-                        </DialogActions>
+                            </ReusableButton>
+                        </ReusableDialogActions>
                     </form>
                 </FormProvider>
-            </Dialog>
+            </ReusableDialog>
         </>
     );
 }

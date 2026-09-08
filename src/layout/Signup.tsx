@@ -9,13 +9,13 @@ import {
     RadioGroup,
 } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import ReusableButton from 'components/Button.component';
 import FormPassword from 'components/Password.component';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FormTextField from 'components/TextField.component';
 import { FormProvider, useForm } from 'react-hook-form';
 import { signin } from 'store/authSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
-import { CustomButton } from 'styles/AuthFormButton.styles';
 import { CustomRadio } from 'styles/Radio.styles';
 
 import { FONT_SIZE } from '@constant';
@@ -200,13 +200,13 @@ function Signup() {
                                     {errors.role?.message}
                                 </FormHelperText>
                             </FormControl>
-                            <CustomButton
+                            <ReusableButton
                                 variant="outlined"
                                 type="submit"
                                 size="medium"
                             >
                                 SignUp
-                            </CustomButton>
+                            </ReusableButton>
                         </Stack>
                     </form>
                 </FormProvider>
