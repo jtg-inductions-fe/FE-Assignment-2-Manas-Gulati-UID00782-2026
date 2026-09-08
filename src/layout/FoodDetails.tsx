@@ -66,19 +66,19 @@ export default function AutoGrid({ data }: FoodAutoGridProps) {
             <ReusableWrapper>
                 <CustomGridWrapper
                     container
-                    spacing={{ sm: 3, md: 4 }}
+                    spacing={{ xs: 3, md: 4 }}
                     rowGap={18}
                 >
                     {data.map((item, index) => (
                         <CustomCardGrid
                             key={index}
-                            size={{ sm: 12, md: 6, lg: 4 }}
+                            size={{ xs: 12, md: 6, lg: 4 }}
                         >
                             <FooditemCard data={item} />
                         </CustomCardGrid>
                     ))}
                     {role === 'owner' && (
-                        <CustomCardGrid size={{ sm: 12, md: 6, lg: 4 }}>
+                        <CustomCardGrid size={{ xs: 12, md: 6, lg: 4 }}>
                             <StyledAddMoreCard
                                 onClick={() => {
                                     setAddOpen(true);

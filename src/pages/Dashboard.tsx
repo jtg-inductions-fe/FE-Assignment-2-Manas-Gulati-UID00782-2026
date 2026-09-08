@@ -60,9 +60,9 @@ export default function Dashboard() {
             />
             <StyledRestaurantDetailWrapper>
                 <Stack
-                    direction={{ sm: 'column', md: 'row' }}
+                    direction={{ xs: 'column', md: 'row' }}
                     justifyContent="space-between"
-                    alignItems={{ sm: 'flex-start', md: 'flex-end' }}
+                    alignItems={{ xs: 'flex-start', md: 'flex-end' }}
                     gap={4}
                 >
                     <Stack spacing={4}>

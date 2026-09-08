@@ -22,7 +22,7 @@ export default function Counter({
         <StyledCounterBox
             display="flex"
             alignItems="center"
-            gap={{ sm: 0.25, md: 2 }}
+            gap={{ xs: 0.25, md: 2 }}
         >
             <IconButton
                 onClick={decreaseHandler}
