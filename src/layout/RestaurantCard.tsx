@@ -114,7 +114,8 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
             selectRestaurant({ id: data.restaurantId, name: data.heading }),
         );
         dispatch(get(data.restaurantId));
-        void navigate(`/dashboard/${data.restaurantId}`);
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        navigate(`/dashboard/${data.restaurantId}`);
     };
 
     return (
