@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import { Box, IconButton, Stack } from '@mui/material';
+import { CardMedia } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import Counter from 'components/Counter.component';
 import { addFood } from 'store/cartSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
@@ -10,10 +13,6 @@ import {
     StyledCartPrice,
 } from 'styles/Cart.styles';
 import { CardProps } from 'types';
-
-import { Box, IconButton, Stack } from '@mui/material';
-import { CardMedia } from '@mui/material';
-import Typography from '@mui/material/Typography';
 
 import { FONT_SIZE } from '@constant';
 

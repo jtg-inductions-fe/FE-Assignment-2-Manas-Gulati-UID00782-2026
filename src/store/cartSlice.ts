@@ -1,30 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-//schema for food items
-interface FoodItem {
-    foodId: number;
-    img: string;
-    alt: string;
-    heading: string;
-    price: number;
-    quantity: number;
-}
-
-//schema for cart data required
-interface CartData {
-    userId: number | null;
-    restaurantId: number | null;
-    food: FoodItem[];
-}
-
-//schema for Fooditem data required
-interface FooditemData {
-    foodId: number;
-    img: string;
-    alt: string;
-    heading: string;
-    price: number;
-}
+import { CartData, CartFooditemData } from 'types';
 
 const initialState: CartData = { userId: null, restaurantId: null, food: [] };
 
@@ -41,7 +16,7 @@ const CartSlice = createSlice({
         },
         addFood: (
             state,
-            action: PayloadAction<{ data: FooditemData; quantity: number }>,
+            action: PayloadAction<{ data: CartFooditemData; quantity: number }>,
         ) => {
             let foodExist = false;
             state.food.forEach((food) => {

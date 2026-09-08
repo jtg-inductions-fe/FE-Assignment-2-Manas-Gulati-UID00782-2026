@@ -1,11 +1,10 @@
+import { Typography } from '@mui/material';
 import AutoGrid from 'layout/CartDetails';
 import { useTypeSelector } from 'store/hooks';
 import {
     StyledCartDetailWrapper,
     StyledCartPageWrapper,
 } from 'styles/Cart.styles';
-
-import { Typography } from '@mui/material';
 
 import Header from '../layout/Header';
 

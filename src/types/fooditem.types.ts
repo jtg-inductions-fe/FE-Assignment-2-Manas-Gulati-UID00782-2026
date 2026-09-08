@@ -23,6 +23,6 @@ export interface FoodCardProps {
     data: FooditemCardData;
 }
 
-export interface AutoGridProps {
+export interface FoodAutoGridProps {
     data: FooditemCardData[];
 }
