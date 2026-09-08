@@ -1,4 +1,4 @@
-interface CardData {
+export interface RestaurantCardData {
     restaurantId: number;
     img: string;
     alt: string;
@@ -18,9 +18,14 @@ export interface RestaurantFormData {
 }
 
 export interface RestaurantCardProps {
-    data: CardData;
+    data: RestaurantCardData;
 }
 
 export interface RestaurantAutoGridProps {
-    data: CardData[];
+    data: RestaurantCardData[];
+}
+
+export interface SelectedRestaurant {
+    restaurantId: number | null;
+    restaurantName: string;
 }

@@ -16,7 +16,6 @@ import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-//import { initializeRestaurant } from 'store/cartSlice';
 import { get } from 'store/fooditemSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { del, edit } from 'store/restaurantSlice';
@@ -115,7 +114,6 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
             selectRestaurant({ id: data.restaurantId, name: data.heading }),
         );
         dispatch(get(data.restaurantId));
-        //dispatch(initializeRestaurant(data.restaurantId));
         void navigate(`/dashboard/${data.restaurantId}`);
     };
 

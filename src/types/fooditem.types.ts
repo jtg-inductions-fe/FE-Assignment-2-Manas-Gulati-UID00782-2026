@@ -1,4 +1,4 @@
-interface CardData {
+export interface FooditemCardData {
     foodId: number;
     img: string;
     alt: string;
@@ -20,9 +20,9 @@ export interface FooditemFormData {
 }
 
 export interface FoodCardProps {
-    data: CardData;
+    data: FooditemCardData;
 }
 
 export interface AutoGridProps {
-    data: CardData[];
+    data: FooditemCardData[];
 }

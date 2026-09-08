@@ -1,5 +1,4 @@
 export declare module '@mui/material/styles/createMixins' {
-    //Doubt: Why export
     interface Mixins {
         lineClamp: (lines: number) => CSSProperties;
     }

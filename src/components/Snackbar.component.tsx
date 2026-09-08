@@ -1,8 +1,7 @@
-import { SnackbarProps } from 'types';
-
 import { Box } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
+import { SnackbarProps } from 'types';
 
 export default function CustomizedSnackbar({
     severity,

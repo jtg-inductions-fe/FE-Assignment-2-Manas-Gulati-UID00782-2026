@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface SelectedRestaurant {
-    restaurantId: number | null;
-    restaurantName: string;
-}
+import { SelectedRestaurant } from 'types';
 
 const initialState: SelectedRestaurant = {
     restaurantId: null,
