@@ -44,7 +44,7 @@ export default function FoodItems() {
     }
     return (
         <StyledFooditemWrapper>
-            <Header 
+            <Header
                 searchValue={searchValue}
                 onSearchChange={setSearchValue}
                 searchPlaceholder="Search this menu…"

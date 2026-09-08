@@ -53,7 +53,7 @@ export default function Dashboard() {
 
     return (
         <StyledDashboardWrapper>
-            <Header 
+            <Header
                 searchValue={searchValue}
                 onSearchChange={setSearchValue}
                 searchPlaceholder="Search restaurants…"
