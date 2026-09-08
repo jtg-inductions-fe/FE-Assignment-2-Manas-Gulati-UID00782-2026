@@ -147,7 +147,6 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         navigate(`/dashboard/${data.restaurantId}`);
         dispatch(initializeRestaurant(data.restaurantId));
-
     };
 
     return (
