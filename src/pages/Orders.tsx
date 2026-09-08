@@ -53,7 +53,7 @@ export default function Orders() {
             <Header />
             <StyledOrderDetailWrapper>
                 <Stack
-                    direction={{ sm: 'column', md: 'row' }}
+                    direction={{ xs: 'column', md: 'row' }}
                     justifyContent="space-between"
                     alignItems={{ sm: 'flex-start', md: 'center' }}
                     gap={2}

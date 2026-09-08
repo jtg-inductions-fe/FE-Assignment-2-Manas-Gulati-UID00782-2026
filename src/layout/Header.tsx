@@ -117,7 +117,7 @@ export default function PrimarySearchAppBar({
             onClose={handleMenuClose}
             sx={{
                 '& .MuiMenuItem-root': {
-                    fontSize: { sm: FONT_SIZE.LG, md: FONT_SIZE.XL },
+                    fontSize: { xs: FONT_SIZE.LG, md: FONT_SIZE.XL },
                 },
             }}
         >

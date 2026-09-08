@@ -103,11 +103,11 @@ export default function RecipeReviewCard({
                 title={restaurantName}
                 subheader={`Order #${data.orderId}`}
             />
-            <CardContent sx={{ p: { sm: 3, md: 4 } }}>
+            <CardContent sx={{ p: { xs: 3, md: 4 } }}>
                 <Stack
-                    direction={{ sm: 'column', md: 'row' }}
+                    direction={{ xs: 'column', md: 'row' }}
                     justifyContent="space-between"
-                    alignItems={{ sm: 'stretch', md: 'center' }}
+                    alignItems={{ xs: 'stretch', md: 'center' }}
                     gap={3}
                 >
                     {canChangeStatus ? (
@@ -129,7 +129,7 @@ export default function RecipeReviewCard({
                             label={data.orderStatus}
                             variant="outlined"
                             sx={(theme) => ({
-                                alignSelf: { sm: 'flex-start', md: 'center' },
+                                alignSelf: { xs: 'flex-start', md: 'center' },
                                 color: theme.palette.primary.main,
                             })}
                         />
@@ -195,7 +195,7 @@ export default function RecipeReviewCard({
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <Divider />
                 <CardContent>
-                    <Stack spacing={2} sx={{ p: { sm: 3, md: 4 }, pt: 3 }}>
+                    <Stack spacing={2} sx={{ p: { xs: 3, md: 4 }, pt: 3 }}>
                         {data.foodItem.map((food) => (
                             <Stack
                                 key={food.foodId}

@@ -55,14 +55,14 @@ export default function FoodItems() {
                         role="img"
                         aria-label={`${restaurantName} restaurant`}
                         sx={{
-                            height: { sm: 190, md: 320 },
+                            height: { xs: 190, md: 320 },
                             backgroundImage: `linear-gradient(180deg, rgba(15, 6, 1, 0.08), rgba(12, 12, 12, 0.34)), url("${coverImage}")`,
                             backgroundPosition: 'center',
                             backgroundSize: 'cover',
                         }}
                     />
                     <Stack
-                        direction={{ sm: 'column', md: 'row' }}
+                        direction={{ xs: 'column', md: 'row' }}
                         alignItems={{ sm: 'flex-start', md: 'center' }}
                         gap={3}
                         sx={{ px: 3, py: 4 }}
