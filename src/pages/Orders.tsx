@@ -1,6 +1,10 @@
 import Header from 'layout/Header';
 import OrdersDetail from 'layout/OrdersDetail';
 import { useTypeSelector } from 'store/hooks';
+import {
+    StyledOrderDetailWrapper,
+    StyledOrderPageWrapper,
+} from 'styles/Orders.styles';
 import { OrderDetails } from 'types';
 
 import { Box, Chip, Stack, Typography } from '@mui/material';
@@ -45,18 +49,9 @@ export default function Orders() {
     }
 
     return (
-        <Box sx={{ maxWidth: '2000px' }}>
+        <StyledOrderPageWrapper>
             <Header />
-            <Box
-                sx={{
-                    width: '100%',
-                    maxWidth: 1400,
-                    mx: 'auto',
-                    px: 5,
-                    pt: 6,
-                    pb: { sm: 10, md: 14 },
-                }}
-            >
+            <StyledOrderDetailWrapper>
                 <Stack
                     direction={{ sm: 'column', md: 'row' }}
                     justifyContent="space-between"
@@ -89,7 +84,7 @@ export default function Orders() {
                     canChangeStatus={isOwner}
                     restaurantNames={restaurantNames}
                 />
-            </Box>
-        </Box>
+            </StyledOrderDetailWrapper>
+        </StyledOrderPageWrapper>
     );
 }

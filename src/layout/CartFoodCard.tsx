@@ -9,8 +9,10 @@ import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import {
     StyledCartCard,
     StyledCartDeleteIcon,
+    StyledCartHeading,
     StyledCartItem,
     StyledCartPrice,
+    StyledCartRestaurantName,
 } from 'styles/Cart.styles';
 import { CardProps } from 'types';
 
@@ -66,33 +68,12 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                         }}
                     />
                     <Box>
-                        <Typography
-                            gutterBottom
-                            variant="h3"
-                            component="div"
-                            sx={{
-                                fontSize: {
-                                    xs: FONT_SIZE.MD,
-                                    md: FONT_SIZE.XL,
-                                },
-                                textOverflow: 'ellipsis',
-                                whiteSpace: { xs: 'normal', sm: 'nowrap' },
-                            }}
-                        >
+                        <StyledCartHeading gutterBottom variant="h3">
                             {data.heading}
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            sx={(theme) => ({
-                                mt: 1,
-                                color: theme.palette.faded?.main,
-                                extOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                            })}
-                        >
+                        </StyledCartHeading>
+                        <StyledCartRestaurantName variant="body1">
                             {restaurantName}
-                        </Typography>
+                        </StyledCartRestaurantName>
                     </Box>
                     <Stack
                         direction="row"
@@ -103,9 +84,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                             gridColumn: { xs: '1 / -1', sm: '2' },
                         }}
                     >
-                        <StyledCartPrice>
-                            &#8377; {data.price}
-                        </StyledCartPrice>
+                        <StyledCartPrice>&#8377; {data.price}</StyledCartPrice>
                         <Stack
                             direction="row"
                             alignItems="center"
@@ -123,7 +102,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                 onClick={deleteHandler}
                                 sx={{ p: { xs: 0.75, sm: 1 } }}
                             >
-                                <StyledCartDeleteIcon/>
+                                <StyledCartDeleteIcon />
                             </IconButton>
                         </Stack>
                     </Stack>

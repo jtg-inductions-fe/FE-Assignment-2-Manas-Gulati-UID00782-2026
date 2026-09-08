@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { STATUS } from 'constants/orderStatusConstants';
 import { useTypeDispatch } from 'store/hooks';
 import { changeStatus } from 'store/orderSlice';
+import { StyledOrderCard, StyledOrderPrice } from 'styles/Orders.styles';
 import { OrderCardProps } from 'types';
 import { ExpandMoreProps } from 'types';
 
@@ -18,7 +18,6 @@ import {
     Stack,
 } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
@@ -27,7 +26,9 @@ import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { FONT_SIZE, FONT_WEIGHT } from '@constant';
+import { FONT_WEIGHT } from '@constant';
+
+import { STATUS } from '../constants';
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
     const { ...other } = props;
@@ -65,6 +66,11 @@ export default function RecipeReviewCard({
         itemCount += orderedFood.quantity;
     });
 
+    /**
+     * Change order status
+     * @param {any} e:SelectChangeEvent
+     * @returns {any}
+     */
     const statusHandler = (e: SelectChangeEvent) => {
         dispatch(
             changeStatus({
@@ -74,19 +80,16 @@ export default function RecipeReviewCard({
         );
     };
 
+    /**
+     * expands orders card
+     * @returns {any}
+     */
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     return (
-        <Card
-            sx={(theme) => ({
-                width: '100%',
-                border: `1px solid ${theme.palette.faded?.light}`,
-                borderRadius: 3,
-                boxShadow: '0 8px 24px rgba(28, 35, 40, 0.05)',
-            })}
-        >
+        <StyledOrderCard>
             <CardHeader
                 avatar={
                     <Avatar
@@ -174,15 +177,9 @@ export default function RecipeReviewCard({
                             </Box>
                         )}
                     </Stack>
-                    <Typography
-                        sx={(theme) => ({
-                            color: theme.palette.primary.main,
-                            fontSize: FONT_SIZE['2XL'],
-                            fontWeight: FONT_WEIGHT.BOLD,
-                        })}
-                    >
+                    <StyledOrderPrice>
                         &#8377;{data.totalPrice.toFixed(2)}
-                    </Typography>
+                    </StyledOrderPrice>
                 </Stack>
             </CardContent>
             <CardActions disableSpacing>
@@ -248,6 +245,6 @@ export default function RecipeReviewCard({
                     </Stack>
                 </CardContent>
             </Collapse>
-        </Card>
+        </StyledOrderCard>
     );
 }

@@ -1,7 +1,7 @@
+import { StyledNoOrderBox } from 'styles/Orders.styles';
 import { OrdersDetailProps } from 'types';
 
 import { Stack, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
 
 import { FONT_WEIGHT } from '@constant';
 
@@ -14,17 +14,7 @@ export default function AutoGrid({
 }: OrdersDetailProps) {
     if (data.length === 0) {
         return (
-            <Box
-                sx={(theme) => ({
-                    p: { sm: 5, md: 8 },
-                    mt: 4,
-                    border: `2px dashed ${theme.palette.faded?.light}`,
-                    borderRadius: 3,
-                    color: theme.palette.faded?.main,
-                    backgroundColor: theme.palette.common.white,
-                    textAlign: 'center',
-                })}
-            >
+            <StyledNoOrderBox>
                 <Typography
                     variant="body1"
                     sx={{ fontWeight: FONT_WEIGHT.SEMIBOLD }}
@@ -34,7 +24,7 @@ export default function AutoGrid({
                 <Typography variant="subtitle1">
                     Confirm Orders to show here
                 </Typography>
-            </Box>
+            </StyledNoOrderBox>
         );
     }
     return (
