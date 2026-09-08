@@ -1,45 +1,53 @@
 import { useEffect, useState } from 'react';
 
-import Counter from 'components/Counter.component';
+//import Counter from 'components/Counter.component';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
-import { MESSAGES } from 'constants/restaurantSnackbarConstant';
-import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import { FormProvider, useForm } from 'react-hook-form';
-import { addFood } from 'store/cartSlice';
+//import { addFood } from 'store/cartSlice';
 import { del, edit } from 'store/fooditemSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
+import {
+    StyledCard,
+    StyledCardContent,
+    StyledDeleteIcon,
+    StyledDescText,
+    StyledDialogContent,
+    StyledEditIcon,
+    StyledIngredientsText,
+    StyledOutStockBox,
+    StyledOutStockText,
+    StyledPriceText,
+    StyledStockText,
+} from 'styles/Fooditem.styles';
 import { FoodCardProps, FooditemFormData } from 'types';
 
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { Box, IconButton, Stack } from '@mui/material';
 import { AlertColor } from '@mui/material';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
 
-import { FONT_SIZE, FONT_WEIGHT } from '@constant';
+import { FONT_SIZE } from '@constant';
+
+import { MESSAGES, RESTAURANT_VALIDATION } from '../constants';
 
 export default function MultiActionAreaCard({ data }: FoodCardProps) {
     //handle open/close modals
     const [open, setOpen] = useState(false);
     const [delOpen, setDelOpen] = useState(false);
     const [disabled, setDisabled] = useState(false);
-    const cartFood = useTypeSelector((state) => state.cart.food);
+    //const cartFood = useTypeSelector((state) => state.cart.food);
     let quantity;
-    cartFood.forEach((food) => {
-        if (food.foodId === data.foodId) {
-            quantity = food.quantity;
-        }
-    });
+    // cartFood.forEach((food) => {
+    //     if (food.foodId === data.foodId) {
+    //         quantity = food.quantity;
+    //     }
+    // });
 
     const [count, setCount] = useState(quantity ?? 0);
     const methods = useForm<FooditemFormData>();
@@ -103,18 +111,18 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
 
     const addToCartHandler = () => {
         setCount(1);
-        dispatch(addFood({ data: data, quantity: 1 }));
+        //dispatch(addFood({ data: data, quantity: 1 }));
     };
 
-    const increaseHandler = () => {
-        dispatch(addFood({ data: data, quantity: count + 1 }));
-        setCount(count + 1);
-    };
+    // const increaseHandler = () => {
+    //     dispatch(addFood({ data: data, quantity: count + 1 }));
+    //     setCount(count + 1);
+    // };
 
-    const decreaseHandler = () => {
-        dispatch(addFood({ data: data, quantity: count - 1 }));
-        setCount(count - 1);
-    };
+    // const decreaseHandler = () => {
+    //     dispatch(addFood({ data: data, quantity: count - 1 }));
+    //     setCount(count - 1);
+    // };
 
     const onSubmit = (editFormData: FooditemFormData) => {
         dispatch(
@@ -133,21 +141,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
     };
     return (
         <>
-            <Card
-                sx={(theme) => ({
-                    maxWidth: '90%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    filter: disabled ? 'grayscale(100%)' : 'none',
-                    border: `1px solid ${theme.palette.faded?.light}`,
-                    borderRadius: 3,
-                    transition: 'transform 180ms ease, box-shadow 180ms ease',
-                    '&:hover': {
-                        transform: 'translateY(-4px)',
-                        boxShadow: '0px 4px 4px 4px rgba(28, 35, 40, 0.10)',
-                    },
-                })}
-            >
+            <StyledCard>
                 <Box sx={{ position: 'relative' }}>
                     <CardMedia
                         component="img"
@@ -157,40 +151,14 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                         sx={{ objectFit: 'cover' }}
                     />
                     {disabled && (
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                inset: 0,
-                                display: 'grid',
-                                placeItems: 'center',
-                                backdropFilter: 'blur(10px)',
-                            }}
-                        >
-                            <Typography
-                                variant="h4"
-                                sx={(theme) => ({
-                                    px: 2.25,
-                                    py: 0.75,
-                                    color: theme.palette.common.white,
-                                    borderRadius: 5,
-                                    border: `2px solid ${theme.palette.common.white}`,
-                                    backgroundColor: theme.palette.faded?.dark,
-                                    textTransform: 'uppercase',
-                                })}
-                            >
+                        <StyledOutStockBox>
+                            <StyledOutStockText variant="h4">
                                 Out of Stock
-                            </Typography>
-                        </Box>
+                            </StyledOutStockText>
+                        </StyledOutStockBox>
                     )}
                 </Box>
-                <CardContent
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        flex: 1,
-                        p: 3.5,
-                    }}
-                >
+                <StyledCardContent>
                     <Stack
                         direction="row"
                         alignItems="flex-start"
@@ -200,39 +168,16 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                         <Typography gutterBottom variant="h3" component="div">
                             {data.heading}
                         </Typography>
-                        <Typography
-                            variant="body2"
-                            sx={(theme) => ({
-                                mt: 3,
-                                flexShrink: 0,
-                                color: theme.palette.primary.main,
-                                fontSize: FONT_SIZE.XL,
-                                fontWeight: FONT_WEIGHT.BOLD,
-                                ...theme.mixins.lineClamp(3),
-                            })}
-                        >
+                        <StyledPriceText variant="body2">
                             &#8377; {data.price}
-                        </Typography>
+                        </StyledPriceText>
                     </Stack>
-                    <Typography
-                        variant="subtitle2"
-                        sx={(theme) => ({
-                            color: 'text.primary',
-                            ...theme.mixins.lineClamp(3),
-                        })}
-                    >
+                    <StyledDescText variant="subtitle2">
                         {data.description}
-                    </Typography>
-                    <Typography
-                        variant="subtitle2"
-                        sx={(theme) => ({
-                            color: theme.palette.faded?.dark,
-                            fontStyle: 'italic',
-                            ...theme.mixins.lineClamp(2),
-                        })}
-                    >
+                    </StyledDescText>
+                    <StyledIngredientsText variant="subtitle2">
                         {data.ingredients}
-                    </Typography>
+                    </StyledIngredientsText>
 
                     <Box
                         display="flex"
@@ -240,39 +185,22 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                         alignItems="center"
                         justifyContent="space-between"
                     >
-                        <Typography
-                            variant="body2"
-                            sx={(theme) => ({
-                                color: theme.palette.primary.main,
-                                fontWeight: FONT_WEIGHT.SEMIBOLD,
-                                ...theme.mixins.lineClamp(3),
-                            })}
-                        >
+                        <StyledStockText variant="body2">
                             {disabled ? 'Out of Stock' : `Stock: ${data.stock}`}
-                        </Typography>
+                        </StyledStockText>
                         {role === 'owner' && (
                             <Stack direction="row" spacing={1}>
                                 <IconButton
                                     aria-label="edit"
                                     onClick={editHandler}
                                 >
-                                    <EditIcon
-                                        sx={(theme) => ({
-                                            fontSize: FONT_SIZE['3XL'],
-                                            color: theme.palette.success.light,
-                                        })}
-                                    />
+                                    <StyledEditIcon />
                                 </IconButton>
                                 <IconButton
                                     aria-label="delete"
                                     onClick={deleteHandler}
                                 >
-                                    <DeleteIcon
-                                        sx={(theme) => ({
-                                            fontSize: FONT_SIZE['3XL'],
-                                            color: theme.palette.error.main,
-                                        })}
-                                    />
+                                    <StyledDeleteIcon />
                                 </IconButton>
                             </Stack>
                         )}
@@ -291,16 +219,16 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                                 />
                             </IconButton>
                         )}
-                        {role === 'customer' && count > 0 && (
+                        {/* {role === 'customer' && count > 0 && (
                             <Counter
                                 count={count}
                                 increaseHandler={increaseHandler}
                                 decreaseHandler={decreaseHandler}
                             />
-                        )}
+                        )} */}
                     </Box>
-                </CardContent>
-            </Card>
+                </StyledCardContent>
+            </StyledCard>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <FormProvider {...methods}>
                     <form
@@ -310,14 +238,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                     >
                         <DialogTitle>Edit Food Item</DialogTitle>
 
-                        <DialogContent
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '20px',
-                                mt: '20px',
-                            }}
-                        >
+                        <StyledDialogContent>
                             <FromTextField
                                 name="heading"
                                 id="heading"
@@ -370,7 +291,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                                 }}
                                 defaultVal={formData.stock}
                             />
-                        </DialogContent>
+                        </StyledDialogContent>
 
                         <DialogActions>
                             <Button
@@ -400,14 +321,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
             >
                 <DialogTitle>Delete Food Item</DialogTitle>
 
-                <DialogContent
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '20px',
-                        mt: '20px',
-                    }}
-                >
+                <StyledDialogContent>
                     <Typography variant="body1">
                         Are you sure you want to delete this restaurant
                     </Typography>
@@ -417,7 +331,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                     >
                         *this action can&apos;t be reversed
                     </Typography>
-                </DialogContent>
+                </StyledDialogContent>
 
                 <DialogActions>
                     <Button
