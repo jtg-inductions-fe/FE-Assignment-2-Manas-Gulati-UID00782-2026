@@ -10,3 +10,7 @@ interface CardData {
 export interface CardProps {
     data: CardData;
 }
+
+export interface AutoGridProps {
+    data: CardData[];
+}

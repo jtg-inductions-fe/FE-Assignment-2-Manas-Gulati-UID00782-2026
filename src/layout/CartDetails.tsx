@@ -1,35 +1,22 @@
-import { useTypeDispatch, useTypeSelector } from 'store/hooks';
-import { initializeOrder } from 'store/orderSlice';
-
+import { useTypeSelector } from 'store/hooks';
+//import { initializeOrder } from 'store/orderSlice';
 import {
-    Button,
-    Card,
-    CardContent,
-    Divider,
-    Stack,
-    Typography,
-} from '@mui/material';
-import Box from '@mui/material/Box';
+    StyledCartConfirmButton,
+    StyledCartSummaryWrapper,
+    StyledCartWrapper,
+    StyledEmptyCart,
+    StyledTotalText,
+} from 'styles/Cart.styles';
+import { AutoGridProps } from 'types';
+
+import { CardContent, Divider, Stack, Typography } from '@mui/material';
 
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
 import CartFoodCard from './CartFoodCard';
 
-interface FooditemData {
-    foodId: number;
-    img: string;
-    alt: string;
-    heading: string;
-    price: number;
-    quantity: number;
-}
-
-interface AutoGridProps {
-    data: FooditemData[];
-}
-
 export default function AutoGrid({ data }: AutoGridProps) {
-    const dispatch = useTypeDispatch();
+    //const dispatch = useTypeDispatch();
 
     const food = useTypeSelector((state) => state.cart.food);
     let subtotal = 0;
@@ -39,62 +26,42 @@ export default function AutoGrid({ data }: AutoGridProps) {
     });
 
     //initializing required variables
-    const restaurantId = useTypeSelector(
-        (state) => state.cart.restaurantId ?? 0,
-    );
-    const userId = useTypeSelector((state) => state.cart.userId ?? 0);
-    const cartFood = useTypeSelector((state) => state.cart.food);
+    // const restaurantId = useTypeSelector(
+    //     (state) => state.cart.restaurantId ?? 0,
+    // );
+    // const userId = useTypeSelector((state) => state.cart.userId ?? 0);
+    // const cartFood = useTypeSelector((state) => state.cart.food);
 
     const total = subtotal + 50;
 
-    const handlePlaceOrder = () => {
-        if (cartFood.length > 0) {
-            const date = new Date();
-            const orderId = restaurantId + userId + date.getTime();
-            const orderData = {
-                orderId: orderId,
-                userId: userId,
-                foodItem: cartFood,
-                totalPrice: total,
-                date: date,
-                orderStatus: 'Pending',
-            };
-            dispatch(initializeOrder({ restaurantId, data: orderData }));
-        } else {
-            alert("can't place order");
-        }
-    };
+    // const handlePlaceOrder = () => {
+    //     if (cartFood.length > 0) {
+    //         const date = new Date();
+    //         const orderId = restaurantId + userId + date.getTime();
+    //         const orderData = {
+    //             orderId: orderId,
+    //             userId: userId,
+    //             foodItem: cartFood,
+    //             totalPrice: total,
+    //             date: date,
+    //             orderStatus: 'Pending',
+    //         };
+    //         dispatch(initializeOrder({ restaurantId, data: orderData }));
+    //     } else {
+    //         alert("can't place order");
+    //     }
+    // };
 
     return (
         <>
-            <Box
-                sx={{
-                    display: 'grid',
-                    gridTemplateColumns: {
-                        sm: '1fr',
-                        lg: 'minmax(0, 2fr) 1fr',
-                    },
-                    alignItems: 'start',
-                    gap: 4,
-                    mt: 4,
-                }}
-            >
+            <StyledCartWrapper>
                 <Stack spacing={3}>
                     {data.length > 0 ? (
                         data.map((item) => (
                             <CartFoodCard key={item.foodId} data={item} />
                         ))
                     ) : (
-                        <Box
-                            sx={(theme) => ({
-                                p: 8,
-                                border: `2px dashed ${theme.palette.faded?.light}`,
-                                borderRadius: 3,
-                                color: theme.palette.faded?.main,
-                                backgroundColor: theme.palette.common.white,
-                                textAlign: 'center',
-                            })}
-                        >
+                        <StyledEmptyCart>
                             <Typography
                                 variant="body1"
                                 sx={{ fontWeight: FONT_WEIGHT.SEMIBOLD }}
@@ -105,20 +72,11 @@ export default function AutoGrid({ data }: AutoGridProps) {
                                 Add an item from a restaurant menu to get
                                 started.
                             </Typography>
-                        </Box>
+                        </StyledEmptyCart>
                     )}
                 </Stack>
 
-                <Card
-                    sx={(theme) => ({
-                        position: { lg: 'sticky' },
-                        top: { lg: 24 },
-                        border: `1px solid ${theme.palette.faded?.light}`,
-                        borderRadius: 3,
-                        backgroundColor: theme.palette.common.white,
-                        boxShadow: '0 10px 30px rgba(28, 35, 40, 0.05)',
-                    })}
-                >
+                <StyledCartSummaryWrapper>
                     <CardContent sx={{ p: 4 }}>
                         <Typography
                             component="h2"
@@ -184,35 +142,21 @@ export default function AutoGrid({ data }: AutoGridProps) {
                             >
                                 Total
                             </Typography>
-                            <Typography
-                                sx={(theme) => ({
-                                    color: theme.palette.primary.main,
-                                    fontSize: FONT_SIZE['3XL'],
-                                    fontWeight: FONT_WEIGHT.BOLD,
-                                })}
-                            >
+                            <StyledTotalText>
                                 &#8377;{total.toFixed(2)}
-                            </Typography>
+                            </StyledTotalText>
                         </Stack>
 
-                        <Button
+                        <StyledCartConfirmButton
                             variant="contained"
                             fullWidth
-                            onClick={handlePlaceOrder}
-                            sx={(theme) => ({
-                                mt: 4,
-                                borderRadius: 2,
-                                fontSize: FONT_SIZE.MD,
-                                color: theme.palette.common.white,
-                                fontWeight: FONT_WEIGHT.BOLD,
-                                textTransform: 'none',
-                            })}
+                            //onClick={handlePlaceOrder}
                         >
                             Place Order
-                        </Button>
+                        </StyledCartConfirmButton>
                     </CardContent>
-                </Card>
-            </Box>
+                </StyledCartSummaryWrapper>
+            </StyledCartWrapper>
         </>
     );
 }

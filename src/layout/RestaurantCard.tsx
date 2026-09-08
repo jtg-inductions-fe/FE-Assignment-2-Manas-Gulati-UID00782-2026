@@ -17,6 +17,7 @@ import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { initializeRestaurant } from 'store/cartSlice';
 import { get } from 'store/fooditemSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { del, edit } from 'store/restaurantSlice';
@@ -61,7 +62,10 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         category: '',
     });
 
-    //set initial form state for editing restaurant
+    /**
+     * set form state for editing restaurant
+     * @returns {any}
+     */
     const editHandler = () => {
         setFormData({
             img: data.img,
@@ -74,10 +78,18 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         setOpen(true);
     };
 
+    /**
+     * open delete restaurant modal
+     * @returns {any}
+     */
     const deleteHandler = () => {
         setDelOpen(true);
     };
 
+    /**
+     * confirm restaurant delete
+     * @returns {any}
+     */
     const confirmDeleteHandler = () => {
         dispatch(del(data.restaurantId));
         setSnackbar({
@@ -88,13 +100,26 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         setDelOpen(false);
     };
 
+    /**
+     * handle edit dialog close
+     * @returns {any}
+     */
     const handleClose = () => {
         setOpen(false);
     };
+    /**
+     * handle delete dialog close
+     * @returns {any}
+     */
     const handleDelClose = () => {
         setDelOpen(false);
     };
 
+    /**
+     * handle edit form submit
+     * @param {any} editFormData:RestaurantFormData
+     * @returns {any}
+     */
     const onSubmit = (editFormData: RestaurantFormData) => {
         dispatch(
             edit({
@@ -110,6 +135,10 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         setOpen(false);
     };
 
+    /**
+     * set which restaurant user selected
+     * @returns {any}
+     */
     const selectRestaurantHandler = () => {
         dispatch(
             selectRestaurant({ id: data.restaurantId, name: data.heading }),
@@ -117,6 +146,8 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         dispatch(get(data.restaurantId));
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         navigate(`/dashboard/${data.restaurantId}`);
+        dispatch(initializeRestaurant(data.restaurantId));
+
     };
 
     return (

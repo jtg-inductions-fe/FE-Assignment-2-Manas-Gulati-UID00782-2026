@@ -21,16 +21,20 @@ import {
     StyledAddMoreCard,
     StyledAddMoreContent,
 } from 'styles/Fooditem.styles';
-import { AutoGridProps, FooditemFormData } from 'types';
+import { FoodAutoGridProps, FooditemFormData } from 'types';
 
 import { MESSAGES, RESTAURANT_VALIDATION } from '../constants';
 
-export default function AutoGrid({ data }: AutoGridProps) {
+export default function AutoGrid({ data }: FoodAutoGridProps) {
     const [addOpen, setAddOpen] = useState(false);
     const methods = useForm<FooditemFormData>();
     const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
 
+    /**
+     * Close add more fooditem dialog box
+     * @returns {any}
+     */
     const handleClose = () => {
         setAddOpen(false);
     };
@@ -42,6 +46,11 @@ export default function AutoGrid({ data }: AutoGridProps) {
         severity: 'success' as AlertColor,
     });
 
+    /**
+     * Add the fooditem into state and render ui
+     * @param {any} addFormData:FooditemFormData
+     * @returns {any}
+     */
     const onSubmit = (addFormData: FooditemFormData) => {
         dispatch(add(addFormData));
         setAddOpen(false);

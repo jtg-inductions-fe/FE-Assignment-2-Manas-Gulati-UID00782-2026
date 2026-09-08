@@ -1,8 +1,9 @@
+import { StyledCount } from 'styles/Counter.styles';
 import { Props } from 'types';
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 
 import { FONT_SIZE } from '@constant';
 
@@ -28,17 +29,15 @@ export default function Counter({
                 <RemoveIcon sx={{ fontSize: FONT_SIZE['3XL'] }} />
             </IconButton>
 
-            <Typography
+            <StyledCount
                 variant="body2"
                 fontWeight="bold"
                 sx={{
                     color: getCounterColor(),
-                    minWidth: '40px',
-                    textAlign: 'center',
                 }}
             >
                 {count}
-            </Typography>
+            </StyledCount>
 
             <IconButton
                 onClick={increaseHandler}

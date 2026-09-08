@@ -3,16 +3,19 @@ import { useState } from 'react';
 import Counter from 'components/Counter.component';
 import { addFood } from 'store/cartSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
+import {
+    StyledCartCard,
+    StyledCartDeleteIcon,
+    StyledCartItem,
+    StyledCartPrice,
+} from 'styles/Cart.styles';
 import { CardProps } from 'types';
 
-import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, IconButton, Stack } from '@mui/material';
 import { CardMedia } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-import { FONT_SIZE, FONT_WEIGHT } from '@constant';
+import { FONT_SIZE } from '@constant';
 
 export default function MultiActionAreaCard({ data }: CardProps) {
     const dispatch = useTypeDispatch();
@@ -21,43 +24,36 @@ export default function MultiActionAreaCard({ data }: CardProps) {
         (state) => state.selectedRestaurant.restaurantName,
     );
 
+    /**
+     * Increases the fooditem quantity by 1
+     * @returns {any}
+     */
     const increaseHandler = () => {
         dispatch(addFood({ data: data, quantity: count + 1 }));
         setCount(count + 1);
     };
 
+    /**
+     * Decreases the fooditem quantity by 1
+     * @returns {any}
+     */
     const decreaseHandler = () => {
         dispatch(addFood({ data: data, quantity: count - 1 }));
         setCount(count - 1);
     };
 
+    /**
+     * Delete fooditem from cart
+     * @returns {any}
+     */
     const deleteHandler = () => {
         dispatch(addFood({ data: data, quantity: 0 }));
     };
 
     return (
         <>
-            <Card
-                sx={(theme) => ({
-                    maxWidth: '100%',
-                    display: 'flex',
-                    border: `1px solid ${theme.palette.faded?.light}`,
-                    borderRadius: 3,
-                    boxShadow: '0 8px 24px rgba(28, 35, 40, 0.04)',
-                    flexDirection: 'row',
-                })}
-            >
-                <CardContent
-                    sx={{
-                        display: 'grid',
-                        gridTemplateColumns: {
-                            sm: '88px minmax(0, 1fr)',
-                            md: '120px minmax(0, 1fr) auto',
-                        },
-                        alignItems: 'center',
-                        gap: 2.5,
-                    }}
-                >
+            <StyledCartCard>
+                <StyledCartItem>
                     <CardMedia
                         component="img"
                         image={data.img}
@@ -93,17 +89,9 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                         >
                             {restaurantName}
                         </Typography>
-                        <Typography
-                            variant="body2"
-                            sx={(theme) => ({
-                                mt: 1.5,
-                                color: theme.palette.primary.main,
-                                fontWeight: FONT_WEIGHT.BOLD,
-                                ...theme.mixins.lineClamp(3),
-                            })}
-                        >
+                        <StyledCartPrice variant="body2">
                             &#8377; {data.price}
-                        </Typography>
+                        </StyledCartPrice>
                     </Box>
                     <Stack
                         direction="row"
@@ -117,18 +105,11 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                             decreaseHandler={decreaseHandler}
                         />
                         <IconButton aria-label="delete" onClick={deleteHandler}>
-                            <DeleteIcon
-                                sx={(theme) => ({
-                                    fontSize: FONT_SIZE['3XL'],
-                                    width: 30,
-                                    height: 30,
-                                    color: theme.palette.primary.main,
-                                })}
-                            />
+                            <StyledCartDeleteIcon />
                         </IconButton>
                     </Stack>
-                </CardContent>
-            </Card>
+                </StyledCartItem>
+            </StyledCartCard>
         </>
     );
 }

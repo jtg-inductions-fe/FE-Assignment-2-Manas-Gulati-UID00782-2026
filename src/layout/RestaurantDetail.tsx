@@ -41,9 +41,28 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
         severity: 'success' as AlertColor,
     });
 
+    /**
+     * handle add dialog close
+     * @returns {any}
+     */
     const handleClose = () => {
         setAddOpen(false);
     };
+    const onSubmit = (addFormData: RestaurantFormData) => {
+        dispatch(add(addFormData));
+        setAddOpen(false);
+        setSnackbar({
+            open: true,
+            message: MESSAGES.ADD,
+            severity: 'success',
+        });
+    };
+
+    /**
+     * handle add restaurant form data
+     * @param {any} addFormData:RestaurantFormData
+     * @returns {any}
+     */
     const onSubmit = (addFormData: RestaurantFormData) => {
         dispatch(add(addFormData));
         setAddOpen(false);
