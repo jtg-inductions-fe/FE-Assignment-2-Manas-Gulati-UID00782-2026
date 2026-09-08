@@ -1,5 +1,5 @@
+import { CardContent, Divider, Stack, Typography } from '@mui/material';
 import { useTypeSelector } from 'store/hooks';
-//import { initializeOrder } from 'store/orderSlice';
 import {
     StyledCartConfirmButton,
     StyledCartSummaryWrapper,
@@ -9,15 +9,11 @@ import {
 } from 'styles/Cart.styles';
 import { AutoGridProps } from 'types';
 
-import { CardContent, Divider, Stack, Typography } from '@mui/material';
-
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
 import CartFoodCard from './CartFoodCard';
 
 export default function AutoGrid({ data }: AutoGridProps) {
-    //const dispatch = useTypeDispatch();
-
     const food = useTypeSelector((state) => state.cart.food);
     let subtotal = 0;
     food.forEach((foodItem) => {
@@ -25,32 +21,7 @@ export default function AutoGrid({ data }: AutoGridProps) {
         subtotal += price;
     });
 
-    //initializing required variables
-    // const restaurantId = useTypeSelector(
-    //     (state) => state.cart.restaurantId ?? 0,
-    // );
-    // const userId = useTypeSelector((state) => state.cart.userId ?? 0);
-    // const cartFood = useTypeSelector((state) => state.cart.food);
-
     const total = subtotal + 50;
-
-    // const handlePlaceOrder = () => {
-    //     if (cartFood.length > 0) {
-    //         const date = new Date();
-    //         const orderId = restaurantId + userId + date.getTime();
-    //         const orderData = {
-    //             orderId: orderId,
-    //             userId: userId,
-    //             foodItem: cartFood,
-    //             totalPrice: total,
-    //             date: date,
-    //             orderStatus: 'Pending',
-    //         };
-    //         dispatch(initializeOrder({ restaurantId, data: orderData }));
-    //     } else {
-    //         alert("can't place order");
-    //     }
-    // };
 
     return (
         <>

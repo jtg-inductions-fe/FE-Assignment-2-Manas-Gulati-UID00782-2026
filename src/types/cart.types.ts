@@ -1,4 +1,4 @@
-interface CardData {
+export interface CartCardData {
     foodId: number;
     img: string;
     alt: string;
@@ -8,9 +8,25 @@ interface CardData {
 }
 
 export interface CardProps {
-    data: CardData;
+    data: CartCardData;
 }
 
 export interface AutoGridProps {
-    data: CardData[];
+    data: CartCardData[];
+}
+
+//schema for cart data required
+export interface CartData {
+    userId: number | null;
+    restaurantId: number | null;
+    food: CartCardData[];
+}
+
+//schema for Fooditem data required
+export interface CartFooditemData {
+    foodId: number;
+    img: string;
+    alt: string;
+    heading: string;
+    price: number;
 }

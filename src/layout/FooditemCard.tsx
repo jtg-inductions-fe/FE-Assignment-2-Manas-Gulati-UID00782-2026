@@ -6,6 +6,7 @@ import { AlertColor } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ReusableButton from 'components/Button.component';
+import Counter from 'components/Counter.component';
 import ReusableDialog, {
     ReusableDialogActions,
     ReusableDialogContent,
@@ -14,6 +15,7 @@ import ReusableDialog, {
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
 import { FormProvider, useForm } from 'react-hook-form';
+import { addFood } from 'store/cartSlice';
 import { del, edit } from 'store/fooditemSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import {
@@ -40,12 +42,12 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
     const [delOpen, setDelOpen] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const cartFood = useTypeSelector((state) => state.cart.food);
-    let quantity;
-    cartFood.forEach((food) => {
-        if (food.foodId === data.foodId) {
-            quantity = food.quantity;
-        }
-    });
+    let quantity = 0;
+    const selectedFood = cartFood.find((food) => food.foodId === data.foodId);
+
+    if (selectedFood) {
+        quantity = selectedFood.quantity;
+    }
 
     const [count, setCount] = useState(quantity ?? 0);
     const methods = useForm<FooditemFormData>();

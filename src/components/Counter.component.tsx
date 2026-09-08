@@ -1,9 +1,8 @@
-import { StyledCount } from 'styles/Counter.styles';
-import { Props } from 'types';
-
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Box, IconButton } from '@mui/material';
+import { StyledCount } from 'styles/Counter.styles';
+import { CounterProps } from 'types';
 
 import { FONT_SIZE } from '@constant';
 
@@ -11,7 +10,7 @@ export default function Counter({
     count,
     increaseHandler,
     decreaseHandler,
-}: Props) {
+}: CounterProps) {
     // Determine color based on the value
     const getCounterColor = () => {
         if (count > 0) return 'success.main';
