@@ -34,20 +34,25 @@ export default function AutoGrid({ data }: CartAutoGridProps) {
 
     const total = subtotal + 50;
 
+    /**
+     * Place an order and empties cart
+     * @returns {any}
+     */
     const handlePlaceOrder = () => {
         if (cartFood.length > 0) {
             const date = new Date();
             const orderId = restaurantId + userId + date.getTime();
             const orderData = {
                 orderId: orderId,
-                userId: userId,
+                customerId: userId,
+                restaurantId: restaurantId,
                 foodItem: cartFood,
                 totalPrice: total,
-                date: date,
+                date: date.toDateString(),
                 orderStatus: 'Pending',
             };
-            dispatch(initializeOrder( orderData ));
-            
+            dispatch(initializeOrder(orderData));
+            dispatch(removeFoodData());
         } else {
             alert("can't place order");
         }

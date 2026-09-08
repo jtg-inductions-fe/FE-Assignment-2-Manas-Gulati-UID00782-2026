@@ -19,16 +19,10 @@ export default function Counter({
     };
 
     return (
-        <Box
+        <StyledCounterBox
             display="flex"
             alignItems="center"
             gap={{ sm: 0.25, md: 2 }}
-            sx={(theme) => ({
-                flexShrink: 0,
-                p: 0.25,
-                borderRadius: 2,
-                backgroundColor: theme.palette.faded?.light,
-            })}
         >
             <IconButton
                 onClick={decreaseHandler}
@@ -55,6 +49,6 @@ export default function Counter({
             >
                 <AddIcon sx={{ fontSize: FONT_SIZE['3XL'] }} />
             </IconButton>
-        </Box>
+        </StyledCounterBox>
     );
 }

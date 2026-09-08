@@ -40,6 +40,28 @@ export const StyledTotalText = styled(Typography)(({ theme }) => ({
     fontWeight: FONT_WEIGHT.BOLD,
 }));
 
+export const StyledCartHeading = styled(Typography)(({ theme }) => ({
+    textOverflow: 'ellipsis',
+    [theme.breakpoints.up('xs')]: {
+        fontSize: FONT_SIZE.MD,
+        whiteSpace: 'normal',
+    },
+    [theme.breakpoints.up('sm')]: {
+        whiteSpace: 'nowrap',
+    },
+    [theme.breakpoints.up('md')]: {
+        fontSize: FONT_SIZE.XL,
+    },
+}));
+
+export const StyledCartRestaurantName = styled(Typography)(({ theme }) => ({
+    marginTop: theme.spacing(1),
+    color: theme.palette.faded?.main,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+}));
+
 export const StyledCartConfirmButton = styled(Button)(({ theme }) => ({
     marginTop: 4,
     borderRadius: 2,
