@@ -28,16 +28,33 @@ export default function PrimarySearchAppBar() {
 
     const dispatch = useTypeDispatch();
     const navigate = useNavigate();
-    const quantity = 0;
+    const cartFoodItem = useTypeSelector((state) => state.cart.food);
+    let quantity = 0;
+    cartFoodItem.forEach((food) => {
+        quantity += food.quantity;
+    });
 
+    /**
+     * handle profile open functionality
+     * @param {any} e:React.MouseEvent<HTMLElement>
+     * @returns {any}
+     */
     const handleProfileMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(e.currentTarget);
     };
 
+    /**
+     * handle profile close functionality
+     * @returns {any}
+     */
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
 
+    /**
+     * handle user logout
+     * @returns {any}
+     */
     const handleLogout = () => {
         dispatch(logout());
         setAnchorEl(null);
@@ -51,6 +68,10 @@ export default function PrimarySearchAppBar() {
 
     const userId = useTypeSelector((state) => state.auth.user?.userId);
 
+    /**
+     * navigate to cart page
+     * @returns {any}
+     */
     const cartHandler = () => {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         navigate(`/dashboard/cart/${userId}`);
