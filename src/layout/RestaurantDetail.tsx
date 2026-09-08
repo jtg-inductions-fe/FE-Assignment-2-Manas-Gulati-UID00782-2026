@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
-import { Typography } from '@mui/material';
+import { AlertColor, Typography } from '@mui/material';
 import ReusableButton from 'components/Button.component';
 import ReusableDialog, {
     ReusableDialogActions,
     ReusableDialogContent,
     ReusableDialogTitle,
 } from 'components/Dialog.component';
+import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
 import ReusableWrapper from 'components/Wrapper.component';
 import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
@@ -24,6 +25,8 @@ import {
     StyledMenuItem,
 } from 'styles/Restaurant.styles';
 import { RestaurantAutoGridProps, RestaurantFormData } from 'types';
+
+import { MESSAGES } from '../constants';
 
 export default function AutoGrid({ data }: RestaurantAutoGridProps) {
     const [addOpen, setAddOpen] = useState(false); //for add restaurant dialog box
@@ -99,9 +102,11 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                 maxWidth="sm"
             >
                 <FormProvider {...methods}>
-                    <form onSubmit={(e) => {
-                        void methods.handleSubmit(onSubmit)(e);
-                    }}>
+                    <form
+                        onSubmit={(e) => {
+                            void methods.handleSubmit(onSubmit)(e);
+                        }}
+                    >
                         <ReusableDialogTitle>
                             Edit Restaurant
                         </ReusableDialogTitle>

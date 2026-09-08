@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
-import { Box, Stack } from '@mui/material';
+import { AlertColor, Box, Stack } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ReusableButton from 'components/Button.component';
@@ -10,6 +10,7 @@ import ReusableDialog, {
     ReusableDialogContent,
     ReusableDialogTitle,
 } from 'components/Dialog.component';
+import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
 import { MESSAGES } from 'constants/restaurantSnackbarConstant';
 import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
@@ -364,6 +365,17 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                     </ReusableButton>
                 </ReusableDialogActions>
             </ReusableDialog>
+            <CustomizedSnackbar
+                severity={snackbar.severity}
+                message={snackbar.message}
+                state={snackbar.open}
+                onClose={() =>
+                    setSnackbar((prev) => ({
+                        ...prev,
+                        open: false,
+                    }))
+                }
+            />
         </>
     );
 }

@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Box, IconButton, Stack } from '@mui/material';
 import { AlertColor } from '@mui/material';
-import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
+import ReusableButton from 'components/Button.component';
+import ReusableDialog, {
+    ReusableDialogActions,
+    ReusableDialogContent,
+    ReusableDialogTitle,
+} from 'components/Dialog.component';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -19,7 +21,6 @@ import {
     StyledCardContent,
     StyledDeleteIcon,
     StyledDescText,
-    StyledDialogContent,
     StyledEditIcon,
     StyledIngredientsText,
     StyledOutStockBox,
@@ -202,16 +203,23 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                     </Box>
                 </StyledCardContent>
             </StyledCard>
-            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+            <ReusableDialog
+                open={open}
+                onClose={handleClose}
+                fullWidth
+                maxWidth="sm"
+            >
                 <FormProvider {...methods}>
                     <form
                         onSubmit={(e) => {
                             void methods.handleSubmit(onSubmit)(e);
                         }}
                     >
-                        <DialogTitle>Edit Food Item</DialogTitle>
+                        <ReusableDialogTitle>
+                            Edit Food Item
+                        </ReusableDialogTitle>
 
-                        <StyledDialogContent>
+                        <ReusableDialogContent>
                             <FromTextField
                                 name="heading"
                                 id="heading"
@@ -264,37 +272,37 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                                 }}
                                 defaultVal={formData.stock}
                             />
-                        </StyledDialogContent>
+                        </ReusableDialogContent>
 
-                        <DialogActions>
-                            <Button
+                        <ReusableDialogActions>
+                            <ReusableButton
                                 size="small"
                                 onClick={handleClose}
                                 color="inherit"
                             >
                                 Cancel
-                            </Button>
+                            </ReusableButton>
 
-                            <Button
+                            <ReusableButton
                                 size="small"
                                 type="submit"
                                 variant="contained"
                             >
                                 Confirm
-                            </Button>
-                        </DialogActions>
+                            </ReusableButton>
+                        </ReusableDialogActions>
                     </form>
                 </FormProvider>
-            </Dialog>
-            <Dialog
+            </ReusableDialog>
+            <ReusableDialog
                 open={delOpen}
                 onClose={handleDelClose}
                 fullWidth
                 maxWidth="sm"
             >
-                <DialogTitle>Delete Food Item</DialogTitle>
+                <ReusableDialogTitle>Delete Food Item</ReusableDialogTitle>
 
-                <StyledDialogContent>
+                <ReusableDialogContent>
                     <Typography variant="body1">
                         Are you sure you want to delete this restaurant
                     </Typography>
@@ -304,27 +312,27 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                     >
                         *this action can&apos;t be reversed
                     </Typography>
-                </StyledDialogContent>
+                </ReusableDialogContent>
 
-                <DialogActions>
-                    <Button
+                <ReusableDialogActions>
+                    <ReusableButton
                         size="small"
                         onClick={handleDelClose}
                         color="inherit"
                     >
                         Cancel
-                    </Button>
+                    </ReusableButton>
 
-                    <Button
+                    <ReusableButton
                         size="small"
                         type="button"
                         onClick={confirmDeleteHandler}
                         variant="contained"
                     >
                         Confirm
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                    </ReusableButton>
+                </ReusableDialogActions>
+            </ReusableDialog>
             <CustomizedSnackbar
                 severity={snackbar.severity}
                 message={snackbar.message}
