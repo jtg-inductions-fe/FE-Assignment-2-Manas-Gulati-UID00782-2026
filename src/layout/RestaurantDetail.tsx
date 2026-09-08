@@ -27,7 +27,6 @@ import { RestaurantAutoGridProps, RestaurantFormData } from 'types';
 
 
 export default function AutoGrid({ data }: RestaurantAutoGridProps) {
-
     const [addOpen, setAddOpen] = useState(false); //for add restaurant dialog box
     const methods = useForm<RestaurantFormData>();
     const dispatch = useTypeDispatch();
@@ -46,11 +45,11 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
     const onSubmit = (addFormData: RestaurantFormData) => {
         dispatch(add(addFormData));
         setAddOpen(false);
-            setSnackbar({
-                open: true,
-                message: MESSAGES.ADD,
-                severity: 'success',
-            });
+        setSnackbar({
+            open: true,
+            message: MESSAGES.ADD,
+            severity: 'success',
+        });
     };
 
     return (
