@@ -52,7 +52,8 @@ export default function PrimarySearchAppBar() {
     const userId = useTypeSelector((state) => state.auth.user?.userId);
 
     const cartHandler = () => {
-        void navigate(`/dashboard/cart/${userId}`);
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        navigate(`/dashboard/cart/${userId}`);
     };
 
     const menuId = 'primary-search-account-menu';

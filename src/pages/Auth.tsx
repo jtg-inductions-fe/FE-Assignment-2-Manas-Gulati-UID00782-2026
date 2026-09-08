@@ -15,7 +15,6 @@ import {
     FormContainer,
 } from 'styles/Auth.styles';
 
-
 export default function Auth() {
     const [login, setLoginFrom] = useState(true);
 

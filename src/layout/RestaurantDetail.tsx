@@ -25,7 +25,6 @@ import {
 } from 'styles/Restaurant.styles';
 import { RestaurantAutoGridProps, RestaurantFormData } from 'types';
 
-
 export default function AutoGrid({ data }: RestaurantAutoGridProps) {
     const [addOpen, setAddOpen] = useState(false); //for add restaurant dialog box
     const methods = useForm<RestaurantFormData>();
