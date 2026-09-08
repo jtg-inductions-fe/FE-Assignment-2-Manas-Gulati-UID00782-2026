@@ -1,7 +1,6 @@
+import { Stack, Typography } from '@mui/material';
 import { StyledNoOrderBox } from 'styles/Orders.styles';
 import { OrdersDetailProps } from 'types';
-
-import { Stack, Typography } from '@mui/material';
 
 import { FONT_WEIGHT } from '@constant';
 

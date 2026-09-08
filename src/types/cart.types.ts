@@ -11,10 +11,6 @@ export interface CardProps {
     data: CartCardData;
 }
 
-export interface AutoGridProps {
-    data: CartCardData[];
-}
-
 //schema for cart data required
 export interface CartData {
     userId: number | null;
@@ -29,6 +25,7 @@ export interface CartFooditemData {
     alt: string;
     heading: string;
     price: number;
+}
 export interface CartAutoGridProps {
-    data: CardData[];
+    data: CartCardData[];
 }

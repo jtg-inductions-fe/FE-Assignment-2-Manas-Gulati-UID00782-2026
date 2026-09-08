@@ -1,11 +1,5 @@
 import { useState } from 'react';
 
-import { useTypeDispatch } from 'store/hooks';
-import { changeStatus } from 'store/orderSlice';
-import { StyledOrderCard, StyledOrderPrice } from 'styles/Orders.styles';
-import { OrderCardProps } from 'types';
-import { ExpandMoreProps } from 'types';
-
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
     Box,
@@ -25,6 +19,11 @@ import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { useTypeDispatch } from 'store/hooks';
+import { changeStatus } from 'store/orderSlice';
+import { StyledOrderCard, StyledOrderPrice } from 'styles/Orders.styles';
+import { OrderCardProps } from 'types';
+import { ExpandMoreProps } from 'types';
 
 import { FONT_WEIGHT } from '@constant';
 

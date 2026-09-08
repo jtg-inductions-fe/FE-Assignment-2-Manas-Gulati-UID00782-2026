@@ -1,33 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-//schema for orders items
-interface OrderDetails {
-    orderId: number;
-    restaurantId: number;
-    customerId: number;
-    foodItem: FoodItem[];
-    totalPrice: number;
-    date: string;
-    orderStatus: string;
-}
-
-//schema for orders status
-interface FoodItem {
-    foodId: number;
-    img: string;
-    alt: string;
-    heading: string;
-    price: number;
-    quantity: number;
-}
-
-//different order state for easy management
-interface OrdersState {
-    byId: Record<number, OrderDetails>; //by order id
-    allIds: number[]; //all orders
-    byCustomerId: Record<number, number[]>; //mapping customer id with their orders
-    byRestaurantId: Record<number, number[]>; //mapping restaurant with their orders
-}
+import { OrderDetails, OrdersState } from 'types/order.types';
 
 const mockOrders: OrderDetails[] = [
     {

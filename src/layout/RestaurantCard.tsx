@@ -35,6 +35,8 @@ import { RestaurantCardProps, RestaurantFormData } from 'types';
 
 import { FONT_SIZE } from '@constant';
 
+import { ROUTES } from '../constants';
+
 export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
     //handle open/close modals
     const [open, setOpen] = useState(false);
@@ -145,7 +147,7 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         );
         dispatch(get(data.restaurantId));
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        navigate(`/dashboard/${data.restaurantId}`);
+        navigate(ROUTES.FOOD(data.restaurantId));
         dispatch(initializeRestaurant(data.restaurantId));
     };
 

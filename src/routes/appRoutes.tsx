@@ -1,4 +1,5 @@
 import Auth from 'pages/Auth';
+import Cart from 'pages/Cart';
 import Dashboard from 'pages/Dashboard';
 import FoodItems from 'pages/FoodItems';
 import Orders from 'pages/Orders';
@@ -24,11 +25,11 @@ export const router = createBrowserRouter([
                 element: <FoodItems />,
             },
             {
-                path: '/dashboard/cart/:userId',
-                //element: <Cart />,
+                path: ROUTES.CART,
+                element: <Cart />,
             },
             {
-                path: '/dashboard/order',
+                path: ROUTES.ORDER,
                 element: <Orders />,
             },
         ],
