@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
-import {
-    AlertColor,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogTitle,
-    Typography,
-} from '@mui/material';
+import { AlertColor, Typography } from '@mui/material';
+import ReusableButton from 'components/Button.component';
+import ReusableDialog, {
+    ReusableDialogActions,
+    ReusableDialogContent,
+    ReusableDialogTitle,
+} from 'components/Dialog.component';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
+import ReusableWrapper from 'components/Wrapper.component';
 import FooditemCard from 'layout/FooditemCard';
 import { FormProvider, useForm } from 'react-hook-form';
 import { add } from 'store/fooditemSlice';
@@ -20,8 +20,6 @@ import {
     StyledAddIcon,
     StyledAddMoreCard,
     StyledAddMoreContent,
-    StyledDialogContent,
-    StyledFoodWrapper,
 } from 'styles/Fooditem.styles';
 import { AutoGridProps, FooditemFormData } from 'types';
 
@@ -56,7 +54,7 @@ export default function AutoGrid({ data }: AutoGridProps) {
 
     return (
         <>
-            <StyledFoodWrapper>
+            <ReusableWrapper>
                 <CustomGridWrapper
                     container
                     spacing={{ sm: 3, md: 4 }}
@@ -88,8 +86,8 @@ export default function AutoGrid({ data }: AutoGridProps) {
                         </CustomCardGrid>
                     )}
                 </CustomGridWrapper>
-            </StyledFoodWrapper>
-            <Dialog
+            </ReusableWrapper>
+            <ReusableDialog
                 open={addOpen}
                 onClose={handleClose}
                 fullWidth
@@ -101,9 +99,9 @@ export default function AutoGrid({ data }: AutoGridProps) {
                             void methods.handleSubmit(onSubmit)(e);
                         }}
                     >
-                        <DialogTitle>Add Food Item</DialogTitle>
+                        <ReusableDialogTitle>Add Food Item</ReusableDialogTitle>
 
-                        <StyledDialogContent>
+                        <ReusableDialogContent>
                             <FromTextField
                                 name="heading"
                                 id="heading"
@@ -157,28 +155,28 @@ export default function AutoGrid({ data }: AutoGridProps) {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                             />
-                        </StyledDialogContent>
+                        </ReusableDialogContent>
 
-                        <DialogActions>
-                            <Button
+                        <ReusableDialogActions>
+                            <ReusableButton
                                 size="small"
                                 onClick={handleClose}
                                 color="inherit"
                             >
                                 Cancel
-                            </Button>
+                            </ReusableButton>
 
-                            <Button
+                            <ReusableButton
                                 size="small"
                                 type="submit"
                                 variant="contained"
                             >
                                 Confirm
-                            </Button>
-                        </DialogActions>
+                            </ReusableButton>
+                        </ReusableDialogActions>
                     </form>
                 </FormProvider>
-            </Dialog>
+            </ReusableDialog>
             <CustomizedSnackbar
                 severity={snackbar.severity}
                 message={snackbar.message}
