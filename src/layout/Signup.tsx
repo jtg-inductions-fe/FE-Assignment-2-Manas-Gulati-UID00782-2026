@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import FormPassword from 'components/Password.component';
-import CustomizedSnackbar from 'components/Snackbar.component';
-import FormTextField from 'components/TextField.component';
-import { FormProvider, useForm } from 'react-hook-form';
-import { signin } from 'store/authSlice';
-import { useTypeDispatch, useTypeSelector } from 'store/hooks';
-import { CustomButton } from 'styles/AuthFormButton.styles';
-import { CustomRadio } from 'styles/Radio.styles';
-
 import { AlertColor } from '@mui/material';
 import {
     FormControl,
@@ -18,6 +9,14 @@ import {
     RadioGroup,
 } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import FormPassword from 'components/Password.component';
+import CustomizedSnackbar from 'components/Snackbar.component';
+import FormTextField from 'components/TextField.component';
+import { FormProvider, useForm } from 'react-hook-form';
+import { signin } from 'store/authSlice';
+import { useTypeDispatch, useTypeSelector } from 'store/hooks';
+import { CustomButton } from 'styles/AuthFormButton.styles';
+import { CustomRadio } from 'styles/Radio.styles';
 
 import { FONT_SIZE } from '@constant';
 
@@ -95,7 +94,10 @@ function Signup() {
                                     required: VALIDATION.NAMEREQUIRED,
                                     maxLength: {
                                         value: 30,
-                                        message: VALIDATION.NAMEXCEED,
+                                        message: VALIDATION.NAMEXCEED.replace(
+                                            '{{name_count}}',
+                                            '30',
+                                        ),
                                     },
                                 }}
                             />
@@ -106,7 +108,10 @@ function Signup() {
                                     required: VALIDATION.EMAILREQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message: VALIDATION.EMAILEXCEED,
+                                        message: VALIDATION.EMAILEXCEED.replace(
+                                            '{{email_count}}',
+                                            '50',
+                                        ),
                                     },
                                     pattern: {
                                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -121,7 +126,10 @@ function Signup() {
                                     validate: {
                                         minLength: (value: string) =>
                                             value.length >= 8 ||
-                                            VALIDATION.PASSWORDSHORT,
+                                            VALIDATION.PASSWORDSHORT.replace(
+                                                '{{password_length}}',
+                                                '8',
+                                            ),
 
                                         uppercase: (value: string) =>
                                             /[A-Z]/.test(value) ||

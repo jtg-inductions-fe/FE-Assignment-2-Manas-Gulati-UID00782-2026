@@ -1,12 +1,19 @@
 import { useState } from 'react';
 
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import { Box, Stack } from '@mui/material';
+import Button from '@mui/material/Button';
+import CardMedia from '@mui/material/CardMedia';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import Typography from '@mui/material/Typography';
 import FromTextField from 'components/TextField.component';
 import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { del, edit } from 'store/restaurantSlice';
-//import { selectRestaurant } from 'store/selectRestaurantSlice';
 import {
     StyledCard,
     StyledCardActionArea,
@@ -19,17 +26,6 @@ import {
     StyledOwnerDeleteButton,
     StyledOwnerEditButton,
 } from 'styles/Restaurant.styles';
-
-//import { RestaurantCardProps, RestaurantFormData } from 'types';
-import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
-import { Box, Stack } from '@mui/material';
-//import { AlertColor } from '@mui/material';
-import Button from '@mui/material/Button';
-import CardMedia from '@mui/material/CardMedia';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
-import Typography from '@mui/material/Typography';
 
 import { FONT_SIZE } from '@constant';
 
@@ -152,14 +148,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                 />
                             )}
                         </Stack>
-                        <Stack
-                            direction="row"
-                            alignItems="center"
-                            gap={1}
-                            // sx={(theme) => ({
-                            //     color: theme.palette.faded?.main,
-                            // })}
-                        >
+                        <Stack direction="row" alignItems="center" gap={1}>
                             <PlaceOutlinedIcon
                                 sx={{ fontSize: FONT_SIZE.LG }}
                             />
@@ -217,11 +206,15 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message: RESTAURANT_VALIDATION.LIMIT,
+                                        message:
+                                            RESTAURANT_VALIDATION.LIMIT.replace(
+                                                '{{name_count}}',
+                                                '50',
+                                            ),
                                     },
                                 }}
                                 defaultVal={formData.heading}
-                            ></FromTextField>
+                            />
                             <FromTextField
                                 name="img"
                                 id="img"
@@ -229,7 +222,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 defaultVal={formData.img}
-                            ></FromTextField>
+                            />
                             <FromTextField
                                 name="alt"
                                 id="alt"
@@ -237,7 +230,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 defaultVal={formData.alt}
-                            ></FromTextField>
+                            />
                             <FromTextField
                                 name="location"
                                 id="location"
@@ -245,7 +238,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 defaultVal={formData.location}
-                            ></FromTextField>
+                            />
                             <FromTextField
                                 name="description"
                                 id="description"
@@ -253,7 +246,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                                 defaultVal={formData.description}
-                            ></FromTextField>
+                            />
                             <Controller
                                 name="category"
                                 control={methods.control}

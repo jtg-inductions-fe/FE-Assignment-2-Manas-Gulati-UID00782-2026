@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { Stack, Typography } from '@mui/material';
 import Login from 'layout/Login';
 import Signup from 'layout/Signup';
 import {
@@ -13,8 +14,6 @@ import {
     CustomButton,
     FormContainer,
 } from 'styles/Auth.styles';
-
-import { Stack, Typography } from '@mui/material';
 
 export default function Auth() {
     const [login, setLoginFrom] = useState(true);
@@ -43,7 +42,6 @@ export default function Auth() {
                     <Stack direction="row" width="100%">
                         <CustomButton
                             selected={login}
-                            //onClick={toggleStateHandler}
                             aria-pressed={login}
                             id="login"
                         >

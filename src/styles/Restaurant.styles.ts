@@ -20,7 +20,6 @@ export const StyledCard = styled(Card)(({}) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    //border: `1px solid ${theme.palette.faded?.light}`,
     borderRadius: 3,
     transition: 'transform 180ms ease, box-shadow 180ms ease',
     '&:hover': {
@@ -131,10 +130,7 @@ export const StyledAddMoreCard = styled(Card)(({ theme }) => ({
     filter: 'grayscale(100%)',
     opacity: 0.7,
     transition: '0.3s',
-    //border: `2px dashed ${theme.palette.faded?.main}`,
     borderRadius: 3,
-    //color: theme.palette.faded?.main,
-    //backgroundColor: theme.palette.faded?.light,
 
     '&:hover': {
         opacity: 1,

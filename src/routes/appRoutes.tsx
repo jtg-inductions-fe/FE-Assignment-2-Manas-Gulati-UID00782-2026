@@ -3,18 +3,19 @@ import Auth from 'pages/Auth';
 import Dashboard from 'pages/Dashboard';
 import { createBrowserRouter } from 'react-router-dom';
 
+import { ROUTES } from '../constants';
 import ProtectedRoute from './protectedRoute';
 
 export const router = createBrowserRouter([
     {
-        path: '/',
+        path: ROUTES.HOME,
         element: <Auth />,
     },
     {
         element: <ProtectedRoute />,
         children: [
             {
-                path: '/dashboard',
+                path: ROUTES.DASHBOARD,
                 element: <Dashboard />,
             },
         ],

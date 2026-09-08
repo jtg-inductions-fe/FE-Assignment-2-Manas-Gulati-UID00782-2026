@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { AlertColor } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import FormPassword from 'components/Password.component';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FormTextField from 'components/TextField.component';
@@ -10,10 +12,7 @@ import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { get } from 'store/restaurantSlice';
 import { CustomButton } from 'styles/AuthFormButton.styles';
 
-import { AlertColor } from '@mui/material';
-import Stack from '@mui/material/Stack';
-
-import { SUCCESSMESSAGES, VALIDATION } from '../constants';
+import { ROUTES, SUCCESSMESSAGES, VALIDATION } from '../constants';
 
 //determining login form data
 interface LoginFormData {
@@ -49,9 +48,9 @@ function Login() {
                     userId: auth.user.userId,
                 }), //to initialize restaurant to show to user
             );
-            //dispatch(initializeUser(auth.user.userId)); //to set user for the cart
         }
-    }, [auth.user, dispatch]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [auth.user]);
 
     useEffect(() => {
         //to generate snackbar at every login attempt
@@ -61,7 +60,9 @@ function Login() {
                 message: SUCCESSMESSAGES.LOGIN,
                 severity: 'success',
             });
-            void navigate('/dashboard', { replace: true });
+
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            navigate(ROUTES.DASHBOARD, { replace: true });
         } else if (message) {
             setSnackbar({
                 open: true,
@@ -69,7 +70,8 @@ function Login() {
                 severity: 'error',
             });
         }
-    }, [isAuthenticated, message, loginAttempt, navigate]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthenticated, message, loginAttempt]);
 
     return (
         <>
@@ -97,7 +99,10 @@ function Login() {
                                     required: VALIDATION.EMAILREQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message: VALIDATION.EMAILEXCEED,
+                                        message: VALIDATION.EMAILEXCEED.replace(
+                                            '{{email_count}}',
+                                            '50',
+                                        ),
                                     },
                                     pattern: {
                                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -105,10 +110,7 @@ function Login() {
                                     },
                                 }}
                             />
-                            <FormPassword
-                                name="password"
-                                id="loginPassword"
-                            ></FormPassword>
+                            <FormPassword name="password" id="loginPassword" />
                             <CustomButton
                                 variant="outlined"
                                 type="submit"

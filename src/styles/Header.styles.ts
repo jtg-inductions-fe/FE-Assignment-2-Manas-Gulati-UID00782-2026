@@ -67,7 +67,7 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
     color: theme.palette.common.black,
     backgroundColor: theme.palette.primary.light,
-    //borderBottom: `2px solid ${theme.palette.faded?.light}`,
+
     boxShadow: '1px 4px 7px rgba(26, 31, 36, 0.06)',
 }));
 

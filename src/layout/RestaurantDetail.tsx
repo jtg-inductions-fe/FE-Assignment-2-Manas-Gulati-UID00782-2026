@@ -1,5 +1,12 @@
 import { useState } from 'react';
 
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    Typography,
+} from '@mui/material';
 import FromTextField from 'components/TextField.component';
 import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import RestaurantCard from 'layout/RestaurantCard';
@@ -17,18 +24,6 @@ import {
     StyledRestaurantWrapper,
 } from 'styles/Restaurant.styles';
 
-//import { RestaurantAutoGridProps, RestaurantFormData } from 'types';
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogTitle,
-    Typography,
-} from '@mui/material';
-
-//---------------------------------------
-//Please note that this section has already been moved to types folder in next PR, but due to merge conflict, I had to declare types here for the working of this section of code
-
 export interface RestaurantFormData {
     img: string;
     alt: string;
@@ -37,22 +32,16 @@ export interface RestaurantFormData {
     description: string;
     category: string;
 }
-//--------------------------------------
 
 export default function AutoGrid() {
     const data = useTypeSelector((state) => state.restaurant);
     const [addOpen, setAddOpen] = useState(false); //for add restaurant dialog box
     const methods = useForm<RestaurantFormData>();
-    //const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
 
     const handleClose = () => {
         setAddOpen(false);
     };
-    // const onSubmit = (addFormData: AddFormData) => {
-    //     dispatch(add(addFormData));
-    //     setAddOpen(false);
-    // };
 
     return (
         <>
@@ -106,11 +95,7 @@ export default function AutoGrid() {
                 maxWidth="sm"
             >
                 <FormProvider {...methods}>
-                    <form
-                    // onSubmit={(e) => {
-                    //     void methods.handleSubmit(onSubmit)(e);
-                    // }}
-                    >
+                    <form>
                         <DialogTitle>Edit Restaurant</DialogTitle>
 
                         <StyledDialogContent>
@@ -121,38 +106,42 @@ export default function AutoGrid() {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message: RESTAURANT_VALIDATION.LIMIT,
+                                        message:
+                                            RESTAURANT_VALIDATION.LIMIT.replace(
+                                                '{{name_count}}',
+                                                '50',
+                                            ),
                                     },
                                 }}
-                            ></FromTextField>
+                            />
                             <FromTextField
                                 name="img"
                                 id="img"
                                 rules={{
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
-                            ></FromTextField>
+                            />
                             <FromTextField
                                 name="alt"
                                 id="alt"
                                 rules={{
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
-                            ></FromTextField>
+                            />
                             <FromTextField
                                 name="location"
                                 id="location"
                                 rules={{
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
-                            ></FromTextField>
+                            />
                             <FromTextField
                                 name="description"
                                 id="description"
                                 rules={{
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
-                            ></FromTextField>
+                            />
                             <Controller
                                 name="category"
                                 control={methods.control}

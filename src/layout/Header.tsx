@@ -1,29 +1,26 @@
 import { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
-import { logout } from 'store/authSlice';
-import { useTypeDispatch, useTypeSelector } from 'store/hooks';
-import {
-    //Search,
-    //SearchIconWrapper,
-    StyledAppBar,
-    StyledBadge,
-    //StyledInputBase,
-    StyledShoppingCartIcon,
-    StyledToolbar,
-    StyledUserBox,
-} from 'styles/Header.styles.ts';
-
 import AccountCircle from '@mui/icons-material/AccountCircle';
-//import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { logout } from 'store/authSlice';
+import { useTypeDispatch, useTypeSelector } from 'store/hooks';
+import {
+    StyledAppBar,
+    StyledBadge,
+    StyledShoppingCartIcon,
+    StyledToolbar,
+    StyledUserBox,
+} from 'styles/Header.styles.ts';
 
 import { FONT_SIZE } from '@constant';
+
+import { ROUTES } from '../constants';
 
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); //to handle opening and closing of menu
@@ -43,7 +40,8 @@ export default function PrimarySearchAppBar() {
     const handleLogout = () => {
         dispatch(logout());
         setAnchorEl(null);
-        void navigate('/', { replace: true });
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        navigate(ROUTES.HOME, { replace: true });
     };
 
     const menuId = 'primary-search-account-menu';
@@ -97,21 +95,6 @@ export default function PrimarySearchAppBar() {
                     >
                         Meishi
                     </Typography>
-                    {/* {onSearchChange && (
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon fontSize="small" />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                value={searchValue}
-                                placeholder={searchPlaceholder}
-                                inputProps={{ 'aria-label': searchPlaceholder }}
-                                onChange={(event) =>
-                                    onSearchChange(event.target.value)
-                                }
-                            />
-                        </Search>
-                    )} */}
                     <Box sx={{ flexGrow: 1 }} />{' '}
                     {/* Act as justify content: space between(provided by mui itself) */}
                     <StyledUserBox>

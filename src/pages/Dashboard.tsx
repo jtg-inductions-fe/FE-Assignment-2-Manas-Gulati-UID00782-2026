@@ -5,8 +5,8 @@ import Header from '../layout/Header';
 export default function Dashboard() {
     return (
         <>
-            <Header></Header>
-            <AutoGrid></AutoGrid>
+            <Header />
+            <AutoGrid />
         </>
     );
 }

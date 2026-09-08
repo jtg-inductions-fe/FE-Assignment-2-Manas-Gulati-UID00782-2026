@@ -4,5 +4,5 @@
  */
 export const RESTAURANT_VALIDATION = {
     REQUIRED: 'This field is mandatory',
-    LIMIT: 'Restaurant name cannot exceed 50 characters',
+    LIMIT: 'Restaurant name cannot exceed {{name_count}} characters',
 };

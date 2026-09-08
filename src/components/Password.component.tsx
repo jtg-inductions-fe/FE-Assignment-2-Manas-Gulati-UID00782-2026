@@ -1,14 +1,13 @@
 import { useState } from 'react';
 
-import { VALIDATION } from 'constants/formValidationConstants';
-import { Controller, RegisterOptions, useFormContext } from 'react-hook-form';
-import { CustomInputLabel, CustomTextField } from 'styles/Password.styles';
-
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { FormControl, FormHelperText } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
+import { VALIDATION } from 'constants/formValidationConstants';
+import { Controller, RegisterOptions, useFormContext } from 'react-hook-form';
+import { CustomInputLabel, CustomTextField } from 'styles/Password.styles';
 
 import { FONT_SIZE } from '@constant';
 
