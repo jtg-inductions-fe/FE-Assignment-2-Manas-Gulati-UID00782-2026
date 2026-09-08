@@ -4,14 +4,16 @@ import EditIcon from '@mui/icons-material/Edit';
 import {
     Box,
     CardContent,
+    Chip,
     DialogContent,
+    Stack,
     styled,
     Typography,
 } from '@mui/material';
 import { Card } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
-import { FONT_SIZE, FONT_WEIGHT } from '@constant';
+import { FONT_SIZE, FONT_WEIGHT, LINE_HEIGHT } from '@constant';
 
 export const StyledCard = styled(Card)(({ theme }) => ({
     width: '100%',
@@ -154,4 +156,69 @@ export const StyledAddMoreContent = styled(CardContent)(({}) => ({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+}));
+
+export const StyledFooditemWrapper = styled(Box)({
+    maxWidth: '2000px',
+    margin: '0 auto',
+    display: 'flex',
+    flexDirection: 'column',
+});
+
+export const StyledFooditemDetailWrapper = styled(Box)(({ theme }) => ({
+    width: '100%',
+    maxWidth: 1700,
+    margin: '0 auto',
+    padding: `${theme.spacing(7)} ${theme.spacing(5)} ${theme.spacing(10)}`,
+    [theme.breakpoints.up('md')]: {
+        paddingBottom: theme.spacing(14),
+    },
+}));
+
+export const StyledFooditemBannerWrapper = styled(Box)(({ theme }) => ({
+    overflow: 'hidden',
+    border: `5px solid ${theme.palette.faded?.light}`,
+    borderRadius: 11,
+    boxShadow: '0 10px 30px rgba(28, 35, 40, 0.05)',
+}));
+
+export const StyledFooditemBannerName = styled(Box)(({ theme }) => ({
+    display: 'grid',
+    flexShrink: 0,
+    placeItems: 'center',
+    color: theme.palette.primary.main,
+    border: `1px solid ${theme.palette.faded?.light}`,
+    borderRadius: 2.5,
+    backgroundColor: theme.palette.common.white,
+    boxShadow: '0 5px 15px rgba(28, 35, 40, 0.10)',
+    [theme.breakpoints.up('sm')]: {
+        width: 104,
+        height: 104,
+        marginTop: theme.spacing(-10),
+    },
+}));
+
+export const StyledFooditemBannerDetailWrapper = styled(Stack)(({ theme }) => ({
+    marginTop: theme.spacing(2),
+    color: theme.palette.faded?.main,
+}));
+
+export const StyledFooditemBannerChip = styled(Chip)(({ theme }) => ({
+    color: theme.palette.faded?.main,
+    backgroundColor: theme.palette.faded?.light,
+    fontSize: FONT_SIZE.XS,
+    fontWeight: FONT_WEIGHT.SEMIBOLD,
+}));
+
+export const StyledFooditemBannerDesc = styled(Typography)(({ theme }) => ({
+    marginTop: theme.spacing(1.5),
+    color: theme.palette.faded?.main,
+    lineHeight: LINE_HEIGHT.HEADING,
+}));
+
+export const StyledMenuText = styled(Chip)(({ theme }) => ({
+    height: 42,
+    padding: `0 ${theme.spacing(2)}`,
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
 }));

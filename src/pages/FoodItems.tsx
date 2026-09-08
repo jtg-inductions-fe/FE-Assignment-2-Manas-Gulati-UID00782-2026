@@ -1,11 +1,21 @@
 import AutoGrid from 'layout/FoodDetails';
 import { useTypeSelector } from 'store/hooks';
+import {
+    StyledFooditemBannerChip,
+    StyledFooditemBannerDesc,
+    StyledFooditemBannerDetailWrapper,
+    StyledFooditemBannerName,
+    StyledFooditemBannerWrapper,
+    StyledFooditemDetailWrapper,
+    StyledFooditemWrapper,
+    StyledMenuText,
+} from 'styles/Fooditem.styles';
 
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
-import { Box, Chip, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
-import { FONT_SIZE, FONT_WEIGHT, LINE_HEIGHT } from '@constant';
+import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
 import Header from '../layout/Header';
 
@@ -23,33 +33,10 @@ export default function FoodItems() {
     const coverImage = restaurant?.img;
 
     return (
-        <Box
-            sx={{
-                maxWidth: '2000px',
-                display: 'flex',
-                flexDirection: 'column',
-                //backgroundColor: '#f8f9fa',
-            }}
-        >
+        <StyledFooditemWrapper>
             <Header />
-            <Box
-                sx={{
-                    width: '100%',
-                    maxWidth: 1700,
-                    mx: 'auto',
-                    px: 5,
-                    pt: 7,
-                    pb: { sm: 10, md: 14 },
-                }}
-            >
-                <Box
-                    sx={(theme) => ({
-                        overflow: 'hidden',
-                        border: `5px solid ${theme.palette.faded?.light}`,
-                        borderRadius: 11,
-                        boxShadow: '0 10px 30px rgba(28, 35, 40, 0.05)',
-                    })}
-                >
+            <StyledFooditemDetailWrapper>
+                <StyledFooditemBannerWrapper>
                     <Box
                         role="img"
                         aria-label={`${restaurantName} restaurant`}
@@ -66,25 +53,11 @@ export default function FoodItems() {
                         gap={3}
                         sx={{ px: 3, py: 4 }}
                     >
-                        <Box
-                            sx={(theme) => ({
-                                width: { sm: 104 },
-                                height: { sm: 104 },
-                                mt: { sm: -10 },
-                                display: 'grid',
-                                flexShrink: 0,
-                                placeItems: 'center',
-                                color: theme.palette.primary.main,
-                                border: `1px solid ${theme.palette.faded?.light}`,
-                                borderRadius: 2.5,
-                                backgroundColor: theme.palette.common.white,
-                                boxShadow: '0 5px 15px rgba(28, 35, 40, 0.10)',
-                            })}
-                        >
+                        <StyledFooditemBannerName>
                             <Typography variant="h4">
                                 {restaurantName.charAt(0).toUpperCase()}
                             </Typography>
-                        </Box>
+                        </StyledFooditemBannerName>
                         <Box>
                             <Typography
                                 variant="h3"
@@ -94,18 +67,14 @@ export default function FoodItems() {
                             >
                                 {restaurantName}
                             </Typography>
-                            <Stack
+                            <StyledFooditemBannerDetailWrapper
                                 direction="row"
                                 flexWrap="wrap"
                                 alignItems="center"
                                 gap={2}
-                                sx={(theme) => ({
-                                    mt: 2,
-                                    color: theme.palette.faded?.main,
-                                })}
                             >
                                 {restaurant?.category && (
-                                    <Chip
+                                    <StyledFooditemBannerChip
                                         size="small"
                                         icon={<RestaurantMenuOutlinedIcon />}
                                         label={
@@ -113,13 +82,6 @@ export default function FoodItems() {
                                                 ? 'Vegetarian'
                                                 : 'Non-Vegetarian'
                                         }
-                                        sx={(theme) => ({
-                                            color: theme.palette.faded?.main,
-                                            backgroundColor:
-                                                theme.palette.faded?.light,
-                                            fontSize: FONT_SIZE.XS,
-                                            fontWeight: FONT_WEIGHT.SEMIBOLD,
-                                        })}
                                     />
                                 )}
                                 {restaurant?.location && (
@@ -131,29 +93,20 @@ export default function FoodItems() {
                                         <PlaceOutlinedIcon
                                             sx={{ fontSize: FONT_SIZE.LG }}
                                         />
-                                        <Typography
-                                            sx={{ fontSize: FONT_SIZE.SM }}
-                                        >
+                                        <Typography>
                                             {restaurant.location}
                                         </Typography>
                                     </Stack>
                                 )}
-                            </Stack>
+                            </StyledFooditemBannerDetailWrapper>
                             {restaurant?.description && (
-                                <Typography
-                                    variant="subtitle1"
-                                    sx={(theme) => ({
-                                        mt: 1.5,
-                                        color: theme.palette.faded?.main,
-                                        lineHeight: LINE_HEIGHT.HEADING,
-                                    })}
-                                >
+                                <StyledFooditemBannerDesc variant="subtitle1">
                                     {restaurant.description}
-                                </Typography>
+                                </StyledFooditemBannerDesc>
                             )}
                         </Box>
                     </Stack>
-                </Box>
+                </StyledFooditemBannerWrapper>
 
                 <Stack
                     direction="row"
@@ -162,22 +115,14 @@ export default function FoodItems() {
                     gap={3}
                     sx={{ mt: 5 }}
                 >
-                    <Chip
-                        label="All Menu Items"
-                        sx={(theme) => ({
-                            height: 42,
-                            px: 2,
-                            backgroundColor: theme.palette.primary.main,
-                            color: theme.palette.common.white,
-                        })}
-                    />
+                    <StyledMenuText label="All Menu Items" />
                     <Typography sx={{ fontSize: FONT_SIZE.SM }}>
                         {foodData.length} items
                     </Typography>
                 </Stack>
 
                 <AutoGrid data={foodData} />
-            </Box>
-        </Box>
+            </StyledFooditemDetailWrapper>
+        </StyledFooditemWrapper>
     );
 }
