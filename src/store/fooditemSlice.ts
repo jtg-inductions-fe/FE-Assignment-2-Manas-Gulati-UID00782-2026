@@ -1,19 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { FooditemCardData } from 'types';
 
-//schema for restaurant data required
-
-interface FooditemData {
-    foodId: number;
-    img: string;
-    alt: string;
-    heading: string;
-    description: string;
-    ingredients: string;
-    price: number;
-    stock: number;
-}
-
-const mockFoodData: Record<number, FooditemData[]> = {
+const mockFoodData: Record<number, FooditemCardData[]> = {
     412: [
         {
             foodId: 1001,
@@ -391,7 +379,7 @@ const mockFoodData: Record<number, FooditemData[]> = {
 };
 
 //initial state
-const initialState: FooditemData[] = [];
+const initialState: FooditemCardData[] = [];
 
 //schema for form data
 interface FormFoodData {

@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
 
-//import Counter from 'components/Counter.component';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Box, IconButton, Stack } from '@mui/material';
+import { AlertColor } from '@mui/material';
+import Button from '@mui/material/Button';
+import CardMedia from '@mui/material/CardMedia';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import Typography from '@mui/material/Typography';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
 import { FormProvider, useForm } from 'react-hook-form';
-//import { addFood } from 'store/cartSlice';
 import { del, edit } from 'store/fooditemSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import {
@@ -22,16 +29,6 @@ import {
 } from 'styles/Fooditem.styles';
 import { FoodCardProps, FooditemFormData } from 'types';
 
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Box, IconButton, Stack } from '@mui/material';
-import { AlertColor } from '@mui/material';
-import Button from '@mui/material/Button';
-import CardMedia from '@mui/material/CardMedia';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
-import Typography from '@mui/material/Typography';
-
 import { FONT_SIZE } from '@constant';
 
 import { MESSAGES, RESTAURANT_VALIDATION } from '../constants';
@@ -41,13 +38,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
     const [open, setOpen] = useState(false);
     const [delOpen, setDelOpen] = useState(false);
     const [disabled, setDisabled] = useState(false);
-    //const cartFood = useTypeSelector((state) => state.cart.food);
     let quantity;
-    // cartFood.forEach((food) => {
-    //     if (food.foodId === data.foodId) {
-    //         quantity = food.quantity;
-    //     }
-    // });
 
     const [count, setCount] = useState(quantity ?? 0);
     const methods = useForm<FooditemFormData>();
@@ -111,18 +102,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
 
     const addToCartHandler = () => {
         setCount(1);
-        //dispatch(addFood({ data: data, quantity: 1 }));
     };
-
-    // const increaseHandler = () => {
-    //     dispatch(addFood({ data: data, quantity: count + 1 }));
-    //     setCount(count + 1);
-    // };
-
-    // const decreaseHandler = () => {
-    //     dispatch(addFood({ data: data, quantity: count - 1 }));
-    //     setCount(count - 1);
-    // };
 
     const onSubmit = (editFormData: FooditemFormData) => {
         dispatch(
@@ -219,13 +199,6 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                                 />
                             </IconButton>
                         )}
-                        {/* {role === 'customer' && count > 0 && (
-                            <Counter
-                                count={count}
-                                increaseHandler={increaseHandler}
-                                decreaseHandler={decreaseHandler}
-                            />
-                        )} */}
                     </Box>
                 </StyledCardContent>
             </StyledCard>

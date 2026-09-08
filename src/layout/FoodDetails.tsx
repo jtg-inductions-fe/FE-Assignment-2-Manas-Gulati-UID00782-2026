@@ -1,5 +1,13 @@
 import { useState } from 'react';
 
+import {
+    AlertColor,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    Typography,
+} from '@mui/material';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
 import FooditemCard from 'layout/FooditemCard';
@@ -16,15 +24,6 @@ import {
     StyledFoodWrapper,
 } from 'styles/Fooditem.styles';
 import { AutoGridProps, FooditemFormData } from 'types';
-
-import {
-    AlertColor,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogTitle,
-    Typography,
-} from '@mui/material';
 
 import { MESSAGES, RESTAURANT_VALIDATION } from '../constants';
 

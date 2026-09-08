@@ -1,3 +1,6 @@
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
+import { Box, Stack, Typography } from '@mui/material';
 import AutoGrid from 'layout/FoodDetails';
 import { useTypeSelector } from 'store/hooks';
 import {
@@ -10,10 +13,6 @@ import {
     StyledFooditemWrapper,
     StyledMenuText,
 } from 'styles/Fooditem.styles';
-
-import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
-import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
-import { Box, Stack, Typography } from '@mui/material';
 
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 

@@ -1,17 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RestaurantCardData, RestaurantFormData } from 'types';
 
-//schema for restaurant data required
-interface RestaurantData {
-    restaurantId: number;
-    img: string;
-    alt: string;
-    heading: string;
-    location: string;
-    description: string;
-    category: string;
-}
-
-const mockData: Record<number, RestaurantData[]> = {
+const mockData: Record<number, RestaurantCardData[]> = {
     1: [
         {
             restaurantId: 412,
@@ -120,17 +110,7 @@ const mockData: Record<number, RestaurantData[]> = {
 };
 
 //initial state
-const initialState: RestaurantData[] = [];
-
-//schema for form data
-interface FormRestaurantData {
-    img: string;
-    alt: string;
-    heading: string;
-    location: string;
-    description: string;
-    category: string;
-}
+const initialState: RestaurantCardData[] = [];
 
 const RestaurantSlice = createSlice({
     name: 'restaurant',
@@ -138,7 +118,7 @@ const RestaurantSlice = createSlice({
     reducers: {
         edit: (
             state,
-            action: PayloadAction<{ data: FormRestaurantData; id: number }>,
+            action: PayloadAction<{ data: RestaurantFormData; id: number }>,
         ) => {
             state.forEach((restaurant) => {
                 if (restaurant.restaurantId === action.payload.id) {
@@ -151,7 +131,7 @@ const RestaurantSlice = createSlice({
                 }
             });
         },
-        add: (state, action: PayloadAction<FormRestaurantData>) => {
+        add: (state, action: PayloadAction<RestaurantFormData>) => {
             const id = Date.now();
             state.push({
                 restaurantId: id,

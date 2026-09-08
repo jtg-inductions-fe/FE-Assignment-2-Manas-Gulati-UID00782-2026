@@ -1,6 +1,4 @@
-// src/routes/AppRoutes.tsx
 import Auth from 'pages/Auth';
-//import Cart from 'pages/Cart';
 import Dashboard from 'pages/Dashboard';
 import FoodItems from 'pages/FoodItems';
 import { createBrowserRouter } from 'react-router-dom';
@@ -23,10 +21,6 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/:restaurantId',
                 element: <FoodItems />,
-            },
-            {
-                path: '/dashboard/cart/:userId',
-                //element: <Cart />,
             },
         ],
     },

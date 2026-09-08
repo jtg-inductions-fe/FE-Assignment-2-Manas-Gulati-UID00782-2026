@@ -28,11 +28,7 @@ export default function PrimarySearchAppBar() {
 
     const dispatch = useTypeDispatch();
     const navigate = useNavigate();
-    //const cartFoodItem = useTypeSelector((state) => state.cart.food);
     const quantity = 0;
-    // cartFoodItem.forEach((food) => {
-    //     quantity += food.quantity;
-    // });
 
     const handleProfileMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(e.currentTarget);
