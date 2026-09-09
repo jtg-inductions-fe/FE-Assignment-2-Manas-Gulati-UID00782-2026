@@ -11,14 +11,9 @@ import { useNavigate } from 'react-router-dom';
 import { login } from 'store/authSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { get } from 'store/restaurantSlice';
+import { LoginFormData } from 'types';
 
 import { ROUTES, SUCCESSMESSAGES, VALIDATION } from '../constants';
-
-//determining login form data
-interface LoginFormData {
-    email: string;
-    password: string;
-}
 
 function Login() {
     //set initial hidden state of snackbar
@@ -75,23 +70,15 @@ function Login() {
 
     return (
         <>
-            <Stack
-                spacing={6}
-                sx={{
-                    justifyContent: 'center',
-                    alignItems: 'stretch',
-                }}
-            >
+            <Stack spacing={4}>
                 <FormProvider {...methods}>
-                    <h3>Login Form</h3>
-
                     <form
                         className="loginForm"
                         onSubmit={(e) => {
                             void methods.handleSubmit(onSubmit)(e);
                         }}
                     >
-                        <Stack spacing={4}>
+                        <Stack spacing={5}>
                             <FormTextField
                                 name="email"
                                 id="loginEmail"

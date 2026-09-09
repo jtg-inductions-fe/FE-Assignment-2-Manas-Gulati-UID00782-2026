@@ -1,29 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AuthUser, LoginFormData, SignupFormData, User } from 'types';
 
 import { ERRORMESSAGES } from '../constants';
-
-interface User {
-    userId: number;
-    name: string;
-    email: string;
-    password: string;
-    role: string;
-}
-
-interface LoginData {
-    email: string;
-    password: string;
-}
-
-interface AuthUser {
-    userId: number | null;
-    user: User | null;
-    isAuthenticated: boolean;
-    isCreated: boolean;
-    message: string;
-    signupAttempt: number;
-    loginAttempt: number;
-}
 
 const mockData: Record<string, User> = {
     'm@gmail.com': {
@@ -59,19 +37,11 @@ const initialState: AuthUser = {
     loginAttempt: 0,
 };
 
-interface SignupFormData {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    role: string;
-}
-
 const AuthSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state, action: PayloadAction<LoginData>) => {
+        login: (state, action: PayloadAction<LoginFormData>) => {
             state.loginAttempt += 1;
             const user = mockData[action.payload.email];
 

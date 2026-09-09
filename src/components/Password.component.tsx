@@ -6,18 +6,12 @@ import { FormControl, FormHelperText } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { VALIDATION } from 'constants/formValidationConstants';
-import { Controller, RegisterOptions, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { CustomInputLabel, CustomTextField } from 'styles/Password.styles';
+import { PasswordProps } from 'types';
 
 import { FONT_SIZE } from '@constant';
 
-//defining props for password component
-interface PasswordProps {
-    name: string;
-    id: string;
-    label?: string;
-    rules?: RegisterOptions;
-}
 export default function FormPassword({
     name,
     id,
@@ -40,7 +34,6 @@ export default function FormPassword({
             }}
             render={({ field, fieldState }) => (
                 <FormControl error={!!fieldState.error}>
-                    {' '}
                     {/*set current state of form */}
                     {/* add label to password text field */}
                     <CustomInputLabel htmlFor={id}>
