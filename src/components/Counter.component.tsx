@@ -1,17 +1,17 @@
 import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import RemoveIcon from '@mui/icons-material/Remove'; //can't be merged coz both have its own js file
 import { IconButton } from '@mui/material';
 import { StyledCount, StyledCounterBox } from 'styles/Counter.styles';
 import { CounterProps } from 'types';
 
 import { FONT_SIZE } from '@constant';
 
-export default function Counter({
+export const Counter = ({
     count,
     increaseHandler,
     decreaseHandler,
     disableIncrease = false,
-}: CounterProps) {
+}: CounterProps) => {
     /**
      * TODO: Determine color based on the value
      * @returns "success.main" | "text.secondary"
@@ -59,4 +59,4 @@ export default function Counter({
             </IconButton>
         </StyledCounterBox>
     );
-}
+};

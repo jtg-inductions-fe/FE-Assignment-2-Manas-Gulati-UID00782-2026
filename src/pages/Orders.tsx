@@ -1,6 +1,6 @@
 import { Box, Chip, Stack, Typography } from '@mui/material';
-import Header from 'layout/Header';
-import OrdersDetail from 'layout/OrdersDetail';
+import { PrimarySearchAppBar } from 'layout/Header';
+import { AutoGrid } from 'layout/OrdersDetail';
 import { useTypeSelector } from 'store/hooks';
 import {
     StyledOrderDetailWrapper,
@@ -8,7 +8,7 @@ import {
 } from 'styles/Orders.styles';
 import { OrderDetails } from 'types';
 
-export default function Orders() {
+export const Orders = () => {
     const user = useTypeSelector((state) => state.auth.user);
     const orderState = useTypeSelector((state) => state.order);
     const restaurantState = useTypeSelector((state) => state.restaurant);
@@ -49,7 +49,7 @@ export default function Orders() {
 
     return (
         <StyledOrderPageWrapper>
-            <Header />
+            <PrimarySearchAppBar />
             <StyledOrderDetailWrapper>
                 <Stack
                     direction={{ xs: 'column', md: 'row' }}
@@ -77,7 +77,7 @@ export default function Orders() {
                     />
                 </Stack>
 
-                <OrdersDetail
+                <AutoGrid
                     data={allOrders}
                     canChangeStatus={isOwner}
                     restaurantNames={restaurantNames}
@@ -85,4 +85,4 @@ export default function Orders() {
             </StyledOrderDetailWrapper>
         </StyledOrderPageWrapper>
     );
-}
+};

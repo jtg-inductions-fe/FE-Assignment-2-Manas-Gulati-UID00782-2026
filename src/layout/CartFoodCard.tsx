@@ -1,6 +1,4 @@
-import { Box, IconButton, Stack } from '@mui/material';
-import { CardMedia } from '@mui/material';
-import Counter from 'components/Counter.component';
+import { Box, CardMedia, IconButton, Stack } from '@mui/material';
 import { addFood } from 'store/cartSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import {
@@ -13,7 +11,9 @@ import {
 } from 'styles/Cart.styles';
 import { CardProps } from 'types';
 
-export default function MultiActionAreaCard({ data }: CardProps) {
+import { Counter } from '@components';
+
+export const MultiActionAreaCard = ({ data }: CardProps) => {
     const dispatch = useTypeDispatch();
     const relevantFoodItem = useTypeSelector((state) =>
         state.cart.food.find((food) => food.foodId === data.foodId),
@@ -108,4 +108,4 @@ export default function MultiActionAreaCard({ data }: CardProps) {
             </StyledCartCard>
         </>
     );
-}
+};

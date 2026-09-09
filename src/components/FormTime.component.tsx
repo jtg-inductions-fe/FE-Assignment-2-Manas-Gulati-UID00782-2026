@@ -1,33 +1,34 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { CustomTextField } from 'styles/TextField.styles';
-import { LabelProps } from 'types';
+import { FormTimeFieldProps } from 'types/time.types';
 
-export const FormTextField = ({
+export const FormTimeField = ({
     name,
-    rules,
     id,
-    defaultVal,
-    type = 'text',
-}: LabelProps) => {
+    label,
+    rules,
+}: FormTimeFieldProps) => {
     const { control } = useFormContext();
+
     return (
         <Controller
             name={name}
             control={control}
             rules={rules}
-            defaultValue={defaultVal}
-            render={(
-                { field, fieldState }, //field automatically configure all onChange, onBlur, ref and value
-            ) => (
+            render={({ field, fieldState }) => (
                 <CustomTextField
                     {...field}
                     id={id}
-                    type={type}
+                    type="time"
                     size="small"
-                    label={name}
-                    variant="outlined"
+                    label={label}
                     error={!!fieldState.error}
                     helperText={fieldState.error?.message}
+                    slotProps={{
+                        inputLabel: {
+                            shrink: true,
+                        },
+                    }}
                 />
             )}
         />

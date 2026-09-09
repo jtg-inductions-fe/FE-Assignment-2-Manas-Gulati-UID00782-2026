@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { Stack, ToggleButton, Typography } from '@mui/material';
-import { useDebouncedValue } from 'hooks/debounceHook';
-import AutoGrid from 'layout/RestaurantDetail';
+import { useDebouncedValue } from 'hooks/useDebounceHook';
+import { AutoGrid } from 'layout/RestaurantDetail';
 import { useTypeSelector } from 'store/hooks';
 import {
     StyledDashboardWrapper,
@@ -10,9 +10,9 @@ import {
 } from 'styles/Restaurant.styles';
 import { StyledToggleButtonGroup } from 'styles/ToggleButton.styles';
 
-import Header from '../layout/Header';
+import { PrimarySearchAppBar } from '../layout/Header';
 
-export default function Dashboard() {
+export const Dashboard = () => {
     //determine what filter selected
     const [option, setOption] = useState<string>('null');
     const handleAlignment = (
@@ -52,7 +52,7 @@ export default function Dashboard() {
 
     return (
         <StyledDashboardWrapper>
-            <Header
+            <PrimarySearchAppBar
                 searchValue={searchValue}
                 onSearchChange={setSearchValue}
                 searchPlaceholder="Search restaurants…"
@@ -106,4 +106,4 @@ export default function Dashboard() {
             </StyledRestaurantDetailWrapper>
         </StyledDashboardWrapper>
     );
-}
+};

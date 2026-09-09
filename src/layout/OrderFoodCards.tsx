@@ -19,6 +19,7 @@ import {
     styled,
     Typography,
 } from '@mui/material';
+import { reduceStock } from 'store/fooditemSlice';
 import { useTypeDispatch } from 'store/hooks';
 import { changeStatus } from 'store/orderSlice';
 import { StyledOrderCard, StyledOrderPrice } from 'styles/Orders.styles';
@@ -53,11 +54,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     ],
 }));
 
-export default function RecipeReviewCard({
+export const RecipeReviewCard = ({
     data,
     restaurantName,
     canChangeStatus,
-}: OrderCardProps) {
+}: OrderCardProps) => {
     const [expanded, setExpanded] = useState(false);
     const dispatch = useTypeDispatch();
     const statusLock = FINAL_STATUS.includes(data.orderStatus);
@@ -71,6 +72,13 @@ export default function RecipeReviewCard({
      * @param e - {SelectChangeEvent}
      */
     const statusHandler = (e: SelectChangeEvent) => {
+        if (e.target.value === 'Accepted' && !data.stockDeducted) {
+            dispatch(
+                reduceStock({
+                    data: data.foodItem,
+                }),
+            );
+        }
         dispatch(
             changeStatus({
                 orderID: data.orderId,
@@ -246,4 +254,4 @@ export default function RecipeReviewCard({
             </Collapse>
         </StyledOrderCard>
     );
-}
+};

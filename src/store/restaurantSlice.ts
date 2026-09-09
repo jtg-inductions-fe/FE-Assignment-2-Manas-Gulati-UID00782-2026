@@ -25,6 +25,8 @@ const RestaurantSlice = createSlice({
                     restaurant.location = action.payload.data.location;
                     restaurant.description = action.payload.data.description;
                     restaurant.category = action.payload.data.category;
+                    restaurant.openingTime = action.payload.data.openingTime;
+                    restaurant.closingTime = action.payload.data.closingTime;
                 }
             });
         },
@@ -38,6 +40,8 @@ const RestaurantSlice = createSlice({
                 location: action.payload.location,
                 description: action.payload.description,
                 category: action.payload.category,
+                openingTime: action.payload.openingTime,
+                closingTime: action.payload.closingTime,
             });
         },
         get: (
