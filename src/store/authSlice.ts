@@ -1,41 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthUser, LoginFormData, SignupFormData, User } from 'types';
+import { AuthDataInterface } from 'types/mockdata.types';
 
 import { ERRORMESSAGES } from '../constants';
+import mockData from '../MOCK_DATA/user.json';
 
-const mockData: Record<string, User> = {
-    'm@gmail.com': {
-        userId: 0,
-        name: 'manas',
-        email: 'm@gmail.com',
-        password: 'abs',
-        role: 'customer',
-    },
-    's@gmail.com': {
-        userId: 1,
-        name: 'sanjay',
-        email: 's@gmail.com',
-        password: 'abc',
-        role: 'owner',
-    },
-    'k@gmail.com': {
-        userId: 2,
-        name: 'kris',
-        email: 'k@gmail.com',
-        password: 'abk',
-        role: 'owner',
-    },
-};
+const storedUser = localStorage.getItem('user');
+
+const loggedInUser: User | null = storedUser
+    ? (JSON.parse(storedUser) as User)
+    : null;
 
 const initialState: AuthUser = {
-    userId: null,
-    user: null,
-    isAuthenticated: false,
+    userId: loggedInUser?.userId ?? null,
+    user: loggedInUser,
+    isAuthenticated: loggedInUser !== null,
     isCreated: false,
     message: '',
     signupAttempt: 0,
     loginAttempt: 0,
 };
+
+const data: AuthDataInterface = mockData;
 
 const AuthSlice = createSlice({
     name: 'auth',
@@ -43,8 +29,8 @@ const AuthSlice = createSlice({
     reducers: {
         login: (state, action: PayloadAction<LoginFormData>) => {
             state.loginAttempt += 1;
-            const user = mockData[action.payload.email];
 
+            const user = data[action.payload.email];
             if (user && user.password === action.payload.password) {
                 state.user = user;
                 state.isAuthenticated = true;
@@ -64,12 +50,12 @@ const AuthSlice = createSlice({
 
         signin: (state, action: PayloadAction<SignupFormData>) => {
             state.signupAttempt += 1;
-            const user = mockData[action.payload.email];
+            const user = data[action.payload.email];
             if (!user) {
                 if (
                     action.payload.confirmPassword === action.payload.password
                 ) {
-                    mockData[action.payload.email] = {
+                    data[action.payload.email] = {
                         userId: Date.now(),
                         name: action.payload.name,
                         email: action.payload.email,

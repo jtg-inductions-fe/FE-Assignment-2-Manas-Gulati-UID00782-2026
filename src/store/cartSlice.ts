@@ -33,6 +33,7 @@ const CartSlice = createSlice({
                     heading: action.payload.data.heading,
                     price: action.payload.data.price,
                     quantity: action.payload.quantity,
+                    stock: action.payload.data.stock,
                 };
                 state.food.push(data);
             }

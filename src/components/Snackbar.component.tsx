@@ -10,8 +10,9 @@ export default function CustomizedSnackbar({
     onClose,
 }: SnackbarProps) {
     /**
-     * handle closing of snackbar
-     *
+     * TODO: handle closing of snackbar
+     * @param _event - {any}
+     * @param reason - {SnackbarCloseReason}
      */
     const handleClose = (
         _event?: React.SyntheticEvent | Event,

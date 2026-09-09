@@ -135,7 +135,7 @@ export default function FoodItems() {
                     </Typography>
                 </Stack>
 
-                <AutoGrid data={foodData} />
+                <AutoGrid data={filterData} />
             </StyledFooditemDetailWrapper>
         </StyledFooditemWrapper>
     );

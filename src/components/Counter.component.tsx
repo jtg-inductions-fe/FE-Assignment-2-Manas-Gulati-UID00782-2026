@@ -10,12 +10,19 @@ export default function Counter({
     count,
     increaseHandler,
     decreaseHandler,
+    disableIncrease = false,
 }: CounterProps) {
-    // Determine color based on the value
+    /**
+     * TODO: Determine color based on the value
+     * @returns "success.main" | "text.secondary"
+     */
     const getCounterColor = () => {
-        if (count > 0) return 'success.main';
-        if (count < 0) return 'error.main';
-        return 'text.secondary';
+        switch (true) {
+            case count > 0:
+                return 'success.main';
+            default:
+                return 'text.secondary';
+        }
     };
 
     return (
@@ -44,6 +51,7 @@ export default function Counter({
 
             <IconButton
                 onClick={increaseHandler}
+                disabled={disableIncrease}
                 color="success"
                 aria-label="increment"
             >

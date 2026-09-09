@@ -7,7 +7,7 @@ export const StyledCartWrapper = styled(Box)(({ theme }) => ({
     display: 'grid',
     gridTemplateColumns: '1fr',
     alignItems: 'start',
-    gap: 4,
+    gap: theme.spacing(4),
     marginTop: theme.spacing(4),
     [theme.breakpoints.up('lg')]: {
         gridTemplateColumns: 'minmax(0, 2fr) 1fr',
@@ -57,7 +57,6 @@ export const StyledCartHeading = styled(Typography)(({ theme }) => ({
 export const StyledCartRestaurantName = styled(Typography)(({ theme }) => ({
     marginTop: theme.spacing(1),
     color: theme.palette.faded?.main,
-    textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
 }));
@@ -81,6 +80,8 @@ export const StyledCartCard = styled(Card)(({ theme }) => ({
 }));
 
 export const StyledCartItem = styled(Card)(({ theme }) => ({
+    width: '100%',
+    padding: theme.spacing(2),
     display: 'grid',
     gridTemplateColumns: '88px minmax(0, 1fr)',
     alignItems: 'center',

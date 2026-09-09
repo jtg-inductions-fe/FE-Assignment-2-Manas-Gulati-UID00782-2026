@@ -5,6 +5,7 @@ export interface CartCardData {
     heading: string;
     price: number;
     quantity: number;
+    stock: number;
 }
 
 export interface CardProps {
@@ -25,6 +26,7 @@ export interface CartFooditemData {
     alt: string;
     heading: string;
     price: number;
+    stock: number;
 }
 export interface CartAutoGridProps {
     data: CartCardData[];

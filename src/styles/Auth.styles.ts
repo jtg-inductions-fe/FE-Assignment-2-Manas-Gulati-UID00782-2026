@@ -74,7 +74,7 @@ export const AuthFormSide = styled(Box)(({ theme }) => ({
 
     [theme.breakpoints.up('lg')]: {
         padding: theme.spacing(0, 10),
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
     },
 }));
 
