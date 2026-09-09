@@ -1,18 +1,9 @@
 import { useState } from 'react';
 
 import { AlertColor, Typography } from '@mui/material';
-import ReusableButton from 'components/Button.component';
-import ReusableDialog, {
-    ReusableDialogActions,
-    ReusableDialogContent,
-    ReusableDialogTitle,
-} from 'components/Dialog.component';
-import CustomizedSnackbar from 'components/Snackbar.component';
-import FromTextField from 'components/TextField.component';
-import ReusableWrapper from 'components/Wrapper.component';
-import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
-import RestaurantCard from 'layout/RestaurantCard';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { FormSelectField } from 'components/FormSelect.component';
+import { FormTimeField } from 'components/FormTime.component';
+import { MultiActionAreaCard } from 'layout/RestaurantCard';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { add } from 'store/restaurantSlice';
 import {
@@ -21,16 +12,21 @@ import {
     StyledAddIcon,
     StyledAddMoreCard,
     StyledCardContent,
-    StyledCategoryTextfield,
     StyledMenuItem,
 } from 'styles/Restaurant.styles';
 import { RestaurantAutoGridProps, RestaurantFormData } from 'types';
 
-import { MESSAGES } from '../constants';
+import {
+    CustomizedSnackbar,
+    FormDialog,
+    FormTextField,
+    ReusableWrapper,
+} from '@components';
 
-export default function AutoGrid({ data }: RestaurantAutoGridProps) {
+import { MESSAGES, RESTAURANT_VALIDATION } from '../constants';
+
+export const AutoGrid = ({ data }: RestaurantAutoGridProps) => {
     const [addOpen, setAddOpen] = useState(false); //for add restaurant dialog box
-    const methods = useForm<RestaurantFormData>();
     const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
 
@@ -42,21 +38,18 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
     });
 
     /**
-     * handle add dialog close
-     * @returns {any}
+     * TODO: handle add dialog close
      */
     const handleClose = () => {
         setAddOpen(false);
     };
 
     /**
-     * handle add restaurant form data
-     * @param {any} addFormData:RestaurantFormData
-     * @returns {any}
+     * TODO: handle add restaurant form data
+     * @param addFormData - {RestaurantFormData}
      */
     const onSubmit = (addFormData: RestaurantFormData) => {
         dispatch(add(addFormData));
-        setAddOpen(false);
         setSnackbar({
             open: true,
             message: MESSAGES.ADD,
@@ -69,19 +62,19 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
             <ReusableWrapper>
                 <CustomGridWrapper
                     container
-                    spacing={{ sm: 3, md: 4 }}
-                    rowGap={18}
+                    spacing={{ xs: 3, md: 4 }}
+                    rowGap={8}
                 >
-                    {data.map((item, index) => (
+                    {data.map((item) => (
                         <CustomCardGrid
-                            key={index}
-                            size={{ sm: 12, md: 6, lg: 4 }}
+                            key={item.restaurantId}
+                            size={{ xs: 12, md: 6, lg: 4 }}
                         >
-                            <RestaurantCard data={item} />
+                            <MultiActionAreaCard data={item} />
                         </CustomCardGrid>
                     ))}
                     {role === 'owner' && (
-                        <CustomCardGrid size={{ sm: 12, md: 6, lg: 4 }}>
+                        <CustomCardGrid size={{ xs: 12, md: 6, lg: 4 }}>
                             <StyledAddMoreCard
                                 onClick={() => {
                                     setAddOpen(true);
@@ -105,113 +98,85 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                     )}
                 </CustomGridWrapper>
             </ReusableWrapper>
-            <ReusableDialog
+            <FormDialog
+                title="Add Restaurant"
                 open={addOpen}
                 onClose={handleClose}
-                fullWidth
-                maxWidth="sm"
+                onSubmit={onSubmit}
             >
-                <FormProvider {...methods}>
-                    <form
-                        onSubmit={(e) => {
-                            void methods.handleSubmit(onSubmit)(e);
+                <>
+                    <FormTextField
+                        name="heading"
+                        id="heading"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                            maxLength: {
+                                value: 50,
+                                message: RESTAURANT_VALIDATION.LIMIT.replace(
+                                    '{{name_count}}',
+                                    '50',
+                                ),
+                            },
+                        }}
+                    />
+                    <FormTextField
+                        name="img"
+                        id="img"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
+                    <FormTextField
+                        name="alt"
+                        id="alt"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
+                    <FormTextField
+                        name="location"
+                        id="location"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
+                    <FormTextField
+                        name="description"
+                        id="description"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
+                    <FormSelectField
+                        name="category"
+                        id="category"
+                        label="Category"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
                         }}
                     >
-                        <ReusableDialogTitle>
-                            Edit Restaurant
-                        </ReusableDialogTitle>
+                        <StyledMenuItem value="veg">Veg</StyledMenuItem>
+                        <StyledMenuItem value="non-veg">Non-Veg</StyledMenuItem>
+                    </FormSelectField>
+                    <FormTimeField
+                        name="openingTime"
+                        id="openingTime"
+                        label="Opening time"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
 
-                        <ReusableDialogContent>
-                            <FromTextField
-                                name="heading"
-                                id="heading"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                    maxLength: {
-                                        value: 50,
-                                        message:
-                                            RESTAURANT_VALIDATION.LIMIT.replace(
-                                                '{{name_count}}',
-                                                '50',
-                                            ),
-                                    },
-                                }}
-                            />
-                            <FromTextField
-                                name="img"
-                                id="img"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                            />
-                            <FromTextField
-                                name="alt"
-                                id="alt"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                            />
-                            <FromTextField
-                                name="location"
-                                id="location"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                            />
-                            <FromTextField
-                                name="description"
-                                id="description"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                            />
-                            <Controller
-                                name="category"
-                                control={methods.control}
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                                render={({ field, fieldState }) => (
-                                    <StyledCategoryTextfield
-                                        {...field}
-                                        required
-                                        size="small"
-                                        select
-                                        label="Category"
-                                        error={!!fieldState.error}
-                                        helperText={fieldState.error?.message}
-                                    >
-                                        <StyledMenuItem value="veg">
-                                            Veg
-                                        </StyledMenuItem>
-                                        <StyledMenuItem value="non-veg">
-                                            Non-Veg
-                                        </StyledMenuItem>
-                                    </StyledCategoryTextfield>
-                                )}
-                            />
-                        </ReusableDialogContent>
-
-                        <ReusableDialogActions>
-                            <ReusableButton
-                                size="small"
-                                onClick={handleClose}
-                                color="inherit"
-                            >
-                                Cancel
-                            </ReusableButton>
-
-                            <ReusableButton
-                                size="small"
-                                type="submit"
-                                variant="contained"
-                            >
-                                Confirm
-                            </ReusableButton>
-                        </ReusableDialogActions>
-                    </form>
-                </FormProvider>
-            </ReusableDialog>
+                    <FormTimeField
+                        name="closingTime"
+                        id="closingTime"
+                        label="Closing time"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
+                </>
+            </FormDialog>
             <CustomizedSnackbar
                 severity={snackbar.severity}
                 message={snackbar.message}
@@ -225,4 +190,4 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
             />
         </>
     );
-}
+};

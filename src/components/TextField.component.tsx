@@ -2,12 +2,13 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { CustomTextField } from 'styles/TextField.styles';
 import { LabelProps } from 'types';
 
-export default function FromTextField({
+export const FormTextField = ({
     name,
     rules,
     id,
     defaultVal,
-}: LabelProps) {
+    type = 'text',
+}: LabelProps) => {
     const { control } = useFormContext();
     return (
         <Controller
@@ -21,6 +22,7 @@ export default function FromTextField({
                 <CustomTextField
                     {...field}
                     id={id}
+                    type={type}
                     size="small"
                     label={name}
                     variant="outlined"
@@ -30,4 +32,4 @@ export default function FromTextField({
             )}
         />
     );
-}
+};

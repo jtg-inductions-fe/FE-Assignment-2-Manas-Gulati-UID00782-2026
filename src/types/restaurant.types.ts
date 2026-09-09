@@ -6,6 +6,8 @@ export interface RestaurantCardData {
     location: string;
     description: string;
     category: string;
+    openingTime: string;
+    closingTime: string;
 }
 
 export interface RestaurantFormData {
@@ -15,6 +17,8 @@ export interface RestaurantFormData {
     location: string;
     description: string;
     category: string;
+    openingTime: string;
+    closingTime: string;
 }
 
 export interface RestaurantCardProps {

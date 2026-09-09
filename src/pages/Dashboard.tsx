@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { ToggleButton } from '@mui/material';
-import { Stack, Typography } from '@mui/material';
-import AutoGrid from 'layout/RestaurantDetail';
+import { Stack, ToggleButton, Typography } from '@mui/material';
+import { useDebouncedValue } from 'hooks/useDebounceHook';
+import { AutoGrid } from 'layout/RestaurantDetail';
 import { useTypeSelector } from 'store/hooks';
 import {
     StyledDashboardWrapper,
@@ -10,9 +10,9 @@ import {
 } from 'styles/Restaurant.styles';
 import { StyledToggleButtonGroup } from 'styles/ToggleButton.styles';
 
-import Header from '../layout/Header';
+import { PrimarySearchAppBar } from '../layout/Header';
 
-export default function Dashboard() {
+export const Dashboard = () => {
     //determine what filter selected
     const [option, setOption] = useState<string>('null');
     const handleAlignment = (
@@ -28,7 +28,11 @@ export default function Dashboard() {
             ? name.charAt(0).toUpperCase() + name.slice(1)
             : 'Guest';
     const restaurantData = useTypeSelector((state) => state.restaurant);
-    let filterData;
+    const [searchValue, setSearchValue] = useState('');
+    const debouncedSearchValue = useDebouncedValue(searchValue, 200);
+    const query = debouncedSearchValue.trim().toLowerCase();
+
+    let filterData = restaurantData;
     if (option) {
         if (option === 'veg') {
             filterData = restaurantData.filter(
@@ -38,20 +42,26 @@ export default function Dashboard() {
             filterData = restaurantData.filter(
                 (item) => item.category === 'non-veg',
             );
-        } else {
-            filterData = restaurantData;
         }
-    } else {
-        filterData = restaurantData;
     }
+    if (query) {
+        filterData = filterData.filter((item) =>
+            item.heading.toLowerCase().includes(query),
+        );
+    }
+
     return (
         <StyledDashboardWrapper>
-            <Header />
+            <PrimarySearchAppBar
+                searchValue={searchValue}
+                onSearchChange={setSearchValue}
+                searchPlaceholder="Search restaurants…"
+            />
             <StyledRestaurantDetailWrapper>
                 <Stack
-                    direction={{ sm: 'column', md: 'row' }}
+                    direction={{ xs: 'column', md: 'row' }}
                     justifyContent="space-between"
-                    alignItems={{ sm: 'flex-start', md: 'flex-end' }}
+                    alignItems={{ xs: 'flex-start', md: 'flex-end' }}
                     gap={4}
                 >
                     <Stack spacing={4}>
@@ -96,4 +106,4 @@ export default function Dashboard() {
             </StyledRestaurantDetailWrapper>
         </StyledDashboardWrapper>
     );
-}
+};

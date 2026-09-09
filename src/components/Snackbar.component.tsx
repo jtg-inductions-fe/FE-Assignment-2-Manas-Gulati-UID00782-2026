@@ -1,17 +1,16 @@
-import { Box } from '@mui/material';
-import Alert from '@mui/material/Alert';
-import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
+import { Alert, Box, Snackbar, SnackbarCloseReason } from '@mui/material';
 import { SnackbarProps } from 'types';
 
-export default function CustomizedSnackbar({
+export const CustomizedSnackbar = ({
     severity,
     message,
     state,
     onClose,
-}: SnackbarProps) {
+}: SnackbarProps) => {
     /**
-     * handle closing of snackbar
-     *
+     * TODO: handle closing of snackbar
+     * @param _event - {any}
+     * @param reason - {SnackbarCloseReason}
      */
     const handleClose = (
         _event?: React.SyntheticEvent | Event,
@@ -42,4 +41,4 @@ export default function CustomizedSnackbar({
             </Snackbar>
         </Box>
     );
-}
+};

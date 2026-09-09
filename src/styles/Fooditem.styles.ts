@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
     Box,
+    Card,
     CardContent,
     Chip,
     DialogContent,
@@ -10,7 +11,6 @@ import {
     styled,
     Typography,
 } from '@mui/material';
-import { Card } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { FONT_SIZE, FONT_WEIGHT, LINE_HEIGHT } from '@constant';

@@ -33,6 +33,7 @@ const CartSlice = createSlice({
                     heading: action.payload.data.heading,
                     price: action.payload.data.price,
                     quantity: action.payload.quantity,
+                    stock: action.payload.data.stock,
                 };
                 state.food.push(data);
             }
@@ -42,10 +43,13 @@ const CartSlice = createSlice({
                 );
             }
         },
+        removeFoodData: (state) => {
+            state.food = [];
+        },
     },
 });
 
-export const { initializeUser, initializeRestaurant, addFood } =
+export const { initializeUser, initializeRestaurant, addFood, removeFoodData } =
     CartSlice.actions;
 
 export default CartSlice.reducer;

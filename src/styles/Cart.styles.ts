@@ -7,7 +7,7 @@ export const StyledCartWrapper = styled(Box)(({ theme }) => ({
     display: 'grid',
     gridTemplateColumns: '1fr',
     alignItems: 'start',
-    gap: 4,
+    gap: theme.spacing(4),
     marginTop: theme.spacing(4),
     [theme.breakpoints.up('lg')]: {
         gridTemplateColumns: 'minmax(0, 2fr) 1fr',
@@ -40,6 +40,27 @@ export const StyledTotalText = styled(Typography)(({ theme }) => ({
     fontWeight: FONT_WEIGHT.BOLD,
 }));
 
+export const StyledCartHeading = styled(Typography)(({ theme }) => ({
+    textOverflow: 'ellipsis',
+    [theme.breakpoints.up('xs')]: {
+        fontSize: FONT_SIZE.MD,
+        whiteSpace: 'normal',
+    },
+    [theme.breakpoints.up('sm')]: {
+        whiteSpace: 'nowrap',
+    },
+    [theme.breakpoints.up('md')]: {
+        fontSize: FONT_SIZE.XL,
+    },
+}));
+
+export const StyledCartRestaurantName = styled(Typography)(({ theme }) => ({
+    marginTop: theme.spacing(1),
+    color: theme.palette.faded?.main,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+}));
+
 export const StyledCartConfirmButton = styled(Button)(({ theme }) => ({
     marginTop: 4,
     borderRadius: 2,
@@ -59,6 +80,8 @@ export const StyledCartCard = styled(Card)(({ theme }) => ({
 }));
 
 export const StyledCartItem = styled(Card)(({ theme }) => ({
+    width: '100%',
+    padding: theme.spacing(2),
     display: 'grid',
     gridTemplateColumns: '88px minmax(0, 1fr)',
     alignItems: 'center',
@@ -69,16 +92,15 @@ export const StyledCartItem = styled(Card)(({ theme }) => ({
 }));
 
 export const StyledCartPrice = styled(Typography)(({ theme }) => ({
-    marginTop: theme.spacing(1.5),
+    flexShrink: 0,
     color: theme.palette.primary.main,
     fontWeight: FONT_WEIGHT.BOLD,
-    ...theme.mixins.lineClamp(3),
 }));
 
 export const StyledCartDeleteIcon = styled(DeleteIcon)(({ theme }) => ({
     fontSize: FONT_SIZE['3XL'],
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     color: theme.palette.primary.main,
 }));
 

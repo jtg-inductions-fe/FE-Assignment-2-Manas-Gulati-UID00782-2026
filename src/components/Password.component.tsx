@@ -1,31 +1,29 @@
 import { useState } from 'react';
 
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { FormControl, FormHelperText } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import { VALIDATION } from 'constants/formValidationConstants';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {
+    FormControl,
+    FormHelperText,
+    IconButton,
+    InputAdornment,
+} from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CustomInputLabel, CustomTextField } from 'styles/Password.styles';
 import { PasswordProps } from 'types';
 
 import { FONT_SIZE } from '@constant';
 
-export default function FormPassword({
-    name,
-    id,
-    label,
-    rules,
-}: PasswordProps) {
+import { VALIDATION } from '../constants';
+
+export const FormPassword = ({ name, id, label, rules }: PasswordProps) => {
     const { control } = useFormContext(); //constraint rhf to specific form
 
     //to manage show/hide password functionality
     const [showPassword, setShowPassword] = useState(false);
 
     /**
-     * set functionality to show or hide password
-     *
+     * TODO: set functionality to show or hide password
+     * @returns any
      */
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -86,4 +84,4 @@ export default function FormPassword({
             )}
         />
     );
-}
+};

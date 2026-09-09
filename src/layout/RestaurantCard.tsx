@@ -1,21 +1,10 @@
 import { useState } from 'react';
 
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
-import { AlertColor, Box, Stack } from '@mui/material';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import ReusableButton from 'components/Button.component';
-import ReusableDialog, {
-    ReusableDialogActions,
-    ReusableDialogContent,
-    ReusableDialogTitle,
-} from 'components/Dialog.component';
-import CustomizedSnackbar from 'components/Snackbar.component';
-import FromTextField from 'components/TextField.component';
-import { MESSAGES } from 'constants/restaurantSnackbarConstant';
-import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
-import { FormProvider, useForm } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
+import { AlertColor, Box, CardMedia, Stack, Typography } from '@mui/material';
+import { FormDialog, NoFormDialog } from 'components/Dialog.component';
+import { FormSelectField } from 'components/FormSelect.component';
+import { FormTimeField } from 'components/FormTime.component';
 import { useNavigate } from 'react-router-dom';
 import { initializeRestaurant } from 'store/cartSlice';
 import { get } from 'store/fooditemSlice';
@@ -27,20 +16,21 @@ import {
     StyledCardActionArea,
     StyledCardContent,
     StyledCategoryBox,
-    StyledCategoryTextfield,
     StyledDescription,
     StyledMenuItem,
 } from 'styles/Restaurant.styles';
 import { RestaurantCardProps, RestaurantFormData } from 'types';
 
-import { FONT_SIZE } from '@constant';
+import { CustomizedSnackbar, FormTextField, ReusableButton } from '@components';
+import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
-export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
+import { MESSAGES, RESTAURANT_VALIDATION } from '../constants';
+import { ROUTES } from '../constants';
+
+export const MultiActionAreaCard = ({ data }: RestaurantCardProps) => {
     //handle open/close modals
     const [open, setOpen] = useState(false);
     const [delOpen, setDelOpen] = useState(false);
-
-    const methods = useForm<RestaurantFormData>();
     const navigate = useNavigate();
     const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
@@ -52,43 +42,22 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         severity: 'success' as AlertColor,
     });
 
-    //set initial form state for adding new restaurant
-    const [formData, setFormData] = useState({
-        img: '',
-        alt: '',
-        heading: '',
-        location: '',
-        description: '',
-        category: '',
-    });
-
     /**
-     * set form state for editing restaurant
-     * @returns {any}
+     * TODO: set form state for editing restaurant
      */
     const editHandler = () => {
-        setFormData({
-            img: data.img,
-            alt: data.alt,
-            heading: data.heading,
-            location: data.location,
-            description: data.description,
-            category: data.category,
-        });
         setOpen(true);
     };
 
     /**
-     * open delete restaurant modal
-     * @returns {any}
+     * TODO: open delete restaurant modal
      */
     const deleteHandler = () => {
         setDelOpen(true);
     };
 
     /**
-     * confirm restaurant delete
-     * @returns {any}
+     * TODO: confirm restaurant delete
      */
     const confirmDeleteHandler = () => {
         dispatch(del(data.restaurantId));
@@ -101,24 +70,22 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
     };
 
     /**
-     * handle edit dialog close
-     * @returns {any}
+     * TODO: handle edit dialog close
      */
     const handleClose = () => {
         setOpen(false);
     };
+
     /**
-     * handle delete dialog close
-     * @returns {any}
+     * TODO: handle delete dialog close
      */
     const handleDelClose = () => {
         setDelOpen(false);
     };
 
     /**
-     * handle edit form submit
-     * @param {any} editFormData:RestaurantFormData
-     * @returns {any}
+     * TODO: handle edit form submit
+     * @param editFormData - {RestaurantFormData}
      */
     const onSubmit = (editFormData: RestaurantFormData) => {
         dispatch(
@@ -132,12 +99,10 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
             message: MESSAGES.EDIT,
             severity: 'success',
         });
-        setOpen(false);
     };
 
     /**
-     * set which restaurant user selected
-     * @returns {any}
+     * TODO: set which restaurant user selected
      */
     const selectRestaurantHandler = () => {
         dispatch(
@@ -145,7 +110,7 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         );
         dispatch(get(data.restaurantId));
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        navigate(`/dashboard/${data.restaurantId}`);
+        navigate(ROUTES.FOOD(data.restaurantId));
         dispatch(initializeRestaurant(data.restaurantId));
     };
 
@@ -203,6 +168,13 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                             </Typography>
                         </Stack>
 
+                        <Typography
+                            variant="subtitle2"
+                            sx={{ fontWeight: FONT_WEIGHT.SEMIBOLD }}
+                        >
+                            Time: {data.openingTime} - {data.closingTime}
+                        </Typography>
+
                         <StyledDescription variant="body2">
                             {data.description}
                         </StyledDescription>
@@ -226,6 +198,7 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                                     <ReusableButton
                                         variant="outlined"
                                         size="small"
+                                        color="primary"
                                         sx={{
                                             fontSize: FONT_SIZE.MD,
                                             px: 4,
@@ -243,128 +216,100 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                     </StyledCardContent>
                 </StyledCardActionArea>
             </StyledCard>
-            <ReusableDialog
+            <FormDialog
+                title="Edit Restaurant"
                 open={open}
                 onClose={handleClose}
-                fullWidth
-                maxWidth="sm"
+                onSubmit={onSubmit}
+                defaultValues={{
+                    img: data.img,
+                    alt: data.alt,
+                    heading: data.heading,
+                    location: data.location,
+                    description: data.description,
+                    category: data.category,
+                }}
             >
-                <FormProvider {...methods}>
-                    <form
-                        onSubmit={(e) => {
-                            void methods.handleSubmit(onSubmit)(e);
+                <>
+                    <FormTextField
+                        name="heading"
+                        id="heading"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                            maxLength: {
+                                value: 50,
+                                message: RESTAURANT_VALIDATION.LIMIT.replace(
+                                    '{{name_count}}',
+                                    '50',
+                                ),
+                            },
+                        }}
+                    />
+                    <FormTextField
+                        name="img"
+                        id="img"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
+                    <FormTextField
+                        name="alt"
+                        id="alt"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
+                    <FormTextField
+                        name="location"
+                        id="location"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
+                    <FormTextField
+                        name="description"
+                        id="description"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
+                    <FormSelectField
+                        name="category"
+                        id="category"
+                        label="Category"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
                         }}
                     >
-                        <ReusableDialogTitle>
-                            Edit Restaurant
-                        </ReusableDialogTitle>
+                        <StyledMenuItem value="veg">Veg</StyledMenuItem>
+                        <StyledMenuItem value="non-veg">Non-Veg</StyledMenuItem>
+                    </FormSelectField>
+                    <FormTimeField
+                        name="openingTime"
+                        id="openingTime"
+                        label="Opening time"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
 
-                        <ReusableDialogContent>
-                            <FromTextField
-                                name="heading"
-                                id="heading"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                    maxLength: {
-                                        value: 50,
-                                        message:
-                                            RESTAURANT_VALIDATION.LIMIT.replace(
-                                                '{{name_count}}',
-                                                '50',
-                                            ),
-                                    },
-                                }}
-                                defaultVal={formData.heading}
-                            />
-                            <FromTextField
-                                name="img"
-                                id="img"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                                defaultVal={formData.img}
-                            />
-                            <FromTextField
-                                name="alt"
-                                id="alt"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                                defaultVal={formData.alt}
-                            />
-                            <FromTextField
-                                name="location"
-                                id="location"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                                defaultVal={formData.location}
-                            />
-                            <FromTextField
-                                name="description"
-                                id="description"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                                defaultVal={formData.description}
-                            />
-                            <Controller
-                                name="category"
-                                control={methods.control}
-                                defaultValue={formData.category}
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                                render={({ field, fieldState }) => (
-                                    <StyledCategoryTextfield
-                                        {...field}
-                                        required
-                                        size="small"
-                                        select
-                                        label="Category"
-                                        error={!!fieldState.error}
-                                        helperText={fieldState.error?.message}
-                                    >
-                                        <StyledMenuItem value="veg">
-                                            Veg
-                                        </StyledMenuItem>
-                                        <StyledMenuItem value="non-veg">
-                                            Non-Veg
-                                        </StyledMenuItem>
-                                    </StyledCategoryTextfield>
-                                )}
-                            />
-                        </ReusableDialogContent>
-
-                        <ReusableDialogActions>
-                            <ReusableButton
-                                size="small"
-                                onClick={handleClose}
-                                color="inherit"
-                            >
-                                Cancel
-                            </ReusableButton>
-
-                            <ReusableButton
-                                size="small"
-                                type="submit"
-                                variant="contained"
-                            >
-                                Confirm
-                            </ReusableButton>
-                        </ReusableDialogActions>
-                    </form>
-                </FormProvider>
-            </ReusableDialog>
-            <ReusableDialog
+                    <FormTimeField
+                        name="closingTime"
+                        id="closingTime"
+                        label="Closing time"
+                        rules={{
+                            required: RESTAURANT_VALIDATION.REQUIRED,
+                        }}
+                    />
+                </>
+            </FormDialog>
+            <NoFormDialog
+                title="Delete Restaurant"
                 open={delOpen}
                 onClose={handleDelClose}
-                fullWidth
-                maxWidth="sm"
+                onConfirm={confirmDeleteHandler}
             >
-                <ReusableDialogTitle>Delete Restaurant</ReusableDialogTitle>
-
-                <ReusableDialogContent>
+                <>
                     <Typography variant="body1">
                         Are you sure you want to delete this restaurant
                     </Typography>
@@ -374,27 +319,8 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                     >
                         *this action can&apos;t be reversed
                     </Typography>
-                </ReusableDialogContent>
-
-                <ReusableDialogActions>
-                    <ReusableButton
-                        size="small"
-                        onClick={handleDelClose}
-                        color="inherit"
-                    >
-                        Cancel
-                    </ReusableButton>
-
-                    <ReusableButton
-                        size="small"
-                        type="button"
-                        onClick={confirmDeleteHandler}
-                        variant="contained"
-                    >
-                        Confirm
-                    </ReusableButton>
-                </ReusableDialogActions>
-            </ReusableDialog>
+                </>
+            </NoFormDialog>
             <CustomizedSnackbar
                 severity={snackbar.severity}
                 message={snackbar.message}
@@ -408,4 +334,4 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
             />
         </>
     );
-}
+};

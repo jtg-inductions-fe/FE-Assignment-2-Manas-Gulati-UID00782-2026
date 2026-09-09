@@ -1,19 +1,33 @@
-import { CardContent, Divider, Stack, Typography } from '@mui/material';
-import { useTypeSelector } from 'store/hooks';
+import { useState } from 'react';
+
+import {
+    AlertColor,
+    CardContent,
+    Divider,
+    Stack,
+    Typography,
+} from '@mui/material';
+import { NullState } from 'components/Nullstate.component';
+import { removeFoodData } from 'store/cartSlice';
+import { useTypeDispatch, useTypeSelector } from 'store/hooks';
+import { initializeOrder } from 'store/orderSlice';
 import {
     StyledCartConfirmButton,
     StyledCartSummaryWrapper,
     StyledCartWrapper,
-    StyledEmptyCart,
     StyledTotalText,
 } from 'styles/Cart.styles';
-import { AutoGridProps } from 'types';
+import { CartAutoGridProps } from 'types';
 
+import { CustomizedSnackbar } from '@components';
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
-import CartFoodCard from './CartFoodCard';
+import { ORDER } from '../constants';
+import { MultiActionAreaCard } from './CartFoodCard';
 
-export default function AutoGrid({ data }: AutoGridProps) {
+export const AutoGrid = ({ data }: CartAutoGridProps) => {
+    const dispatch = useTypeDispatch();
+
     const food = useTypeSelector((state) => state.cart.food);
     let subtotal = 0;
     food.forEach((foodItem) => {
@@ -21,29 +35,73 @@ export default function AutoGrid({ data }: AutoGridProps) {
         subtotal += price;
     });
 
+    //initializing required variables
+    const restaurantId = useTypeSelector(
+        (state) => state.cart.restaurantId ?? 0,
+    );
+    const userId = useTypeSelector((state) => state.cart.userId ?? 0);
+    const cartFood = useTypeSelector((state) => state.cart.food);
+
     const total = subtotal + 50;
+
+    const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: '',
+        severity: 'success' as AlertColor,
+    });
+
+    /**
+     * TODO: Place an order and empties cart
+     */
+    const handlePlaceOrder = () => {
+        if (cartFood.length > 0) {
+            const date = new Date();
+            const orderId = restaurantId + userId + date.getTime();
+            const orderData = {
+                orderId: orderId,
+                customerId: userId,
+                restaurantId: restaurantId,
+                foodItem: cartFood,
+                totalPrice: total,
+                date: date.toDateString(),
+                orderStatus: 'Pending',
+            };
+            dispatch(initializeOrder(orderData));
+            dispatch(removeFoodData());
+            setSnackbar({
+                open: true,
+                message: ORDER.SUCCESS,
+                severity: 'success',
+            });
+        } else {
+            setSnackbar({
+                open: true,
+                message: ORDER.FAILED,
+                severity: 'error',
+            });
+        }
+    };
+    let nullState = false;
+    if (data.length <= 0) {
+        nullState = true;
+    }
 
     return (
         <>
             <StyledCartWrapper>
                 <Stack spacing={3}>
-                    {data.length > 0 ? (
+                    {!nullState ? (
                         data.map((item) => (
-                            <CartFoodCard key={item.foodId} data={item} />
+                            <MultiActionAreaCard
+                                key={item.foodId}
+                                data={item}
+                            />
                         ))
                     ) : (
-                        <StyledEmptyCart>
-                            <Typography
-                                variant="body1"
-                                sx={{ fontWeight: FONT_WEIGHT.SEMIBOLD }}
-                            >
-                                Your cart is empty
-                            </Typography>
-                            <Typography variant="subtitle1">
-                                Add an item from a restaurant menu to get
-                                started.
-                            </Typography>
-                        </StyledEmptyCart>
+                        <NullState
+                            title="Your cart is empty"
+                            description="Add an item from a restaurant menu to get started."
+                        />
                     )}
                 </Stack>
 
@@ -121,13 +179,24 @@ export default function AutoGrid({ data }: AutoGridProps) {
                         <StyledCartConfirmButton
                             variant="contained"
                             fullWidth
-                            //onClick={handlePlaceOrder}
+                            onClick={handlePlaceOrder}
                         >
                             Place Order
                         </StyledCartConfirmButton>
                     </CardContent>
                 </StyledCartSummaryWrapper>
             </StyledCartWrapper>
+            <CustomizedSnackbar
+                severity={snackbar.severity}
+                message={snackbar.message}
+                state={snackbar.open}
+                onClose={() =>
+                    setSnackbar((previous) => ({
+                        ...previous,
+                        open: false,
+                    }))
+                }
+            />
         </>
     );
-}
+};

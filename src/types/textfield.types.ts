@@ -6,4 +6,5 @@ export interface LabelProps {
     rules: RegisterOptions;
     id: string;
     defaultVal?: string | number;
+    type?: string;
 }
