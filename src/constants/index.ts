@@ -4,4 +4,5 @@ export { VALIDATION } from './formValidationConstants';
 export { RESTAURANT_VALIDATION } from './restaurantValidationConstants';
 export { ROUTES } from './routeConstants';
 export { MESSAGES } from './restaurantSnackbarConstant';
-export { STATUS } from './orderStatusConstants';
+export { FINAL_STATUS, STATUS } from './orderStatusConstants';
+export { ORDER } from './orderConstants';

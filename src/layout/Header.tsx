@@ -43,25 +43,22 @@ export default function PrimarySearchAppBar({
     });
 
     /**
-     * handle profile open functionality
-     * @param {any} e:React.MouseEvent<HTMLElement>
-     * @returns {any}
+     * TODO: handle profile open functionality
+     * @param e - {React.MouseEvent<HTMLElement>}
      */
     const handleProfileMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(e.currentTarget);
     };
 
     /**
-     * handle profile close functionality
-     * @returns {any}
+     * TODO: handle profile close functionality
      */
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
 
     /**
-     * handle user logout
-     * @returns {any}
+     * TODO: handle user logout
      */
     const handleLogout = () => {
         dispatch(logout());
@@ -70,6 +67,9 @@ export default function PrimarySearchAppBar({
         navigate(ROUTES.HOME, { replace: true });
     };
 
+    /**
+     * TODO: redirect to orders page
+     */
     const handleOrders = () => {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         navigate(ROUTES.ORDER);
@@ -78,12 +78,11 @@ export default function PrimarySearchAppBar({
     const userId = useTypeSelector((state) => state.auth.user?.userId);
 
     /**
-     * navigate to cart page
-     * @returns {any}
+     * TODO: navigate to cart page
      */
     const cartHandler = () => {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        navigate(ROUTES.CART(userId ?? 404));
+        navigate(ROUTES.CART(userId ?? ROUTES.ERROR));
     };
 
     const menuId = 'primary-search-account-menu';
@@ -126,7 +125,7 @@ export default function PrimarySearchAppBar({
                         variant="h5"
                         component={RouterLink}
                         noWrap
-                        to="/dashboard"
+                        to={ROUTES.HOME}
                         sx={(theme) => ({
                             ml: theme.spacing(1),
                             textDecoration: 'none',

@@ -66,9 +66,8 @@ export default function Orders() {
                             color="text.secondary"
                             sx={{ mt: 1 }}
                         >
-                            {
-                                'Track your current orders and review your order history.'
-                            }
+                            Track your current orders and review your order
+                            history.
                         </Typography>
                     </Box>
                     <Chip

@@ -7,6 +7,7 @@ export default function FromTextField({
     rules,
     id,
     defaultVal,
+    type = 'text',
 }: LabelProps) {
     const { control } = useFormContext();
     return (
@@ -21,6 +22,7 @@ export default function FromTextField({
                 <CustomTextField
                     {...field}
                     id={id}
+                    type={type}
                     size="small"
                     label={name}
                     variant="outlined"

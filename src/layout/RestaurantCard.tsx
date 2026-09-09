@@ -65,8 +65,7 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
     });
 
     /**
-     * set form state for editing restaurant
-     * @returns {any}
+     * TODO: set form state for editing restaurant
      */
     const editHandler = () => {
         setFormData({
@@ -81,16 +80,14 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
     };
 
     /**
-     * open delete restaurant modal
-     * @returns {any}
+     * TODO: open delete restaurant modal
      */
     const deleteHandler = () => {
         setDelOpen(true);
     };
 
     /**
-     * confirm restaurant delete
-     * @returns {any}
+     * TODO: confirm restaurant delete
      */
     const confirmDeleteHandler = () => {
         dispatch(del(data.restaurantId));
@@ -103,24 +100,22 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
     };
 
     /**
-     * handle edit dialog close
-     * @returns {any}
+     * TODO: handle edit dialog close
      */
     const handleClose = () => {
         setOpen(false);
     };
+
     /**
-     * handle delete dialog close
-     * @returns {any}
+     * TODO: handle delete dialog close
      */
     const handleDelClose = () => {
         setDelOpen(false);
     };
 
     /**
-     * handle edit form submit
-     * @param {any} editFormData:RestaurantFormData
-     * @returns {any}
+     * TODO: handle edit form submit
+     * @param editFormData - {RestaurantFormData}
      */
     const onSubmit = (editFormData: RestaurantFormData) => {
         dispatch(
@@ -138,8 +133,7 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
     };
 
     /**
-     * set which restaurant user selected
-     * @returns {any}
+     * TODO: set which restaurant user selected
      */
     const selectRestaurantHandler = () => {
         dispatch(

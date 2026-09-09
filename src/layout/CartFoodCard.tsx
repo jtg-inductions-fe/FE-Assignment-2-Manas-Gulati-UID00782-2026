@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Box, IconButton, Stack } from '@mui/material';
 import { CardMedia } from '@mui/material';
 import Counter from 'components/Counter.component';
@@ -17,32 +15,33 @@ import { CardProps } from 'types';
 
 export default function MultiActionAreaCard({ data }: CardProps) {
     const dispatch = useTypeDispatch();
-    const [count, setCount] = useState(data.quantity);
+    const relevantFoodItem = useTypeSelector((state) =>
+        state.cart.food.find((food) => food.foodId === data.foodId),
+    );
+    const count = relevantFoodItem?.quantity ?? 0; //give relevant fooditem quantity to set counter
+    const currentStock = relevantFoodItem?.stock ?? 0; //give relevant fooditem stock for stock management
+
     const restaurantName = useTypeSelector(
         (state) => state.selectedRestaurant.restaurantName,
     );
 
     /**
-     * Increases the fooditem quantity by 1
-     * @returns {any}
+     * TODO: Increases the fooditem quantity by 1
      */
     const increaseHandler = () => {
+        if (count >= currentStock) return;
         dispatch(addFood({ data: data, quantity: count + 1 }));
-        setCount(count + 1);
     };
 
     /**
-     * Decreases the fooditem quantity by 1
-     * @returns {any}
+     * TODO: Decreases the fooditem quantity by 1
      */
     const decreaseHandler = () => {
         dispatch(addFood({ data: data, quantity: count - 1 }));
-        setCount(count - 1);
     };
 
     /**
-     * Delete fooditem from cart
-     * @returns {any}
+     * TODO: Delete fooditem from cart
      */
     const deleteHandler = () => {
         dispatch(addFood({ data: data, quantity: 0 }));
@@ -64,7 +63,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                             borderRadius: 2,
                         }}
                     />
-                    <Box>
+                    <Box ml={4}>
                         <StyledCartHeading gutterBottom variant="h3">
                             {data.heading}
                         </StyledCartHeading>
@@ -75,6 +74,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                     <Stack
                         direction="row"
                         mt="auto"
+                        ml={4}
                         alignItems="center"
                         gap="2.5"
                         sx={{
@@ -92,6 +92,7 @@ export default function MultiActionAreaCard({ data }: CardProps) {
                             <Counter
                                 count={count}
                                 increaseHandler={increaseHandler}
+                                disableIncrease={count >= currentStock}
                                 decreaseHandler={decreaseHandler}
                             />
                             <IconButton

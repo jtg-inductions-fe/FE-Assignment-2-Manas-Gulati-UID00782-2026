@@ -32,8 +32,7 @@ export default function AutoGrid({ data }: FoodAutoGridProps) {
     const role = useTypeSelector((state) => state?.auth?.user?.role);
 
     /**
-     * Close add more fooditem dialog box
-     * @returns {any}
+     * TODO: Close add more fooditem dialog box
      */
     const handleClose = () => {
         setAddOpen(false);
@@ -47,9 +46,8 @@ export default function AutoGrid({ data }: FoodAutoGridProps) {
     });
 
     /**
-     * Add the fooditem into state and render ui
-     * @param {any} addFormData:FooditemFormData
-     * @returns {any}
+     * TODO: Add the fooditem into state and render ui
+     * @param addFormData - {FooditemFormData}
      */
     const onSubmit = (addFormData: FooditemFormData) => {
         dispatch(add(addFormData));
@@ -67,11 +65,11 @@ export default function AutoGrid({ data }: FoodAutoGridProps) {
                 <CustomGridWrapper
                     container
                     spacing={{ xs: 3, md: 4 }}
-                    rowGap={18}
+                    rowGap={8}
                 >
-                    {data.map((item, index) => (
+                    {data.map((item) => (
                         <CustomCardGrid
-                            key={index}
+                            key={item.foodId}
                             size={{ xs: 12, md: 6, lg: 4 }}
                         >
                             <FooditemCard data={item} />

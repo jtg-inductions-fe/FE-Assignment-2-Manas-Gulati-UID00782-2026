@@ -13,7 +13,7 @@ import ReusableButton from 'components/Button.component';
 import FormPassword from 'components/Password.component';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FormTextField from 'components/TextField.component';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { signin } from 'store/authSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { CustomRadio } from 'styles/Radio.styles';
@@ -39,6 +39,10 @@ function Signup() {
         formState: { errors },
     } = methods;
 
+    /**
+     * TODO: sets signup data
+     * @param data - {SignupFormData}
+     */
     const onSubmit = (data: SignupFormData) => {
         dispatch(signin(data)); //update signup attempt at every signup attempt and check signup validations
     };
@@ -153,34 +157,47 @@ function Signup() {
                                 >
                                     Role
                                 </FormLabel>
-                                <RadioGroup
-                                    row
-                                    aria-labelledby="signupUserRole"
-                                    {...methods.register('role', {
+                                <Controller
+                                    name="role"
+                                    control={methods.control}
+                                    rules={{
                                         required: 'Please select a role',
-                                    })}
-                                >
-                                    <FormControlLabel
-                                        value="customer"
-                                        control={<CustomRadio />}
-                                        label="Customer"
-                                        sx={{
-                                            '& .MuiFormControlLabel-label': {
-                                                fontSize: FONT_SIZE.XL,
-                                            },
-                                        }}
-                                    />
-                                    <FormControlLabel
-                                        value="owner"
-                                        control={<CustomRadio />}
-                                        label="Owner"
-                                        sx={{
-                                            '& .MuiFormControlLabel-label': {
-                                                fontSize: FONT_SIZE.XL,
-                                            },
-                                        }}
-                                    />
-                                </RadioGroup>
+                                    }}
+                                    render={({ field }) => (
+                                        <RadioGroup
+                                            row
+                                            aria-labelledby="signupUserRole"
+                                            {...field}
+                                        >
+                                            <FormControlLabel
+                                                value="customer"
+                                                control={<CustomRadio />}
+                                                label="Customer"
+                                                sx={{
+                                                    '& .MuiFormControlLabel-label':
+                                                        {
+                                                            fontSize:
+                                                                FONT_SIZE.XL,
+                                                        },
+                                                }}
+                                            />
+
+                                            <FormControlLabel
+                                                value="owner"
+                                                control={<CustomRadio />}
+                                                label="Owner"
+                                                sx={{
+                                                    '& .MuiFormControlLabel-label':
+                                                        {
+                                                            fontSize:
+                                                                FONT_SIZE.XL,
+                                                        },
+                                                }}
+                                            />
+                                        </RadioGroup>
+                                    )}
+                                />
+
                                 <FormHelperText error={!!errors.role}>
                                     {errors.role?.message}
                                 </FormHelperText>

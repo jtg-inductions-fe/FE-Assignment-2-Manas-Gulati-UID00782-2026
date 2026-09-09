@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Stack, Typography } from '@mui/material';
 import Login from 'layout/Login';
 import Signup from 'layout/Signup';
+import { Navigate } from 'react-router-dom';
+import { useTypeSelector } from 'store/hooks';
 import {
     AuthBrand,
     AuthCard,
@@ -15,8 +17,17 @@ import {
     FormContainer,
 } from 'styles/Auth.styles';
 
+import { ROUTES } from '../constants';
+
 export default function Auth() {
     const [login, setLoginFrom] = useState(true);
+    const isAuthenticated = useTypeSelector(
+        (state) => state.auth.isAuthenticated,
+    );
+
+    if (isAuthenticated) {
+        <Navigate to={ROUTES.DASHBOARD} replace />;
+    }
 
     const toggleStateHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         const id = e.currentTarget.id;

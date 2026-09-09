@@ -11,7 +11,11 @@ export default function AutoGrid({
     canChangeStatus,
     restaurantNames,
 }: OrdersDetailProps) {
+    let nullState = false;
     if (data.length === 0) {
+        nullState = true;
+    }
+    if (nullState)
         return (
             <StyledNoOrderBox>
                 <Typography
@@ -25,7 +29,7 @@ export default function AutoGrid({
                 </Typography>
             </StyledNoOrderBox>
         );
-    }
+
     return (
         <>
             <Stack spacing={3} sx={{ mt: 4 }}>

@@ -19,6 +19,7 @@ const selectRestaurantSlice = createSlice({
         },
         clearRestaurant: (state) => {
             state.restaurantId = null;
+            state.restaurantName = '';
         },
     },
 });

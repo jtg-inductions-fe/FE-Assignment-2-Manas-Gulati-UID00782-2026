@@ -1,9 +1,5 @@
-import { ButtonProps } from '@mui/material';
 import { StyledButton } from 'styles/Button.styles';
-
-export interface ReusableButtonProps extends ButtonProps {
-    selected?: boolean;
-}
+import { ReusableButtonProps } from 'types/button.types';
 
 export default function ReusableButton({
     children,

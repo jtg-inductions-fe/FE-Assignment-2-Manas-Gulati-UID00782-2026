@@ -2,6 +2,7 @@ import Auth from 'pages/Auth';
 import Cart from 'pages/Cart';
 import Dashboard from 'pages/Dashboard';
 import FoodItems from 'pages/FoodItems';
+import NotFound from 'pages/NotFound';
 import Orders from 'pages/Orders';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -14,6 +15,10 @@ export const router = createBrowserRouter([
         element: <Auth />,
     },
     {
+        path: '*',
+        element: <NotFound />,
+    },
+    {
         element: <ProtectedRoute />,
         children: [
             {
@@ -21,11 +26,11 @@ export const router = createBrowserRouter([
                 element: <Dashboard />,
             },
             {
-                path: ROUTES.FOOD,
+                path: ROUTES.FOOD_ROUTE,
                 element: <FoodItems />,
             },
             {
-                path: ROUTES.CART,
+                path: ROUTES.CART_ROUTE,
                 element: <Cart />,
             },
             {

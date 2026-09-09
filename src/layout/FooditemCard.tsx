@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Box, IconButton, Stack } from '@mui/material';
@@ -40,16 +40,11 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
     //handle open/close modals
     const [open, setOpen] = useState(false);
     const [delOpen, setDelOpen] = useState(false);
-    const [disabled, setDisabled] = useState(false);
     const cartFood = useTypeSelector((state) => state.cart.food);
-    let quantity = 0;
     const selectedFood = cartFood.find((food) => food.foodId === data.foodId);
 
-    if (selectedFood) {
-        quantity = selectedFood.quantity;
-    }
-
-    const [count, setCount] = useState(quantity ?? 0);
+    const count = selectedFood?.quantity ?? 0;
+    const disabled = data.stock <= 0;
     const methods = useForm<FooditemFormData>();
     const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
@@ -73,8 +68,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
     });
 
     /**
-     * set form state for editing restaurant
-     * @returns {any}
+     * TODO: set form state for editing restaurant
      */
     const editHandler = () => {
         setFormData({
@@ -89,21 +83,15 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
         setOpen(true);
     };
 
-    useEffect(() => {
-        setDisabled(data.stock == 0);
-    }, [data.stock]);
-
     /**
-     * open delete fooditem confirmation modal
-     * @returns {any}
+     * TODO: open delete fooditem confirmation modal
      */
     const deleteHandler = () => {
         setDelOpen(true);
     };
 
     /**
-     * Delete fooditem confirmation
-     * @returns {any}
+     * TODO: Delete fooditem confirmation
      */
     const confirmDeleteHandler = () => {
         dispatch(del(data.foodId));
@@ -116,52 +104,44 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
     };
 
     /**
-     * Closes edit dialog box
-     * @returns {any}
+     * TODO: Closes edit dialog box
      */
     const handleClose = () => {
         setOpen(false);
     };
 
     /**
-     * Closes delete dialog box
-     * @returns {any}
+     * TODO:  Closes delete dialog box
      */
     const handleDelClose = () => {
         setDelOpen(false);
     };
 
     /**
-     * Add item to card and set its quantity
-     * @returns {any}
+     * TODO: Add item to card and set its quantity
      */
     const addToCartHandler = () => {
-        setCount(1);
         dispatch(addFood({ data: data, quantity: 1 }));
     };
 
     /**
-     * Increase cart food item quantity
-     * @returns {any}
+     * TODO: Increase cart food item quantity
      */
     const increaseHandler = () => {
+        if (count >= data.stock) return;
         dispatch(addFood({ data: data, quantity: count + 1 }));
-        setCount(count + 1);
     };
 
     /**
-     * decrease cart food item quantity
-     * @returns {any}
+     * TODO: decrease cart food item quantity
      */
     const decreaseHandler = () => {
         dispatch(addFood({ data: data, quantity: count - 1 }));
-        setCount(count - 1);
     };
 
     /**
-     * Edit food item
-     * @param {any} editFormData:FooditemFormData
-     * @returns {any}
+     * TODO: Edit food item
+     * @param editFormData - {FooditemFormData}
      */
     const onSubmit = (editFormData: FooditemFormData) => {
         dispatch(
@@ -264,6 +244,7 @@ export default function MultiActionAreaCard({ data }: FoodCardProps) {
                                 count={count}
                                 increaseHandler={increaseHandler}
                                 decreaseHandler={decreaseHandler}
+                                disableIncrease={count >= data.stock}
                             />
                         )}
                     </Box>

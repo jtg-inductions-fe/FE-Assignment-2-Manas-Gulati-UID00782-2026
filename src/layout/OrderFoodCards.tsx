@@ -2,23 +2,23 @@ import { useState } from 'react';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
+    Avatar,
     Box,
+    CardActions,
+    CardContent,
+    CardHeader,
     Chip,
+    Collapse,
     Divider,
     FormControl,
+    IconButton,
     MenuItem,
     Select,
     SelectChangeEvent,
     Stack,
+    styled,
+    Typography,
 } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import { useTypeDispatch } from 'store/hooks';
 import { changeStatus } from 'store/orderSlice';
 import { StyledOrderCard, StyledOrderPrice } from 'styles/Orders.styles';
@@ -27,7 +27,7 @@ import { ExpandMoreProps } from 'types';
 
 import { FONT_WEIGHT } from '@constant';
 
-import { STATUS } from '../constants';
+import { FINAL_STATUS, STATUS } from '../constants';
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
     const { ...other } = props;
@@ -60,15 +60,15 @@ export default function RecipeReviewCard({
 }: OrderCardProps) {
     const [expanded, setExpanded] = useState(false);
     const dispatch = useTypeDispatch();
+    const statusLock = FINAL_STATUS.includes(data.orderStatus);
     let itemCount = 0;
     data.foodItem.forEach((orderedFood) => {
         itemCount += orderedFood.quantity;
     });
 
     /**
-     * Change order status
-     * @param {any} e:SelectChangeEvent
-     * @returns {any}
+     * TODO: Change order status
+     * @param e - {SelectChangeEvent}
      */
     const statusHandler = (e: SelectChangeEvent) => {
         dispatch(
@@ -80,8 +80,7 @@ export default function RecipeReviewCard({
     };
 
     /**
-     * expands orders card
-     * @returns {any}
+     * TODO: expands orders card
      */
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -115,6 +114,7 @@ export default function RecipeReviewCard({
                                 value={data.orderStatus}
                                 aria-label={`Order status`}
                                 onChange={statusHandler}
+                                disabled={statusLock}
                             >
                                 {STATUS.map((status) => (
                                     <MenuItem key={status} value={status}>

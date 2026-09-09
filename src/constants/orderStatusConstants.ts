@@ -10,3 +10,9 @@ export const STATUS = [
     'Delivered',
     'Rejected',
 ];
+
+/**
+ * Final Order Status to disable and pack orders
+ * @constant
+ */
+export const FINAL_STATUS = ['Delivered', 'Rejected'];

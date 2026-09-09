@@ -42,17 +42,15 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
     });
 
     /**
-     * handle add dialog close
-     * @returns {any}
+     * TODO: handle add dialog close
      */
     const handleClose = () => {
         setAddOpen(false);
     };
 
     /**
-     * handle add restaurant form data
-     * @param {any} addFormData:RestaurantFormData
-     * @returns {any}
+     * TODO: handle add restaurant form data
+     * @param addFormData - {RestaurantFormData}
      */
     const onSubmit = (addFormData: RestaurantFormData) => {
         dispatch(add(addFormData));
@@ -70,11 +68,11 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                 <CustomGridWrapper
                     container
                     spacing={{ xs: 3, md: 4 }}
-                    rowGap={18}
+                    rowGap={8}
                 >
-                    {data.map((item, index) => (
+                    {data.map((item) => (
                         <CustomCardGrid
-                            key={index}
+                            key={item.restaurantId}
                             size={{ xs: 12, md: 6, lg: 4 }}
                         >
                             <RestaurantCard data={item} />

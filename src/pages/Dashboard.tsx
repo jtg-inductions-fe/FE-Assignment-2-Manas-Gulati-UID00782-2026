@@ -42,8 +42,6 @@ export default function Dashboard() {
             filterData = restaurantData.filter(
                 (item) => item.category === 'non-veg',
             );
-        } else {
-            filterData = restaurantData;
         }
     }
     if (query) {

@@ -1,4 +1,13 @@
-import { CardContent, Divider, Stack, Typography } from '@mui/material';
+import { useState } from 'react';
+
+import {
+    AlertColor,
+    CardContent,
+    Divider,
+    Stack,
+    Typography,
+} from '@mui/material';
+import CustomizedSnackbar from 'components/Snackbar.component';
 import { removeFoodData } from 'store/cartSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { initializeOrder } from 'store/orderSlice';
@@ -13,6 +22,7 @@ import { CartAutoGridProps } from 'types';
 
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
+import { ORDER } from '../constants';
 import CartFoodCard from './CartFoodCard';
 
 export default function AutoGrid({ data }: CartAutoGridProps) {
@@ -34,9 +44,14 @@ export default function AutoGrid({ data }: CartAutoGridProps) {
 
     const total = subtotal + 50;
 
+    const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: '',
+        severity: 'success' as AlertColor,
+    });
+
     /**
-     * Place an order and empties cart
-     * @returns {any}
+     * TODO: Place an order and empties cart
      */
     const handlePlaceOrder = () => {
         if (cartFood.length > 0) {
@@ -53,16 +68,29 @@ export default function AutoGrid({ data }: CartAutoGridProps) {
             };
             dispatch(initializeOrder(orderData));
             dispatch(removeFoodData());
+            setSnackbar({
+                open: true,
+                message: ORDER.SUCCESS,
+                severity: 'success',
+            });
         } else {
-            alert("can't place order");
+            setSnackbar({
+                open: true,
+                message: ORDER.FAILED,
+                severity: 'error',
+            });
         }
     };
+    let nullState = false;
+    if (data.length <= 0) {
+        nullState = true;
+    }
 
     return (
         <>
             <StyledCartWrapper>
                 <Stack spacing={3}>
-                    {data.length > 0 ? (
+                    {!nullState ? (
                         data.map((item) => (
                             <CartFoodCard key={item.foodId} data={item} />
                         ))
@@ -163,6 +191,17 @@ export default function AutoGrid({ data }: CartAutoGridProps) {
                     </CardContent>
                 </StyledCartSummaryWrapper>
             </StyledCartWrapper>
+            <CustomizedSnackbar
+                severity={snackbar.severity}
+                message={snackbar.message}
+                state={snackbar.open}
+                onClose={() =>
+                    setSnackbar((previous) => ({
+                        ...previous,
+                        open: false,
+                    }))
+                }
+            />
         </>
     );
 }
