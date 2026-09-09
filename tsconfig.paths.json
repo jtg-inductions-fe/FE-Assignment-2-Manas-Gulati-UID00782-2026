@@ -2,8 +2,7 @@
     "compilerOptions": {
         "baseUrl": "./src",
         "paths": {
-            "@assets/*": ["assets/*"],
-            "@constant": ["constant/index"],
+            "@constant": ["theme/constant/index"],
             "@theme": ["theme/index"]
         }
     }
