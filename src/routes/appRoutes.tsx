@@ -1,13 +1,13 @@
-import Auth from 'pages/Auth';
-import Cart from 'pages/Cart';
-import Dashboard from 'pages/Dashboard';
-import FoodItems from 'pages/FoodItems';
-import NotFound from 'pages/NotFound';
-import Orders from 'pages/Orders';
+import { Auth } from 'pages/Auth';
+import { Cart } from 'pages/Cart';
+import { Dashboard } from 'pages/Dashboard';
+import { FoodItems } from 'pages/FoodItems';
+import { NotFoundPage } from 'pages/NotFound';
+import { Orders } from 'pages/Orders';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { ROUTES } from '../constants';
-import ProtectedRoute from './protectedRoute';
+import { ProtectedRoute } from './protectedRoute';
 
 export const router = createBrowserRouter([
     {
@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '*',
-        element: <NotFound />,
+        element: <NotFoundPage />,
     },
     {
         element: <ProtectedRoute />,

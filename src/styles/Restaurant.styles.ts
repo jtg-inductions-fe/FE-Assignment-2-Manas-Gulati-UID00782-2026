@@ -1,6 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import {
     Box,
+    Card,
     CardActionArea,
     CardContent,
     MenuItem,
@@ -8,7 +9,6 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import { Card } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { FONT_SIZE } from '@constant';

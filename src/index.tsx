@@ -8,7 +8,7 @@ import { RouterProvider } from 'react-router-dom';
 import { theme } from '@theme';
 
 import { router } from './routes/appRoutes';
-import CheckLocalStorage from './routes/CheckLocalStorage';
+import { CheckLocalStorage } from './routes/CheckLocalStorage';
 import { store } from './store/store';
 
 const rootElement = document.getElementById('root') as HTMLElement;

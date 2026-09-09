@@ -3,7 +3,7 @@ import { useTypeSelector } from 'store/hooks';
 
 import { ROUTES } from '../constants';
 
-function ProtectedRoute() {
+export const ProtectedRoute = () => {
     const { isAuthenticated } = useTypeSelector((state) => state.auth);
 
     if (!isAuthenticated) {
@@ -11,6 +11,4 @@ function ProtectedRoute() {
     }
 
     return <Outlet />;
-}
-
-export default ProtectedRoute;
+};

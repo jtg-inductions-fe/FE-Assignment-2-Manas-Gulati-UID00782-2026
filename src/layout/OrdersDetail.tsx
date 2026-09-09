@@ -1,34 +1,26 @@
-import { Stack, Typography } from '@mui/material';
-import { StyledNoOrderBox } from 'styles/Orders.styles';
+import { Stack } from '@mui/material';
+import { NullState } from 'components/Nullstate.component';
 import { OrdersDetailProps } from 'types';
 
-import { FONT_WEIGHT } from '@constant';
+import { RecipeReviewCard } from './OrderFoodCards';
 
-import RecipeReviewCard from './OrderFoodCards';
-
-export default function AutoGrid({
+export const AutoGrid = ({
     data,
     canChangeStatus,
     restaurantNames,
-}: OrdersDetailProps) {
+}: OrdersDetailProps) => {
     let nullState = false;
     if (data.length === 0) {
         nullState = true;
     }
-    if (nullState)
+    if (nullState) {
         return (
-            <StyledNoOrderBox>
-                <Typography
-                    variant="body1"
-                    sx={{ fontWeight: FONT_WEIGHT.SEMIBOLD }}
-                >
-                    No orders available
-                </Typography>
-                <Typography variant="subtitle1">
-                    Confirm Orders to show here
-                </Typography>
-            </StyledNoOrderBox>
+            <NullState
+                title="No orders available"
+                description="Confirm Orders to show here"
+            />
         );
+    }
 
     return (
         <>
@@ -47,4 +39,4 @@ export default function AutoGrid({
             </Stack>
         </>
     );
-}
+};

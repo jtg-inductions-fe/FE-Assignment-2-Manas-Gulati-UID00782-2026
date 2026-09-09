@@ -7,7 +7,9 @@
             "heading": "Kake da dhaba",
             "location": "Rohini",
             "description": "Authentic North Indian food with rich flavors and traditional recipes.",
-            "category": "veg"
+            "category": "veg",
+            "openingTime": "09:00",
+            "closingTime": "23:00"
         },
         {
             "restaurantId": 413,
@@ -16,7 +18,9 @@
             "heading": "Billu hut",
             "location": "Pitampura",
             "description": "Delicious fast food and freshly prepared snacks perfect for a quick meal.",
-            "category": "non-veg"
+            "category": "non-veg",
+            "openingTime": "10:00",
+            "closingTime": "23:30"
         },
         {
             "restaurantId": 414,
@@ -25,7 +29,9 @@
             "heading": "Sindhi Meat Shop",
             "location": "Shalimar Bagh",
             "description": "A popular spot for flavorful meat dishes and authentic North Indian cuisine.",
-            "category": "non-veg"
+            "category": "non-veg",
+            "openingTime": "11:00",
+            "closingTime": "22:30"
         },
         {
             "restaurantId": 415,
@@ -34,7 +40,9 @@
             "heading": "Urban Tadka",
             "location": "Model Town",
             "description": "A modern restaurant serving delicious Indian dishes with a contemporary twist.",
-            "category": "veg"
+            "category": "veg",
+            "openingTime": "09:30",
+            "closingTime": "22:00"
         },
         {
             "restaurantId": 416,
@@ -43,7 +51,9 @@
             "heading": "The Burger House",
             "location": "Rajouri Garden",
             "description": "Juicy burgers, crispy fries and delicious comfort food made fresh to order.",
-            "category": "non-veg"
+            "category": "non-veg",
+            "openingTime": "10:00",
+            "closingTime": "23:00"
         }
     ],
     "2": [
@@ -54,7 +64,9 @@
             "heading": "Punjabi Rasoi",
             "location": "Dwarka",
             "description": "Traditional Punjabi dishes packed with authentic spices and homestyle flavors.",
-            "category": "veg"
+            "category": "veg",
+            "openingTime": "08:00",
+            "closingTime": "22:00"
         },
         {
             "restaurantId": 418,
@@ -63,7 +75,9 @@
             "heading": "Chicken Point",
             "location": "Janakpuri",
             "description": "Specializing in juicy chicken dishes, kebabs and flavorful Indian curries.",
-            "category": "non-veg"
+            "category": "non-veg",
+            "openingTime": "11:00",
+            "closingTime": "23:30"
         },
         {
             "restaurantId": 419,
@@ -72,7 +86,9 @@
             "heading": "Wok Express",
             "location": "Vasant Kunj",
             "description": "Fresh Asian noodles, rice bowls and stir-fried dishes prepared with bold flavors.",
-            "category": "veg"
+            "category": "veg",
+            "openingTime": "10:30",
+            "closingTime": "22:30"
         },
         {
             "restaurantId": 420,
@@ -81,7 +97,9 @@
             "heading": "Pizza Corner",
             "location": "Saket",
             "description": "Freshly baked pizzas with crispy crusts, cheesy toppings and flavorful sauces.",
-            "category": "veg"
+            "category": "veg",
+            "openingTime": "10:00",
+            "closingTime": "23:00"
         },
         {
             "restaurantId": 421,
@@ -90,7 +108,9 @@
             "heading": "Grill Nation",
             "location": "Karol Bagh",
             "description": "Grilled meats, kebabs and smoky specialties served with delicious sides.",
-            "category": "non-veg"
+            "category": "non-veg",
+            "openingTime": "12:00",
+            "closingTime": "23:30"
         }
     ]
 }

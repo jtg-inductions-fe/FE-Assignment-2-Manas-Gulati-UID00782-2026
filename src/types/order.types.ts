@@ -19,6 +19,7 @@ export interface OrderDetails {
     totalPrice: number;
     date: string;
     orderStatus: string;
+    stockDeducted?: boolean;
 }
 
 export interface OrdersDetailProps {

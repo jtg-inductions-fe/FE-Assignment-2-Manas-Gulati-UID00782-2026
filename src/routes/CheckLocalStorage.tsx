@@ -4,7 +4,7 @@ import { initializeUser } from 'store/cartSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { get } from 'store/restaurantSlice';
 
-export default function CheckLocalStorage({ children }: PropsWithChildren) {
+export const CheckLocalStorage = ({ children }: PropsWithChildren) => {
     const dispatch = useTypeDispatch();
     const user = useTypeSelector((state) => state.auth.user);
 
@@ -16,4 +16,4 @@ export default function CheckLocalStorage({ children }: PropsWithChildren) {
     }, [user]);
 
     return children;
-}
+};

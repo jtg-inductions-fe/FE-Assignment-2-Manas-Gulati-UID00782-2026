@@ -1,20 +1,22 @@
 import { useEffect, useState } from 'react';
 
-import { AlertColor } from '@mui/material';
-import Stack from '@mui/material/Stack';
-import ReusableButton from 'components/Button.component';
-import FormPassword from 'components/Password.component';
-import CustomizedSnackbar from 'components/Snackbar.component';
-import FormTextField from 'components/TextField.component';
+import { AlertColor, Stack } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { login } from 'store/authSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { LoginFormData } from 'types';
 
+import {
+    CustomizedSnackbar,
+    FormPassword,
+    FormTextField,
+    ReusableButton,
+} from '@components';
+
 import { ROUTES, SUCCESSMESSAGES, VALIDATION } from '../constants';
 
-function Login() {
+export const Login = () => {
     //set initial hidden state of snackbar
     const dispatch = useTypeDispatch();
     const navigate = useNavigate();
@@ -84,11 +86,7 @@ function Login() {
                                 }}
                             />
                             <FormPassword name="password" id="loginPassword" />
-                            <ReusableButton
-                                variant="outlined"
-                                type="submit"
-                                size="medium"
-                            >
+                            <ReusableButton type="submit" size="medium">
                                 LogIn
                             </ReusableButton>
                         </Stack>
@@ -108,6 +106,4 @@ function Login() {
             />
         </>
     );
-}
-
-export default Login;
+};

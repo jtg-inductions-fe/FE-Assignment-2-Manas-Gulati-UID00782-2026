@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FooditemCardData, FooditemFormData } from 'types';
+import { FooditemCardData, FooditemFormData, ReduceStock } from 'types';
 import { FooditemDataInterface } from 'types/mockdata.types';
 
 import mockData from '../MOCK_DATA/fooditem.json';
@@ -46,9 +46,20 @@ const FooditemSlice = createSlice({
             data[action.payload] ?? [],
         del: (state, action: PayloadAction<number>) =>
             state.filter((food) => food.foodId !== action.payload),
+        reduceStock: (state, action: PayloadAction<ReduceStock>) => {
+            action.payload.data.forEach((foodItem) => {
+                const food = state.find(
+                    (item) => item.foodId === foodItem.foodId,
+                );
+
+                if (food) {
+                    food.stock = food.stock - foodItem.quantity;
+                }
+            });
+        },
     },
 });
 
-export const { edit, add, del, get } = FooditemSlice.actions;
+export const { edit, add, del, get, reduceStock } = FooditemSlice.actions;
 
 export default FooditemSlice.reducer;

@@ -3,8 +3,8 @@ import { useState } from 'react';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
 import { Box, Stack, Typography } from '@mui/material';
-import { useDebouncedValue } from 'hooks/debounceHook';
-import AutoGrid from 'layout/FoodDetails';
+import { useDebouncedValue } from 'hooks/useDebounceHook';
+import { AutoGrid } from 'layout/FoodDetails';
 import { useTypeSelector } from 'store/hooks';
 import {
     StyledFooditemBannerChip,
@@ -19,9 +19,9 @@ import {
 
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
-import Header from '../layout/Header';
+import { PrimarySearchAppBar } from '../layout/Header';
 
-export default function FoodItems() {
+export const FoodItems = () => {
     const foodData = useTypeSelector((state) => state.food);
     const selectedRestaurant = useTypeSelector(
         (state) => state.selectedRestaurant,
@@ -44,7 +44,7 @@ export default function FoodItems() {
     }
     return (
         <StyledFooditemWrapper>
-            <Header
+            <PrimarySearchAppBar
                 searchValue={searchValue}
                 onSearchChange={setSearchValue}
                 searchPlaceholder="Search this menu…"
@@ -139,4 +139,4 @@ export default function FoodItems() {
             </StyledFooditemDetailWrapper>
         </StyledFooditemWrapper>
     );
-}
+};

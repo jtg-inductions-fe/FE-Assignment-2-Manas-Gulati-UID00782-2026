@@ -7,7 +7,7 @@ import {
     Stack,
     Typography,
 } from '@mui/material';
-import CustomizedSnackbar from 'components/Snackbar.component';
+import { NullState } from 'components/Nullstate.component';
 import { removeFoodData } from 'store/cartSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { initializeOrder } from 'store/orderSlice';
@@ -15,17 +15,17 @@ import {
     StyledCartConfirmButton,
     StyledCartSummaryWrapper,
     StyledCartWrapper,
-    StyledEmptyCart,
     StyledTotalText,
 } from 'styles/Cart.styles';
 import { CartAutoGridProps } from 'types';
 
+import { CustomizedSnackbar } from '@components';
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
 import { ORDER } from '../constants';
-import CartFoodCard from './CartFoodCard';
+import { MultiActionAreaCard } from './CartFoodCard';
 
-export default function AutoGrid({ data }: CartAutoGridProps) {
+export const AutoGrid = ({ data }: CartAutoGridProps) => {
     const dispatch = useTypeDispatch();
 
     const food = useTypeSelector((state) => state.cart.food);
@@ -92,21 +92,16 @@ export default function AutoGrid({ data }: CartAutoGridProps) {
                 <Stack spacing={3}>
                     {!nullState ? (
                         data.map((item) => (
-                            <CartFoodCard key={item.foodId} data={item} />
+                            <MultiActionAreaCard
+                                key={item.foodId}
+                                data={item}
+                            />
                         ))
                     ) : (
-                        <StyledEmptyCart>
-                            <Typography
-                                variant="body1"
-                                sx={{ fontWeight: FONT_WEIGHT.SEMIBOLD }}
-                            >
-                                Your cart is empty
-                            </Typography>
-                            <Typography variant="subtitle1">
-                                Add an item from a restaurant menu to get
-                                started.
-                            </Typography>
-                        </StyledEmptyCart>
+                        <NullState
+                            title="Your cart is empty"
+                            description="Add an item from a restaurant menu to get started."
+                        />
                     )}
                 </Stack>
 
@@ -204,4 +199,4 @@ export default function AutoGrid({ data }: CartAutoGridProps) {
             />
         </>
     );
-}
+};

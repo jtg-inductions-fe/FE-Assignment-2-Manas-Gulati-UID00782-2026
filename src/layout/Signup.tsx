@@ -7,23 +7,25 @@ import {
     FormHelperText,
     FormLabel,
     RadioGroup,
+    Stack,
 } from '@mui/material';
-import Stack from '@mui/material/Stack';
-import ReusableButton from 'components/Button.component';
-import FormPassword from 'components/Password.component';
-import CustomizedSnackbar from 'components/Snackbar.component';
-import FormTextField from 'components/TextField.component';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { signin } from 'store/authSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { CustomRadio } from 'styles/Radio.styles';
 import { SignupFormData } from 'types';
 
+import {
+    CustomizedSnackbar,
+    FormPassword,
+    FormTextField,
+    ReusableButton,
+} from '@components';
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
 import { SUCCESSMESSAGES, VALIDATION } from '../constants';
 
-function Signup() {
+export const Signup = () => {
     //setup initial snackbar state
     const dispatch = useTypeDispatch();
     const { isCreated, message, signupAttempt } = useTypeSelector(
@@ -202,11 +204,7 @@ function Signup() {
                                     {errors.role?.message}
                                 </FormHelperText>
                             </FormControl>
-                            <ReusableButton
-                                variant="outlined"
-                                type="submit"
-                                size="medium"
-                            >
+                            <ReusableButton type="submit" size="medium">
                                 SignUp
                             </ReusableButton>
                         </Stack>
@@ -226,6 +224,4 @@ function Signup() {
             />
         </>
     );
-}
-
-export default Signup;
+};

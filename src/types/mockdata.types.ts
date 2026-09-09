@@ -30,5 +30,7 @@ export interface RestaurantDataInterface {
         location: string;
         description: string;
         category: string;
+        openingTime: string;
+        closingTime: string;
     }[];
 }

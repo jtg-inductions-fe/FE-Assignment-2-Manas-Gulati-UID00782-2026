@@ -1,34 +1,33 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { CustomTextField } from 'styles/TextField.styles';
-import { LabelProps } from 'types';
+import { FormSelectFieldProps } from 'types/select.types';
 
-export const FormTextField = ({
+export const FormSelectField = ({
     name,
-    rules,
     id,
-    defaultVal,
-    type = 'text',
-}: LabelProps) => {
+    label,
+    rules,
+    children,
+}: FormSelectFieldProps) => {
     const { control } = useFormContext();
+
     return (
         <Controller
             name={name}
             control={control}
             rules={rules}
-            defaultValue={defaultVal}
-            render={(
-                { field, fieldState }, //field automatically configure all onChange, onBlur, ref and value
-            ) => (
+            render={({ field, fieldState }) => (
                 <CustomTextField
                     {...field}
                     id={id}
-                    type={type}
                     size="small"
-                    label={name}
-                    variant="outlined"
+                    select
+                    label={label}
                     error={!!fieldState.error}
                     helperText={fieldState.error?.message}
-                />
+                >
+                    {children}
+                </CustomTextField>
             )}
         />
     );

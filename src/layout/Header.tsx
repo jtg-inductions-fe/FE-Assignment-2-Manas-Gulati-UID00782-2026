@@ -1,22 +1,15 @@
 import { useState } from 'react';
 
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import SearchIcon from '@mui/icons-material/Search';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
+import { AccountCircle } from '@mui/icons-material';
+import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { Searchbar } from 'components/Searchbar.component';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import { logout } from 'store/authSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import {
-    Search,
-    SearchIconWrapper,
     StyledAppBar,
     StyledBadge,
-    StyledInputBase,
     StyledShoppingCartIcon,
     StyledToolbar,
     StyledUserBox,
@@ -27,11 +20,11 @@ import { FONT_SIZE } from '@constant';
 
 import { ROUTES } from '../constants';
 
-export default function PrimarySearchAppBar({
+export const PrimarySearchAppBar = ({
     searchValue = '',
     onSearchChange,
     searchPlaceholder = 'Search…',
-}: HeaderProps) {
+}: HeaderProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const isMenuOpen = Boolean(anchorEl);
     const dispatch = useTypeDispatch();
@@ -135,19 +128,11 @@ export default function PrimarySearchAppBar({
                         Meishi
                     </Typography>
                     {onSearchChange && (
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon fontSize="small" />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                value={searchValue}
-                                placeholder={searchPlaceholder}
-                                inputProps={{ 'aria-label': searchPlaceholder }}
-                                onChange={(event) =>
-                                    onSearchChange(event.target.value)
-                                }
-                            />
-                        </Search>
+                        <Searchbar
+                            value={searchValue}
+                            placeholder={searchPlaceholder}
+                            onChange={onSearchChange}
+                        />
                     )}
                     <Box sx={{ flexGrow: 1 }} />
                     {/* Act as justify content: space between(provided by mui itself) */}
@@ -179,4 +164,4 @@ export default function PrimarySearchAppBar({
             {renderMenu}
         </Box>
     );
-}
+};
