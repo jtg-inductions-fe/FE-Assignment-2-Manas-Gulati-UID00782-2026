@@ -1,11 +1,4 @@
-import { useState } from 'react';
-
-import FormPassword from 'components/Password.component';
-import CustomizedSnackbar from 'components/Snackbar.component';
-import FormTextField from 'components/TextField.component';
-import { FormProvider, useForm } from 'react-hook-form';
-import { CustomButton } from 'styles/AuthFormButton.styles';
-import { CustomRadio } from 'styles/Radio.styles';
+import { useEffect, useState } from 'react';
 
 import { AlertColor } from '@mui/material';
 import {
@@ -16,34 +9,18 @@ import {
     RadioGroup,
 } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import ReusableButton from 'components/Button.component';
+import FormPassword from 'components/Password.component';
+import CustomizedSnackbar from 'components/Snackbar.component';
+import FormTextField from 'components/TextField.component';
+import { FormProvider, useForm } from 'react-hook-form';
+import { signin } from 'store/authSlice';
+import { useTypeDispatch, useTypeSelector } from 'store/hooks';
+import { CustomRadio } from 'styles/Radio.styles';
 
 import { FONT_SIZE } from '@constant';
 
-import { ERRORMESSAGES, SUCCESSMESSAGES, VALIDATION } from '../constants';
-
-//defining user data schema
-interface User {
-    name: string;
-    email: string;
-    password: string;
-    role: string;
-}
-
-//creating preset values
-const mockData: Record<string, User> = {
-    'm@gmail.com': {
-        name: 'manas',
-        email: 'm@gmail.com',
-        password: 'abs',
-        role: 'customer',
-    },
-    's@gmail.com': {
-        name: 'sanjay',
-        email: 's@gmail.com',
-        password: 'abc',
-        role: 'owner',
-    },
-};
+import { SUCCESSMESSAGES, VALIDATION } from '../constants';
 
 //signup form data schema
 interface SignupFormData {
@@ -56,6 +33,10 @@ interface SignupFormData {
 
 function Signup() {
     //setup initial snackbar state
+    const dispatch = useTypeDispatch();
+    const { isCreated, message, signupAttempt } = useTypeSelector(
+        (state) => state.auth,
+    );
     const [snackbar, setSnackbar] = useState({
         open: false,
         message: '',
@@ -67,36 +48,25 @@ function Signup() {
     } = methods;
 
     const onSubmit = (data: SignupFormData) => {
-        //form data validations
-        if (!mockData[data.email]) {
-            if (data.confirmPassword === data.password) {
-                mockData[data.email] = {
-                    name: data.name,
-                    email: data.email,
-                    password: data.password,
-                    role: data.role,
-                };
+        dispatch(signin(data)); //update signup attempt at every signup attempt and check signup validations
+    };
 
-                setSnackbar({
-                    open: true,
-                    message: SUCCESSMESSAGES.SIGNUP,
-                    severity: 'success',
-                });
-            } else {
-                setSnackbar({
-                    open: true,
-                    message: ERRORMESSAGES.PASSWORDNOMATCH,
-                    severity: 'error',
-                });
-            }
-        } else {
+    useEffect(() => {
+        //throws snackbar at every signup attempt
+        if (isCreated) {
             setSnackbar({
                 open: true,
-                message: ERRORMESSAGES.USERNOTFOUND,
+                message: SUCCESSMESSAGES.SIGNUP,
+                severity: 'success',
+            });
+        } else if (message) {
+            setSnackbar({
+                open: true,
+                message,
                 severity: 'error',
             });
         }
-    };
+    }, [isCreated, message, signupAttempt]);
 
     return (
         <>
@@ -124,7 +94,10 @@ function Signup() {
                                     required: VALIDATION.NAMEREQUIRED,
                                     maxLength: {
                                         value: 30,
-                                        message: VALIDATION.NAMEXCEED,
+                                        message: VALIDATION.NAMEXCEED.replace(
+                                            '{{name_count}}',
+                                            '30',
+                                        ),
                                     },
                                 }}
                             />
@@ -135,7 +108,10 @@ function Signup() {
                                     required: VALIDATION.EMAILREQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message: VALIDATION.EMAILEXCEED,
+                                        message: VALIDATION.EMAILEXCEED.replace(
+                                            '{{email_count}}',
+                                            '50',
+                                        ),
                                     },
                                     pattern: {
                                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -150,7 +126,10 @@ function Signup() {
                                     validate: {
                                         minLength: (value: string) =>
                                             value.length >= 8 ||
-                                            VALIDATION.PASSWORDSHORT,
+                                            VALIDATION.PASSWORDSHORT.replace(
+                                                '{{password_length}}',
+                                                '8',
+                                            ),
 
                                         uppercase: (value: string) =>
                                             /[A-Z]/.test(value) ||
@@ -221,13 +200,13 @@ function Signup() {
                                     {errors.role?.message}
                                 </FormHelperText>
                             </FormControl>
-                            <CustomButton
+                            <ReusableButton
                                 variant="outlined"
                                 type="submit"
                                 size="medium"
                             >
                                 SignUp
-                            </CustomButton>
+                            </ReusableButton>
                         </Stack>
                     </form>
                 </FormProvider>
