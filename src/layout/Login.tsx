@@ -9,6 +9,7 @@ import FormTextField from 'components/TextField.component';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { login } from 'store/authSlice';
+import { initializeUser } from 'store/cartSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { get } from 'store/restaurantSlice';
 import { LoginFormData } from 'types';
@@ -43,6 +44,7 @@ function Login() {
                     userId: auth.user.userId,
                 }), //to initialize restaurant to show to user
             );
+            dispatch(initializeUser(auth.user.userId)); //to set user for the cart
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth.user]);

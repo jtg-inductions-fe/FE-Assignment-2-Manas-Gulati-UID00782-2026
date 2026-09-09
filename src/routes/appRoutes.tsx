@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
                 element: <Dashboard />,
             },
             {
-                path: '/dashboard/:restaurantId',
+                path: ROUTES.FOOD,
                 element: <FoodItems />,
             },
         ],

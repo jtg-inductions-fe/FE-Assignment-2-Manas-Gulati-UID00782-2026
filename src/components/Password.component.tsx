@@ -22,6 +22,11 @@ export default function FormPassword({
 
     //to manage show/hide password functionality
     const [showPassword, setShowPassword] = useState(false);
+
+    /**
+     * set functionality to show or hide password
+     *
+     */
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     return (
