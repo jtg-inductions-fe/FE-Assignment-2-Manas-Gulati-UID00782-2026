@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-import { AlertColor } from '@mui/material';
 import {
     FormControl,
     FormControlLabel,
@@ -14,32 +13,26 @@ import { signin } from 'store/authSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { CustomRadio } from 'styles/Radio.styles';
 import { SignupFormData } from 'types';
+import { SignupProps } from 'types/signup.types';
 
-import {
-    CustomizedSnackbar,
-    FormPassword,
-    FormTextField,
-    ReusableButton,
-} from '@components';
+import { FormPassword, FormTextField, ReusableButton } from '@components';
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
 import { SUCCESSMESSAGES, VALIDATION } from '../constants';
 
-export const Signup = () => {
+export const Signup = ({ setSnackbar }: SignupProps) => {
     //setup initial snackbar state
     const dispatch = useTypeDispatch();
     const { isCreated, message, signupAttempt } = useTypeSelector(
         (state) => state.auth,
     );
-    const [snackbar, setSnackbar] = useState({
-        open: false,
-        message: '',
-        severity: 'success' as AlertColor,
-    });
+
     const methods = useForm<SignupFormData>();
     const {
         formState: { errors },
     } = methods;
+
+    const signupNumber = useRef(signupAttempt);
 
     /**
      * TODO: sets signup data
@@ -50,21 +43,25 @@ export const Signup = () => {
     };
 
     useEffect(() => {
+        if (signupAttempt === signupNumber.current) return;
         //throws snackbar at every signup attempt
         if (isCreated) {
-            setSnackbar({
-                open: true,
+            setSnackbar((prev) => ({
+                ...prev,
+                state: true,
                 message: SUCCESSMESSAGES.SIGNUP,
                 severity: 'success',
-            });
+            }));
         } else if (message) {
-            setSnackbar({
-                open: true,
+            setSnackbar((prev) => ({
+                ...prev,
+                state: true,
                 message,
                 severity: 'error',
-            });
+            }));
         }
-    }, [isCreated, message, signupAttempt]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [signupAttempt]);
 
     return (
         <>
@@ -157,7 +154,7 @@ export const Signup = () => {
                                         },
                                     })}
                                 >
-                                    Role
+                                    *Role
                                 </FormLabel>
                                 <Controller
                                     name="role"
@@ -211,17 +208,6 @@ export const Signup = () => {
                     </form>
                 </FormProvider>
             </Stack>
-            <CustomizedSnackbar
-                severity={snackbar.severity}
-                message={snackbar.message}
-                state={snackbar.open}
-                onClose={() =>
-                    setSnackbar((prev) => ({
-                        ...prev,
-                        open: false,
-                    }))
-                }
-            />
         </>
     );
 };

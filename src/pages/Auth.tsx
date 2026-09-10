@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Stack, Typography } from '@mui/material';
+import { AlertColor, Stack, Typography } from '@mui/material';
 import { Login } from 'layout/Login';
 import { Signup } from 'layout/Signup';
 import { Navigate } from 'react-router-dom';
@@ -16,6 +16,9 @@ import {
     CustomButton,
     FormContainer,
 } from 'styles/Auth.styles';
+import { SnackbarProps } from 'types/snackbar.types';
+
+import { CustomizedSnackbar } from '@components';
 
 import { ROUTES } from '../constants';
 
@@ -25,12 +28,22 @@ export const Auth = () => {
         (state) => state.auth.isAuthenticated,
     );
 
+    const [snackbar, setSnackbar] = useState<SnackbarProps>({
+        state: false,
+        message: '',
+        severity: 'success' as AlertColor,
+        onClose: () => {
+            setSnackbar((prev) => ({ ...prev, state: false }));
+        },
+    });
+
     if (isAuthenticated) {
         <Navigate to={ROUTES.DASHBOARD} replace />;
     }
 
     const toggleStateHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         const id = e.currentTarget.id;
+        setSnackbar((prev) => ({ ...prev, state: false }));
         if (id === 'login') {
             setLoginFrom(true);
         } else {
@@ -73,11 +86,26 @@ export const Auth = () => {
                         {login ? 'Welcome Back' : 'Create Your Account'}
                     </AuthPageFormHeading>
 
-                    <FormContainer>
-                        {login ? <Login /> : <Signup />}
+                    <FormContainer mb={4}>
+                        {login ? (
+                            <Login setSnackbar={setSnackbar} />
+                        ) : (
+                            <Signup setSnackbar={setSnackbar} />
+                        )}
                     </FormContainer>
                 </AuthFormSide>
             </AuthCard>
+            <CustomizedSnackbar
+                severity={snackbar.severity}
+                message={snackbar.message}
+                state={snackbar.state}
+                onClose={() =>
+                    setSnackbar((prev) => ({
+                        ...prev,
+                        state: false,
+                    }))
+                }
+            />
         </AuthPage>
     );
 };

@@ -139,7 +139,7 @@ export const MultiActionAreaCard = ({ data }: FoodCardProps) => {
 
     return (
         <>
-            <StyledCard>
+            <StyledCard sx={{ filter: disabled ? 'grayscale(100%)' : 'none' }}>
                 <Box sx={{ position: 'relative' }}>
                     <CardMedia
                         component="img"
