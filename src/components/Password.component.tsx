@@ -40,7 +40,7 @@ export const FormPassword = ({ name, id, label, rules }: PasswordProps) => {
                     {/*set current state of form */}
                     {/* add label to password text field */}
                     <CustomInputLabel htmlFor={id}>
-                        {label || 'Password'}
+                        {label ? `*${label}` : '*Password'}
                     </CustomInputLabel>
                     <CustomTextField
                         {...field}
@@ -75,7 +75,7 @@ export const FormPassword = ({ name, id, label, rules }: PasswordProps) => {
                                 </IconButton>
                             </InputAdornment>
                         }
-                        label={label || 'Password'}
+                        label={label || '*Password'}
                         error={!!fieldState.error}
                     />
                     {/* display error message */}

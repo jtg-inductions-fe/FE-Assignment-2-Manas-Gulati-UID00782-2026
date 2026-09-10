@@ -6,7 +6,7 @@ import {
     StyledOrderDetailWrapper,
     StyledOrderPageWrapper,
 } from 'styles/Orders.styles';
-import { OrderDetails } from 'types';
+import { OrderDetails, RestaurantNameOrdersInterface } from 'types';
 
 export const Orders = () => {
     const user = useTypeSelector((state) => state.auth.user);
@@ -14,7 +14,7 @@ export const Orders = () => {
     const restaurantState = useTypeSelector((state) => state.restaurant);
     const isOwner = user?.role === 'owner';
     const allOrders: OrderDetails[] = [];
-    const restaurantNames: Record<number, string> = {};
+    const restaurantNames: RestaurantNameOrdersInterface = {};
     restaurantState.forEach((restaurant) => {
         restaurantNames[restaurant.restaurantId] = restaurant.heading;
     });

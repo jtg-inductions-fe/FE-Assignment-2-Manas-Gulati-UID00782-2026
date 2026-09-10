@@ -6,7 +6,7 @@ import { FONT_SIZE } from '@constant';
 export const StyledSearchContainer = styled('div')(({ theme }) => ({
     position: 'relative',
     marginRight: theme.spacing(2),
-    marginLeft: 0,
+    marginLeft: theme.spacing(2),
     width: '100%',
     borderRadius: theme.shape.borderRadius * 3,
     backgroundColor: alpha(theme.palette.common.white, 0.35),

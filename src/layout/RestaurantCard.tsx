@@ -180,7 +180,7 @@ export const MultiActionAreaCard = ({ data }: RestaurantCardProps) => {
                         </StyledDescription>
                         <Box display="flex" mt="auto" justifyContent="flex-end">
                             {role === 'owner' && (
-                                <Stack direction="row" spacing={4}>
+                                <Stack direction="row" spacing={2}>
                                     <ReusableButton
                                         variant="contained"
                                         size="small"

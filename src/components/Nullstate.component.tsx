@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { StyledNullState } from 'styles/Nullstate.styles';
 import { NullStateProps } from 'types/null.types';
 
@@ -11,5 +11,15 @@ export const NullState = ({ title, description }: NullStateProps) => (
         </Typography>
 
         <Typography variant="subtitle1">{description}</Typography>
+        <Box
+            component="img"
+            src="/Assets/null.webp"
+            alt="null state"
+            sx={{
+                width: '60%',
+                minHeight: 180,
+                objectFit: 'cover',
+            }}
+        />
     </StyledNullState>
 );
