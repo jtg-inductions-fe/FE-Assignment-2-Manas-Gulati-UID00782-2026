@@ -17,12 +17,11 @@ export const Counter = ({
      * @returns "success.main" | "text.secondary"
      */
     const getCounterColor = () => {
-        switch (true) {
-            case count > 0:
-                return 'success.main';
-            default:
-                return 'text.secondary';
+        if (count > 0) {
+            return 'success.main';
         }
+
+        return 'text.secondary';
     };
 
     return (

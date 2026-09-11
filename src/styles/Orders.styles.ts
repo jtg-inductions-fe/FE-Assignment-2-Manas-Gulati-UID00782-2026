@@ -15,19 +15,6 @@ export const StyledOrderPrice = styled(Typography)(({ theme }) => ({
     fontWeight: FONT_WEIGHT.BOLD,
 }));
 
-export const StyledNoOrderBox = styled(Box)(({ theme }) => ({
-    p: theme.spacing(5),
-    marginTop: theme.spacing(4),
-    border: `2px dashed ${theme.palette.faded?.light}`,
-    borderRadius: 3,
-    color: theme.palette.faded?.main,
-    backgroundColor: theme.palette.common.white,
-    textAlign: 'center',
-    [theme.breakpoints.up('md')]: {
-        padding: theme.spacing(8),
-    },
-}));
-
 export const StyledOrderPageWrapper = styled(Box)({
     maxWidth: '2000px',
     margin: '0 auto',

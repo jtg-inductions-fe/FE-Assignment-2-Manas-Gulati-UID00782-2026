@@ -126,7 +126,7 @@ export const PrimarySearchAppBar = ({
                     <Typography
                         variant="h5"
                         component={RouterLink}
-                        to={ROUTES.HOME}
+                        to={ROUTES.DASHBOARD}
                         sx={(theme) => ({
                             textDecoration: 'none',
                             color: theme.palette.common.black,

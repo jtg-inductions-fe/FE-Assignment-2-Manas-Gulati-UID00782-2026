@@ -23,7 +23,7 @@ export const FormPassword = ({ name, id, label, rules }: PasswordProps) => {
 
     /**
      * TODO: set functionality to show or hide password
-     * @returns any
+     * @returns void
      */
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 

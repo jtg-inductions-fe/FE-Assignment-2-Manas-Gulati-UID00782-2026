@@ -11,7 +11,7 @@ export const CustomizedSnackbar = ({
 }: SnackbarProps) => {
     /**
      * TODO: handle closing of snackbar
-     * @param _event - {any}
+     * @param _event - {Event}
      * @param reason - {SnackbarCloseReason}
      */
     const handleClose = (
