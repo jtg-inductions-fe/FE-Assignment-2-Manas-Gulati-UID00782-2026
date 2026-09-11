@@ -23,8 +23,7 @@ import { reduceStock } from 'store/fooditemSlice';
 import { useTypeDispatch } from 'store/hooks';
 import { changeStatus } from 'store/orderSlice';
 import { StyledOrderCard, StyledOrderPrice } from 'styles/Orders.styles';
-import { OrderCardProps } from 'types';
-import { ExpandMoreProps } from 'types';
+import { ExpandMoreProps, OrderCardProps } from 'types';
 
 import { FONT_WEIGHT } from '@constant';
 
@@ -62,10 +61,10 @@ export const RecipeReviewCard = ({
     const [expanded, setExpanded] = useState(false);
     const dispatch = useTypeDispatch();
     const statusLock = FINAL_STATUS.includes(data.orderStatus);
-    let itemCount = 0;
-    data.foodItem.forEach((orderedFood) => {
-        itemCount += orderedFood.quantity;
-    });
+    const itemCount = data.foodItem.reduce(
+        (sum, orderedFood) => sum + (orderedFood.quantity ?? 0),
+        0,
+    );
 
     /**
      * TODO: Change order status
