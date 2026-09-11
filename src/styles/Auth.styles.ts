@@ -20,12 +20,12 @@ export const AuthContent = styled(Box)(({ theme }) => ({
 
 export const AuthBrand = styled(Box)(({ theme }) => ({
     position: 'absolute',
-    left: theme.spacing(4),
+    left: theme.spacing(5),
     right: theme.spacing(7.5),
     bottom: theme.spacing(5.5),
 
     [theme.breakpoints.up('md')]: {
-        left: theme.spacing(6),
+        left: theme.spacing(8),
         bottom: theme.spacing(12),
     },
 

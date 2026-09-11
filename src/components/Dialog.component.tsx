@@ -7,6 +7,8 @@ import {
 } from 'styles/Dialog.styles';
 import { FormProps, NoFormProps } from 'types/dialog.types';
 
+import { FONT_SIZE } from '@constant';
+
 import { ReusableButton } from './Button.component';
 
 export const NoFormDialog = ({
@@ -27,6 +29,20 @@ export const NoFormDialog = ({
         onClose={onClose}
         fullWidth={fullWidth}
         maxWidth={maxWidth}
+        slotProps={{
+            paper: {
+                sx: {
+                    borderRadius: 6,
+                    padding: 2,
+                    '& .MuiTypography-body1': {
+                        fontSize: FONT_SIZE['2XL'],
+                    },
+                    '& .MuiTypography-subtitle2': {
+                        fontSize: FONT_SIZE.LG,
+                    },
+                },
+            },
+        }}
     >
         <StyledDialogTitle>{title}</StyledDialogTitle>
 
@@ -36,6 +52,7 @@ export const NoFormDialog = ({
             <ReusableButton
                 size="small"
                 color="inherit"
+                variant="outlined"
                 onClick={onClose}
                 {...cancelButtonProps}
             >
@@ -86,6 +103,14 @@ export const FormDialog = <TFormValues extends FieldValues>({
             onClose={onClose}
             fullWidth={fullWidth}
             maxWidth={maxWidth}
+            slotProps={{
+                paper: {
+                    sx: {
+                        borderRadius: 6,
+                        padding: 2,
+                    },
+                },
+            }}
         >
             <StyledDialogTitle>{title}</StyledDialogTitle>
 
@@ -102,6 +127,7 @@ export const FormDialog = <TFormValues extends FieldValues>({
                         <ReusableButton
                             size="small"
                             color="inherit"
+                            variant="outlined"
                             onClick={onClose}
                             {...cancelButtonProps}
                         >

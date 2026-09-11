@@ -1,7 +1,14 @@
 import { useState } from 'react';
 
 import { AccountCircle } from '@mui/icons-material';
-import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import {
+    Box,
+    IconButton,
+    Menu,
+    MenuItem,
+    Typography,
+    useMediaQuery,
+} from '@mui/material';
 import { Searchbar } from 'components/Searchbar.component';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
@@ -17,6 +24,7 @@ import {
 import { HeaderProps } from 'types';
 
 import { FONT_SIZE } from '@constant';
+import { theme as MuiTheme } from '@theme';
 
 import { ROUTES } from '../constants';
 
@@ -29,6 +37,7 @@ export const PrimarySearchAppBar = ({
     const isMenuOpen = Boolean(anchorEl);
     const dispatch = useTypeDispatch();
     const navigate = useNavigate();
+    const isLargeScreen = useMediaQuery(MuiTheme.breakpoints.up('md'));
     const cartFoodItem = useTypeSelector((state) => state.cart.food);
     let quantity = 0;
     cartFoodItem.forEach((food) => {
@@ -117,15 +126,13 @@ export const PrimarySearchAppBar = ({
                     <Typography
                         variant="h5"
                         component={RouterLink}
-                        noWrap
-                        to={ROUTES.HOME}
+                        to={ROUTES.DASHBOARD}
                         sx={(theme) => ({
-                            ml: theme.spacing(1),
                             textDecoration: 'none',
                             color: theme.palette.common.black,
                         })}
                     >
-                        Meishi
+                        {isLargeScreen ? 'Meishi' : 'M'}
                     </Typography>
                     {onSearchChange && (
                         <Searchbar

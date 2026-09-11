@@ -9,7 +9,6 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)(
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: 28,
         backgroundColor: '#f4f5f6',
-        marginRight: 35,
 
         '& .MuiToggleButton-root': {
             minWidth: 72,

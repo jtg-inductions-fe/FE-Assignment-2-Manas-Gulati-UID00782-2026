@@ -45,3 +45,7 @@ export interface OrdersState {
     byCustomerId: Record<number, number[]>; //mapping customer id with their orders
     byRestaurantId: Record<number, number[]>; //mapping restaurant with their orders
 }
+
+export interface RestaurantNameOrdersInterface {
+    [key: number]: string;
+}

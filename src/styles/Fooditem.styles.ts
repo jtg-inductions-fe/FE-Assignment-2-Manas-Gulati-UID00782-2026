@@ -21,11 +21,11 @@ export const StyledCard = styled(Card)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     border: `1px solid ${theme.palette.faded?.light}`,
-    borderRadius: 3,
+    borderRadius: 19,
     transition: 'transform 180ms ease, box-shadow 180ms ease',
     '&:hover': {
         transform: 'translateY(-4px)',
-        boxShadow: '0px 4px 4px 4px rgba(28, 35, 40, 0.10)',
+        boxShadow: '0px 6px 10px 10px rgba(28, 35, 40, 0.20)',
     },
 }));
 
@@ -45,9 +45,9 @@ export const StyledOutStockBox = styled(Box)(({}) => ({
 }));
 
 export const StyledOutStockText = styled(Typography)(({ theme }) => ({
-    padding: `${theme.spacing(0.75)}, ${theme.spacing(2.25)}`,
+    padding: `${theme.spacing(0.75)} ${theme.spacing(2.25)}`,
     color: theme.palette.common.white,
-    borderRadius: 5,
+    borderRadius: 15,
     border: `2px solid ${theme.palette.common.white}`,
     backgroundColor: theme.palette.faded?.dark,
     textTransform: 'uppercase',
@@ -111,11 +111,12 @@ export const StyledFoodWrapper = styled(Box)({
 
 export const CustomCardGrid = styled(Grid)({
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'stretch',
 });
 
 export const CustomGridWrapper = styled(Grid)(({ theme }) => ({
+    width: '100%',
     margin: `${theme.spacing(5)} auto 0`,
     alignItems: 'stretch',
 }));
@@ -123,7 +124,6 @@ export const CustomGridWrapper = styled(Grid)(({ theme }) => ({
 export const StyledAddMoreCard = styled(Card)(({ theme }) => ({
     width: '100%',
     minHeight: 600,
-    minWidth: 400,
     display: 'flex',
     flexDirection: 'column',
     cursor: 'pointer',
@@ -175,10 +175,8 @@ export const StyledFooditemDetailWrapper = styled(Box)(({ theme }) => ({
     },
 }));
 
-export const StyledFooditemBannerWrapper = styled(Box)(({ theme }) => ({
+export const StyledFooditemBannerWrapper = styled(Box)(({}) => ({
     overflow: 'hidden',
-    border: `5px solid ${theme.palette.faded?.light}`,
-    borderRadius: 11,
     boxShadow: '0 10px 30px rgba(28, 35, 40, 0.05)',
 }));
 
@@ -194,7 +192,6 @@ export const StyledFooditemBannerName = styled(Box)(({ theme }) => ({
     [theme.breakpoints.up('sm')]: {
         width: 104,
         height: 104,
-        marginTop: theme.spacing(-10),
     },
 }));
 
@@ -218,6 +215,7 @@ export const StyledFooditemBannerDesc = styled(Typography)(({ theme }) => ({
 
 export const StyledMenuText = styled(Chip)(({ theme }) => ({
     height: 42,
+    borderRadius: 10,
     padding: `0 ${theme.spacing(2)}`,
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,

@@ -2,6 +2,8 @@
 
 ## Getting Started
 
+Build the frontend of an e-Commerce Restaurant and food delivery application with where database management is simulated through MOCK_DATA and redux state management
+
 ### Prerequisites
 
 - **Node.js**: Version 20+. You can download and install it from nodejs.org.

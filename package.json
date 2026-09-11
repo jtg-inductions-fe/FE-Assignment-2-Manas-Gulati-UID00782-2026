@@ -1,6 +1,6 @@
 {
-    "name": "react-mui-base-template",
-    "description": "",
+    "name": "Meishi-Sushi-Restaurant",
+    "description": "Manas Assignment 2",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -8,10 +8,10 @@
         "dev": "vite",
         "build": "tsc -b && vite build",
         "build:dev": "tsc -b && vite build --mode development",
-        "lint": "eslint --fix .",
+        "lint": "eslint .",
         "lint:fix": "eslint --fix .",
         "preview": "vite preview",
-        "prettier": "npx prettier --write ./",
+        "prettier": "prettier --write ./",
         "postinstall": "husky install",
         "pre-commit": "lint-staged"
     },

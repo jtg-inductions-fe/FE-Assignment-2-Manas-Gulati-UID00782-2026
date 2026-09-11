@@ -7,7 +7,7 @@ export const StyledCount = styled(Typography)(({}) => ({
 
 export const StyledCounterBox = styled(Box)(({ theme }) => ({
     flexShrink: 0,
-    p: theme.spacing(0.25),
+    padding: theme.spacing(0.25),
     borderRadius: 2,
     backgroundColor: theme.palette.faded?.light,
 }));

@@ -31,7 +31,12 @@ export const CustomTextField = styled(OutlinedInput)<OutlinedInputProps>(
 //Styling password textfield label
 export const CustomInputLabel = styled(InputLabel)(({ theme }) => ({
     color: theme.palette.grey[700],
+    transform: 'translate(14px, 9px) scale(1)',
 
+    '&.MuiInputLabel-shrink': {
+        //when it start to top
+        transform: 'translate(14px, -10px) scale(0.75)',
+    },
     '&.MuiInputLabel-root': {
         fontSize: FONT_SIZE.XL,
         fontWeight: FONT_WEIGHT.MEDIUM,

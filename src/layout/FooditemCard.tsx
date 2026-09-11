@@ -139,7 +139,7 @@ export const MultiActionAreaCard = ({ data }: FoodCardProps) => {
 
     return (
         <>
-            <StyledCard>
+            <StyledCard sx={{ filter: disabled ? 'grayscale(100%)' : 'none' }}>
                 <Box sx={{ position: 'relative' }}>
                     <CardMedia
                         component="img"
@@ -251,7 +251,10 @@ export const MultiActionAreaCard = ({ data }: FoodCardProps) => {
                             required: RESTAURANT_VALIDATION.REQUIRED,
                             maxLength: {
                                 value: 50,
-                                message: RESTAURANT_VALIDATION.LIMIT,
+                                message: RESTAURANT_VALIDATION.LIMIT.replace(
+                                    '{{name_count}}',
+                                    '50',
+                                ),
                             },
                         }}
                     />
