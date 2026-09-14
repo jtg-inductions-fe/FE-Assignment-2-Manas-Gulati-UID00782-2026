@@ -10,29 +10,30 @@ import ReusableDialog, {
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
 import ReusableWrapper from 'components/Wrapper.component';
-import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
-import RestaurantCard from 'layout/RestaurantCard';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import FooditemCard from 'layout/FooditemCard';
+import { FormProvider, useForm } from 'react-hook-form';
+import { add } from 'store/fooditemSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
-import { add } from 'store/restaurantSlice';
 import {
     CustomCardGrid,
     CustomGridWrapper,
     StyledAddIcon,
     StyledAddMoreCard,
-    StyledCardContent,
-    StyledCategoryTextfield,
-    StyledMenuItem,
-} from 'styles/Restaurant.styles';
-import { RestaurantAutoGridProps, RestaurantFormData } from 'types';
+    StyledAddMoreContent,
+} from 'styles/Fooditem.styles';
+import { AutoGridProps, FooditemFormData } from 'types';
 
-import { MESSAGES } from '../constants';
+import { MESSAGES, RESTAURANT_VALIDATION } from '../constants';
 
-export default function AutoGrid({ data }: RestaurantAutoGridProps) {
-    const [addOpen, setAddOpen] = useState(false); //for add restaurant dialog box
-    const methods = useForm<RestaurantFormData>();
+export default function AutoGrid({ data }: AutoGridProps) {
+    const [addOpen, setAddOpen] = useState(false);
+    const methods = useForm<FooditemFormData>();
     const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
+
+    const handleClose = () => {
+        setAddOpen(false);
+    };
 
     //set snackbar
     const [snackbar, setSnackbar] = useState({
@@ -41,10 +42,7 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
         severity: 'success' as AlertColor,
     });
 
-    const handleClose = () => {
-        setAddOpen(false);
-    };
-    const onSubmit = (addFormData: RestaurantFormData) => {
+    const onSubmit = (addFormData: FooditemFormData) => {
         dispatch(add(addFormData));
         setAddOpen(false);
         setSnackbar({
@@ -67,7 +65,7 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                             key={index}
                             size={{ sm: 12, md: 6, lg: 4 }}
                         >
-                            <RestaurantCard data={item} />
+                            <FooditemCard data={item} />
                         </CustomCardGrid>
                     ))}
                     {role === 'owner' && (
@@ -77,19 +75,13 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                                     setAddOpen(true);
                                 }}
                             >
-                                <StyledCardContent
-                                    sx={{
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        textAlign: 'center',
-                                    }}
-                                >
+                                <StyledAddMoreContent>
                                     <StyledAddIcon />
 
                                     <Typography variant="h4" component="div">
                                         Add More Item
                                     </Typography>
-                                </StyledCardContent>
+                                </StyledAddMoreContent>
                             </StyledAddMoreCard>
                         </CustomCardGrid>
                     )}
@@ -107,9 +99,7 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                             void methods.handleSubmit(onSubmit)(e);
                         }}
                     >
-                        <ReusableDialogTitle>
-                            Edit Restaurant
-                        </ReusableDialogTitle>
+                        <ReusableDialogTitle>Add Food Item</ReusableDialogTitle>
 
                         <ReusableDialogContent>
                             <FromTextField
@@ -119,11 +109,7 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message:
-                                            RESTAURANT_VALIDATION.LIMIT.replace(
-                                                '{{name_count}}',
-                                                '50',
-                                            ),
+                                        message: RESTAURANT_VALIDATION.LIMIT,
                                     },
                                 }}
                             />
@@ -142,43 +128,32 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                                 }}
                             />
                             <FromTextField
-                                name="location"
-                                id="location"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                            />
-                            <FromTextField
                                 name="description"
                                 id="description"
                                 rules={{
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
                             />
-                            <Controller
-                                name="category"
-                                control={methods.control}
+                            <FromTextField
+                                name="ingredients"
+                                id="ingredients"
                                 rules={{
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
-                                render={({ field, fieldState }) => (
-                                    <StyledCategoryTextfield
-                                        {...field}
-                                        required
-                                        size="small"
-                                        select
-                                        label="Category"
-                                        error={!!fieldState.error}
-                                        helperText={fieldState.error?.message}
-                                    >
-                                        <StyledMenuItem value="veg">
-                                            Veg
-                                        </StyledMenuItem>
-                                        <StyledMenuItem value="non-veg">
-                                            Non-Veg
-                                        </StyledMenuItem>
-                                    </StyledCategoryTextfield>
-                                )}
+                            />
+                            <FromTextField
+                                name="price"
+                                id="price"
+                                rules={{
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
+                                }}
+                            />
+                            <FromTextField
+                                name="stock"
+                                id="stock"
+                                rules={{
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
+                                }}
                             />
                         </ReusableDialogContent>
 

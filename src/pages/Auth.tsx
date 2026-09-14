@@ -42,6 +42,7 @@ export default function Auth() {
                     <Stack direction="row" width="100%">
                         <CustomButton
                             selected={login}
+                            onClick={toggleStateHandler}
                             aria-pressed={login}
                             id="login"
                         >

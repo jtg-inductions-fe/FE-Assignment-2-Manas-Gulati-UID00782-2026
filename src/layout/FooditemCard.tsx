@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
-import { AlertColor, Box, Stack } from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Box, IconButton, Stack } from '@mui/material';
+import { AlertColor } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ReusableButton from 'components/Button.component';
@@ -12,35 +13,36 @@ import ReusableDialog, {
 } from 'components/Dialog.component';
 import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
-import { MESSAGES } from 'constants/restaurantSnackbarConstant';
-import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { get } from 'store/fooditemSlice';
+import { del, edit } from 'store/fooditemSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
-import { del, edit } from 'store/restaurantSlice';
-import { selectRestaurant } from 'store/selectRestaurantSlice';
 import {
     StyledCard,
-    StyledCardActionArea,
     StyledCardContent,
-    StyledCategoryBox,
-    StyledCategoryTextfield,
-    StyledDescription,
-    StyledMenuItem,
-} from 'styles/Restaurant.styles';
-import { RestaurantCardProps, RestaurantFormData } from 'types';
+    StyledDeleteIcon,
+    StyledDescText,
+    StyledEditIcon,
+    StyledIngredientsText,
+    StyledOutStockBox,
+    StyledOutStockText,
+    StyledPriceText,
+    StyledStockText,
+} from 'styles/Fooditem.styles';
+import { FoodCardProps, FooditemFormData } from 'types';
 
 import { FONT_SIZE } from '@constant';
 
-export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
+import { MESSAGES, RESTAURANT_VALIDATION } from '../constants';
+
+export default function MultiActionAreaCard({ data }: FoodCardProps) {
     //handle open/close modals
     const [open, setOpen] = useState(false);
     const [delOpen, setDelOpen] = useState(false);
+    const [disabled, setDisabled] = useState(false);
+    let quantity;
 
-    const methods = useForm<RestaurantFormData>();
-    const navigate = useNavigate();
+    const [count, setCount] = useState(quantity ?? 0);
+    const methods = useForm<FooditemFormData>();
     const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
 
@@ -56,9 +58,9 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         img: '',
         alt: '',
         heading: '',
-        location: '',
         description: '',
-        category: '',
+        ingredients: '',
+        stock: 0,
     });
 
     //set initial form state for editing restaurant
@@ -67,25 +69,29 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
             img: data.img,
             alt: data.alt,
             heading: data.heading,
-            location: data.location,
             description: data.description,
-            category: data.category,
+            ingredients: data.ingredients,
+            stock: data.stock,
         });
         setOpen(true);
     };
+
+    useEffect(() => {
+        setDisabled(data.stock == 0);
+    }, [data.stock]);
 
     const deleteHandler = () => {
         setDelOpen(true);
     };
 
     const confirmDeleteHandler = () => {
-        dispatch(del(data.restaurantId));
+        dispatch(del(data.foodId));
+        setDelOpen(false);
         setSnackbar({
             open: true,
             message: MESSAGES.DELETE,
             severity: 'success',
         });
-        setDelOpen(false);
     };
 
     const handleClose = () => {
@@ -95,34 +101,29 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         setDelOpen(false);
     };
 
-    const onSubmit = (editFormData: RestaurantFormData) => {
+    const addToCartHandler = () => {
+        setCount(1);
+    };
+
+    const onSubmit = (editFormData: FooditemFormData) => {
         dispatch(
             edit({
-                id: data.restaurantId,
+                id: data.foodId,
                 data: editFormData,
             }),
         );
+
+        setOpen(false);
         setSnackbar({
             open: true,
             message: MESSAGES.EDIT,
             severity: 'success',
         });
-        setOpen(false);
     };
-
-    const selectRestaurantHandler = () => {
-        dispatch(
-            selectRestaurant({ id: data.restaurantId, name: data.heading }),
-        );
-        dispatch(get(data.restaurantId));
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        navigate(`/dashboard/${data.restaurantId}`);
-    };
-
     return (
         <>
             <StyledCard>
-                <StyledCardActionArea onClick={selectRestaurantHandler}>
+                <Box sx={{ position: 'relative' }}>
                     <CardMedia
                         component="img"
                         height="250"
@@ -130,88 +131,77 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                         alt={data.alt}
                         sx={{ objectFit: 'cover' }}
                     />
-                    <StyledCardContent>
-                        <Stack
-                            direction="row"
-                            alignItems="flex-start"
-                            justifyContent="space-between"
-                            gap={2}
-                        >
-                            <Typography
-                                gutterBottom
-                                variant="h3"
-                                component="h4"
-                            >
-                                {data.heading}
-                            </Typography>
-                            {data.category === 'non-veg' && (
-                                <StyledCategoryBox
-                                    src="/Assets/images (1).webp"
-                                    alt="restaurant icon"
-                                />
-                            )}
-                            {data.category === 'veg' && (
-                                <StyledCategoryBox
-                                    src="/Assets/veg.webp"
-                                    alt="restaurant icon"
-                                />
-                            )}
-                        </Stack>
-                        <Stack
-                            direction="row"
-                            alignItems="center"
-                            gap={1}
-                            sx={(theme) => ({
-                                color: theme.palette.faded?.main,
-                            })}
-                        >
-                            <PlaceOutlinedIcon
-                                sx={{ fontSize: FONT_SIZE.LG }}
-                            />
-                            <Typography variant="subtitle2">
-                                {data.location}
-                            </Typography>
-                        </Stack>
+                    {disabled && (
+                        <StyledOutStockBox>
+                            <StyledOutStockText variant="h4">
+                                Out of Stock
+                            </StyledOutStockText>
+                        </StyledOutStockBox>
+                    )}
+                </Box>
+                <StyledCardContent>
+                    <Stack
+                        direction="row"
+                        alignItems="flex-start"
+                        justifyContent="space-between"
+                        gap={2}
+                    >
+                        <Typography gutterBottom variant="h3" component="div">
+                            {data.heading}
+                        </Typography>
+                        <StyledPriceText variant="body2">
+                            &#8377; {data.price}
+                        </StyledPriceText>
+                    </Stack>
+                    <StyledDescText variant="subtitle2">
+                        {data.description}
+                    </StyledDescText>
+                    <StyledIngredientsText variant="subtitle2">
+                        {data.ingredients}
+                    </StyledIngredientsText>
 
-                        <StyledDescription variant="body2">
-                            {data.description}
-                        </StyledDescription>
-                        <Box display="flex" mt="auto" justifyContent="flex-end">
-                            {role === 'owner' && (
-                                <Stack direction="row" spacing={4}>
-                                    <ReusableButton
-                                        variant="contained"
-                                        size="small"
-                                        sx={{
-                                            fontSize: FONT_SIZE.MD,
-                                            px: 4,
-                                        }}
-                                        onClick={(e) => {
-                                            editHandler();
-                                            e.stopPropagation();
-                                        }}
-                                    >
-                                        Edit
-                                    </ReusableButton>
-                                    <ReusableButton
-                                        variant="outlined"
-                                        size="small"
-                                        sx={{
-                                            fontSize: FONT_SIZE.MD,
-                                            px: 4,
-                                        }}
-                                        onClick={(e) => {
-                                            deleteHandler();
-                                            e.stopPropagation();
-                                        }}
-                                    >
-                                        Delete
-                                    </ReusableButton>
-                                </Stack>
-                            )}
-                        </Box>
-                    </StyledCardContent>
-                </StyledCardActionArea>
+                    <Box
+                        display="flex"
+                        mt="auto"
+                        alignItems="center"
+                        justifyContent="space-between"
+                    >
+                        <StyledStockText variant="body2">
+                            {disabled ? 'Out of Stock' : `Stock: ${data.stock}`}
+                        </StyledStockText>
+                        {role === 'owner' && (
+                            <Stack direction="row" spacing={1}>
+                                <IconButton
+                                    aria-label="edit"
+                                    onClick={editHandler}
+                                >
+                                    <StyledEditIcon />
+                                </IconButton>
+                                <IconButton
+                                    aria-label="delete"
+                                    onClick={deleteHandler}
+                                >
+                                    <StyledDeleteIcon />
+                                </IconButton>
+                            </Stack>
+                        )}
+                        {role === 'customer' && count <= 0 && (
+                            <IconButton
+                                aria-label="delete"
+                                onClick={addToCartHandler}
+                            >
+                                <AddShoppingCartIcon
+                                    sx={{
+                                        fontSize: FONT_SIZE['3XL'],
+                                        display: disabled
+                                            ? 'none'
+                                            : 'inline-block',
+                                    }}
+                                />
+                            </IconButton>
+                        )}
+                    </Box>
+                </StyledCardContent>
             </StyledCard>
             <ReusableDialog
                 open={open}
@@ -226,7 +216,7 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                         }}
                     >
                         <ReusableDialogTitle>
-                            Edit Restaurant
+                            Edit Food Item
                         </ReusableDialogTitle>
 
                         <ReusableDialogContent>
@@ -237,11 +227,7 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                     maxLength: {
                                         value: 50,
-                                        message:
-                                            RESTAURANT_VALIDATION.LIMIT.replace(
-                                                '{{name_count}}',
-                                                '50',
-                                            ),
+                                        message: RESTAURANT_VALIDATION.LIMIT,
                                     },
                                 }}
                                 defaultVal={formData.heading}
@@ -263,14 +249,6 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                                 defaultVal={formData.alt}
                             />
                             <FromTextField
-                                name="location"
-                                id="location"
-                                rules={{
-                                    required: RESTAURANT_VALIDATION.REQUIRED,
-                                }}
-                                defaultVal={formData.location}
-                            />
-                            <FromTextField
                                 name="description"
                                 id="description"
                                 rules={{
@@ -278,31 +256,21 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                                 }}
                                 defaultVal={formData.description}
                             />
-                            <Controller
-                                name="category"
-                                control={methods.control}
-                                defaultValue={formData.category}
+                            <FromTextField
+                                name="ingredients"
+                                id="ingredients"
                                 rules={{
                                     required: RESTAURANT_VALIDATION.REQUIRED,
                                 }}
-                                render={({ field, fieldState }) => (
-                                    <StyledCategoryTextfield
-                                        {...field}
-                                        required
-                                        size="small"
-                                        select
-                                        label="Category"
-                                        error={!!fieldState.error}
-                                        helperText={fieldState.error?.message}
-                                    >
-                                        <StyledMenuItem value="veg">
-                                            Veg
-                                        </StyledMenuItem>
-                                        <StyledMenuItem value="non-veg">
-                                            Non-Veg
-                                        </StyledMenuItem>
-                                    </StyledCategoryTextfield>
-                                )}
+                                defaultVal={formData.ingredients}
+                            />
+                            <FromTextField
+                                name="stock"
+                                id="stock"
+                                rules={{
+                                    required: RESTAURANT_VALIDATION.REQUIRED,
+                                }}
+                                defaultVal={formData.stock}
                             />
                         </ReusableDialogContent>
 
@@ -332,7 +300,7 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                 fullWidth
                 maxWidth="sm"
             >
-                <ReusableDialogTitle>Delete Restaurant</ReusableDialogTitle>
+                <ReusableDialogTitle>Delete Food Item</ReusableDialogTitle>
 
                 <ReusableDialogContent>
                     <Typography variant="body1">

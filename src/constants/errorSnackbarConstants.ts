@@ -1,5 +1,5 @@
 /**
- * Success Messages
+ * error Messages
  * @constant
  */
 export const ERRORMESSAGES = {

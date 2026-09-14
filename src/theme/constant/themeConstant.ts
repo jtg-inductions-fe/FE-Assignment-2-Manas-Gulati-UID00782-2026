@@ -4,9 +4,9 @@
  */
 export const COLORS = {
     PRIMARY: {
-        MAIN: '#F1D5BB',
-        LIGHT: '#f6e5d5',
-        DARK: '#f7c08c',
+        MAIN: '#bd3500',
+        LIGHT: '#ed855c',
+        DARK: '#9f2d00',
         CONTRASTTEXT: '#000',
     },
     WARNING: {
@@ -18,6 +18,11 @@ export const COLORS = {
         MAIN: '#777777',
         LIGHT: '#b1b1b1eb',
         DARK: '#4c4c4c',
+    },
+    FADED: {
+        LIGHT: '#d9dee2',
+        MAIN: '#6b554d',
+        DARK: '#5d4942',
     },
 };
 
