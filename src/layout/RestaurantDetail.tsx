@@ -53,19 +53,6 @@ export const AutoGrid = ({ data }: RestaurantAutoGridProps) => {
         });
     };
 
-    /**
-     * TODO: handle add restaurant form data
-     * @param addFormData - {RestaurantFormData}
-     */
-    const onSubmit = (addFormData: RestaurantFormData) => {
-        dispatch(add(addFormData));
-        setSnackbar({
-            open: true,
-            message: MESSAGES.ADD,
-            severity: 'success',
-        });
-    };
-
     return (
         <>
             <ReusableWrapper>
