@@ -57,17 +57,27 @@ export default tseslint.config(
                 'error',
                 {
                     groups: [
-                        // TODO: Update the groups as per the requirement.
                         ['^react$', '^react-dom'],
-                        ['^\\w'],
-                        ['^@mui'],
+
+                        ['^@?\\w'],
+
                         [
-                            '^@(?:|assets|components|constant|layout|routes|theme)',
+                            '^@(?:assets|components|constant|hooks|layout|routes|store|styles|theme|types|utils)',
                         ],
-                        ['^\\./', '^\\.\\./'],
+
+                        ['^\\.'],
                     ],
                 },
             ],
+
+            'react/self-closing-comp': [
+                'error',
+                {
+                    component: true,
+                    html: true,
+                },
+            ],
+
             '@typescript-eslint/naming-convention': [
                 'error',
                 {
@@ -76,7 +86,7 @@ export default tseslint.config(
                 },
                 {
                     selector: 'function',
-                    format: ['camelCase'],
+                    format: ['camelCase', 'PascalCase'], //added pascal case to bypass error while creating react component
                 },
                 {
                     selector: 'typeLike',

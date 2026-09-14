@@ -1,0 +1,23 @@
+{
+    "m@gmail.com": {
+        "userId": 0,
+        "name": "manas",
+        "email": "m@gmail.com",
+        "password": "abs",
+        "role": "customer"
+    },
+    "s@gmail.com": {
+        "userId": 1,
+        "name": "sanjay",
+        "email": "s@gmail.com",
+        "password": "abc",
+        "role": "owner"
+    },
+    "k@gmail.com": {
+        "userId": 2,
+        "name": "kris",
+        "email": "k@gmail.com",
+        "password": "abk",
+        "role": "owner"
+    }
+}

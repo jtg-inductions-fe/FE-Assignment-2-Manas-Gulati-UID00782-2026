@@ -1,9 +1,8 @@
+import react from '@vitejs/plugin-react';
 import type { UserConfig } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import tsconfigPaths from 'vite-tsconfig-paths';
-
-import react from '@vitejs/plugin-react';
 
 /* Common Config for both PROD and DEV mode */
 const commonConfig: UserConfig = {

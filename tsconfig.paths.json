@@ -2,9 +2,9 @@
     "compilerOptions": {
         "baseUrl": "./src",
         "paths": {
-            "@assets/*": ["assets/*"],
-            "@constant": ["constant/index"],
-            "@theme": ["theme/index"]
+            "@constant": ["theme/constant/index"],
+            "@theme": ["theme/index"],
+            "@components": ["components/index"]
         }
     }
 }

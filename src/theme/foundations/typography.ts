@@ -1,10 +1,9 @@
-import type { Theme } from '@mui/material/styles';
 import type {
     TypographyOptions,
     TypographyUtils,
 } from '@mui/material/styles/createTypography';
 
-import { HTML_FONT_SIZE } from '@constant';
+import { FONT_SIZE, FONT_WEIGHT, HTML_FONT_SIZE, LINE_HEIGHT } from '@constant';
 
 /* Custom px to rem function */
 const typographyUtil: TypographyUtils = {
@@ -16,29 +15,49 @@ const typographyUtil: TypographyUtils = {
     pxToRem: (px: number) => `${px / HTML_FONT_SIZE}` + 'rem',
 };
 
-// TODO: Add the necessary typographies here.
 /**
  * Creates a typography block with various styles
- * @param theme - Theme object to access the breakpoints.
  * @returns The function returns a TypographyOptions object, which includes various typography settings,
  */
-const typographyStyle = (theme: Theme): TypographyOptions => ({
+const typographyStyle = (): TypographyOptions => ({
     fontFamily: 'Inter',
     htmlFontSize: HTML_FONT_SIZE,
 
-    fontWeightLight: 400,
-    fontWeightRegular: 500,
-    fontWeightMedium: 600,
+    fontWeightLight: FONT_WEIGHT.LIGHT,
+    fontWeightRegular: FONT_WEIGHT.REGULAR,
+    fontWeightMedium: FONT_WEIGHT.MEDIUM,
+    fontWeightSemiBold: FONT_WEIGHT.SEMIBOLD,
+    fontWeightBold: FONT_WEIGHT.BOLD,
 
     h1: {
-        fontSize: typographyUtil.pxToRem(30),
-        fontWeight: 700,
-        lineHeight: typographyUtil.pxToRem(45),
-
-        [theme.breakpoints.up('md')]: {
-            fontSize: typographyUtil.pxToRem(48),
-            lineHeight: typographyUtil.pxToRem(62.5),
-        },
+        fontSize: typographyUtil.pxToRem(FONT_SIZE['5XL']),
+        fontWeight: FONT_WEIGHT.BOLD,
+        lineHeight: LINE_HEIGHT.HEADING,
+    },
+    h2: {
+        fontSize: typographyUtil.pxToRem(FONT_SIZE['4XL']),
+        fontWeight: FONT_WEIGHT.BOLD,
+        lineHeight: LINE_HEIGHT.HEADING,
+    },
+    h3: {
+        fontSize: typographyUtil.pxToRem(FONT_SIZE['3XL']),
+        fontWeight: FONT_WEIGHT.SEMIBOLD,
+        lineHeight: LINE_HEIGHT.HEADING,
+    },
+    h4: {
+        fontSize: typographyUtil.pxToRem(FONT_SIZE['2XL']),
+        fontWeight: FONT_WEIGHT.BOLD,
+        lineHeight: LINE_HEIGHT.HEADING,
+    },
+    h5: {
+        fontSize: typographyUtil.pxToRem(FONT_SIZE.XL),
+        fontWeight: FONT_WEIGHT.SEMIBOLD,
+        lineHeight: LINE_HEIGHT.HEADING,
+    },
+    h6: {
+        fontSize: typographyUtil.pxToRem(FONT_SIZE.MD),
+        fontWeight: FONT_WEIGHT.BOLD,
+        lineHeight: LINE_HEIGHT.HEADING,
     },
 });
 
