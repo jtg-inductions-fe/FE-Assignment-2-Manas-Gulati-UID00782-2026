@@ -5,14 +5,11 @@ export interface CartCardData {
     heading: string;
     price: number;
     quantity: number;
+    stock: number;
 }
 
 export interface CardProps {
     data: CartCardData;
-}
-
-export interface AutoGridProps {
-    data: CartCardData[];
 }
 
 //schema for cart data required
@@ -29,4 +26,8 @@ export interface CartFooditemData {
     alt: string;
     heading: string;
     price: number;
+    stock: number;
+}
+export interface CartAutoGridProps {
+    data: CartCardData[];
 }

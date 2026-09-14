@@ -26,3 +26,10 @@ export interface FoodCardProps {
 export interface FoodAutoGridProps {
     data: FooditemCardData[];
 }
+
+export interface ReduceStock {
+    data: {
+        foodId: number;
+        quantity: number;
+    }[];
+}

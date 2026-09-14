@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 
-import { AlertColor } from '@mui/material';
-import Stack from '@mui/material/Stack';
-import ReusableButton from 'components/Button.component';
-import FormPassword from 'components/Password.component';
-import CustomizedSnackbar from 'components/Snackbar.component';
-import FormTextField from 'components/TextField.component';
+import { AlertColor, Stack } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { login } from 'store/authSlice';
-import { initializeUser } from 'store/cartSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
-import { get } from 'store/restaurantSlice';
 import { LoginFormData } from 'types';
+
+import {
+    CustomizedSnackbar,
+    FormPassword,
+    FormTextField,
+    ReusableButton,
+} from '@components';
 
 import { ROUTES, SUCCESSMESSAGES, VALIDATION } from '../constants';
 
-function Login() {
+export const Login = () => {
     //set initial hidden state of snackbar
     const dispatch = useTypeDispatch();
     const navigate = useNavigate();
@@ -28,26 +28,12 @@ function Login() {
         message: '',
         severity: 'success' as AlertColor,
     });
-    const auth = useTypeSelector((state) => state.auth); //to send user data forward
 
     const methods = useForm<LoginFormData>(); //create rhf hook to manage form
 
     const onSubmit = (data: LoginFormData) => {
         dispatch(login(data)); //update login attempt and checks authN
     };
-
-    useEffect(() => {
-        if (auth.user) {
-            dispatch(
-                get({
-                    role: auth.user.role,
-                    userId: auth.user.userId,
-                }), //to initialize restaurant to show to user
-            );
-            dispatch(initializeUser(auth.user.userId)); //to set user for the cart
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth.user]);
 
     useEffect(() => {
         //to generate snackbar at every login attempt
@@ -100,11 +86,7 @@ function Login() {
                                 }}
                             />
                             <FormPassword name="password" id="loginPassword" />
-                            <ReusableButton
-                                variant="outlined"
-                                type="submit"
-                                size="medium"
-                            >
+                            <ReusableButton type="submit" size="medium">
                                 LogIn
                             </ReusableButton>
                         </Stack>
@@ -124,6 +106,4 @@ function Login() {
             />
         </>
     );
-}
-
-export default Login;
+};

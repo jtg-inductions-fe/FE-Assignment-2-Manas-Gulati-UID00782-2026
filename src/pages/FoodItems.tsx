@@ -1,7 +1,10 @@
+import { useState } from 'react';
+
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
 import { Box, Stack, Typography } from '@mui/material';
-import AutoGrid from 'layout/FoodDetails';
+import { useDebouncedValue } from 'hooks/useDebounceHook';
+import { AutoGrid } from 'layout/FoodDetails';
 import { useTypeSelector } from 'store/hooks';
 import {
     StyledFooditemBannerChip,
@@ -16,9 +19,9 @@ import {
 
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
-import Header from '../layout/Header';
+import { PrimarySearchAppBar } from '../layout/Header';
 
-export default function FoodItems() {
+export const FoodItems = () => {
     const foodData = useTypeSelector((state) => state.food);
     const selectedRestaurant = useTypeSelector(
         (state) => state.selectedRestaurant,
@@ -30,24 +33,36 @@ export default function FoodItems() {
     );
     const restaurantName = selectedRestaurant.restaurantName;
     const coverImage = restaurant?.img;
-
+    const [searchValue, setSearchValue] = useState('');
+    const debouncedSearchValue = useDebouncedValue(searchValue, 200);
+    const query = debouncedSearchValue.trim().toLowerCase();
+    let filterData = foodData;
+    if (query) {
+        filterData = foodData.filter((item) =>
+            item.heading.toLowerCase().includes(query),
+        );
+    }
     return (
         <StyledFooditemWrapper>
-            <Header />
+            <PrimarySearchAppBar
+                searchValue={searchValue}
+                onSearchChange={setSearchValue}
+                searchPlaceholder="Search this menu…"
+            />
             <StyledFooditemDetailWrapper>
                 <StyledFooditemBannerWrapper>
                     <Box
                         role="img"
                         aria-label={`${restaurantName} restaurant`}
                         sx={{
-                            height: { sm: 190, md: 320 },
+                            height: { xs: 190, md: 320 },
                             backgroundImage: `linear-gradient(180deg, rgba(15, 6, 1, 0.08), rgba(12, 12, 12, 0.34)), url("${coverImage}")`,
                             backgroundPosition: 'center',
                             backgroundSize: 'cover',
                         }}
                     />
                     <Stack
-                        direction={{ sm: 'column', md: 'row' }}
+                        direction={{ xs: 'column', md: 'row' }}
                         alignItems={{ sm: 'flex-start', md: 'center' }}
                         gap={3}
                         sx={{ px: 3, py: 4 }}
@@ -116,12 +131,12 @@ export default function FoodItems() {
                 >
                     <StyledMenuText label="All Menu Items" />
                     <Typography sx={{ fontSize: FONT_SIZE.SM }}>
-                        {foodData.length} items
+                        {filterData.length} items
                     </Typography>
                 </Stack>
 
-                <AutoGrid data={foodData} />
+                <AutoGrid data={filterData} />
             </StyledFooditemDetailWrapper>
         </StyledFooditemWrapper>
     );
-}
+};

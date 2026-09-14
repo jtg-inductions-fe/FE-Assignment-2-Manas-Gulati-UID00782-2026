@@ -1,25 +1,36 @@
 import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import { Box, IconButton } from '@mui/material';
-import { StyledCount } from 'styles/Counter.styles';
+import RemoveIcon from '@mui/icons-material/Remove'; //can't be merged coz both have its own js file
+import { IconButton } from '@mui/material';
+import { StyledCount, StyledCounterBox } from 'styles/Counter.styles';
 import { CounterProps } from 'types';
 
 import { FONT_SIZE } from '@constant';
 
-export default function Counter({
+export const Counter = ({
     count,
     increaseHandler,
     decreaseHandler,
-}: CounterProps) {
-    // Determine color based on the value
+    disableIncrease = false,
+}: CounterProps) => {
+    /**
+     * TODO: Determine color based on the value
+     * @returns "success.main" | "text.secondary"
+     */
     const getCounterColor = () => {
-        if (count > 0) return 'success.main';
-        if (count < 0) return 'error.main';
-        return 'text.secondary';
+        switch (true) {
+            case count > 0:
+                return 'success.main';
+            default:
+                return 'text.secondary';
+        }
     };
 
     return (
-        <Box display="flex" alignItems="center" gap={2}>
+        <StyledCounterBox
+            display="flex"
+            alignItems="center"
+            gap={{ xs: 0.25, md: 2 }}
+        >
             <IconButton
                 onClick={decreaseHandler}
                 color="error"
@@ -40,11 +51,12 @@ export default function Counter({
 
             <IconButton
                 onClick={increaseHandler}
+                disabled={disableIncrease}
                 color="success"
                 aria-label="increment"
             >
                 <AddIcon sx={{ fontSize: FONT_SIZE['3XL'] }} />
             </IconButton>
-        </Box>
+        </StyledCounterBox>
     );
-}
+};

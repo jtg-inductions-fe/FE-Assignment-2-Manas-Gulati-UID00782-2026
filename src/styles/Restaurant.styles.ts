@@ -1,6 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import {
     Box,
+    Card,
     CardActionArea,
     CardContent,
     MenuItem,
@@ -8,7 +9,6 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import { Card } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { FONT_SIZE } from '@constant';
@@ -73,9 +73,6 @@ export const StyledCategoryTextfield = styled(TextField)(({ theme }) => ({
     '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.common.black,
     },
-    '& MuiButtonBase-root-MuiMenuItem-root': {
-        fontSize: FONT_SIZE['XL'],
-    },
 }));
 
 export const StyledMenuItem = styled(MenuItem)({
@@ -98,7 +95,7 @@ export const CustomGridWrapper = styled(Grid)(({ theme }) => ({
 export const StyledAddMoreCard = styled(Card)(({ theme }) => ({
     width: '100%',
     minHeight: 600,
-    minWidth: 400,
+    minWidth: 300,
     display: 'flex',
     flexDirection: 'column',
     cursor: 'pointer',

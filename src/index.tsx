@@ -8,6 +8,7 @@ import { RouterProvider } from 'react-router-dom';
 import { theme } from '@theme';
 
 import { router } from './routes/appRoutes';
+import { CheckLocalStorage } from './routes/CheckLocalStorage';
 import { store } from './store/store';
 
 const rootElement = document.getElementById('root') as HTMLElement;
@@ -17,7 +18,9 @@ createRoot(rootElement).render(
         <Provider store={store}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <RouterProvider router={router} />
+                <CheckLocalStorage>
+                    <RouterProvider router={router} />
+                </CheckLocalStorage>
             </ThemeProvider>
         </Provider>
     </StrictMode>,

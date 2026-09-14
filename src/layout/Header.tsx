@@ -1,11 +1,8 @@
 import { useState } from 'react';
 
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
+import { AccountCircle } from '@mui/icons-material';
+import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { Searchbar } from 'components/Searchbar.component';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import { logout } from 'store/authSlice';
@@ -17,15 +14,19 @@ import {
     StyledToolbar,
     StyledUserBox,
 } from 'styles/Header.styles.ts';
+import { HeaderProps } from 'types';
 
 import { FONT_SIZE } from '@constant';
 
 import { ROUTES } from '../constants';
 
-export default function PrimarySearchAppBar() {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); //to handle opening and closing of menu
+export const PrimarySearchAppBar = ({
+    searchValue = '',
+    onSearchChange,
+    searchPlaceholder = 'Search…',
+}: HeaderProps) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const isMenuOpen = Boolean(anchorEl);
-
     const dispatch = useTypeDispatch();
     const navigate = useNavigate();
     const cartFoodItem = useTypeSelector((state) => state.cart.food);
@@ -35,25 +36,22 @@ export default function PrimarySearchAppBar() {
     });
 
     /**
-     * handle profile open functionality
-     * @param {any} e:React.MouseEvent<HTMLElement>
-     * @returns {any}
+     * TODO: handle profile open functionality
+     * @param e - {React.MouseEvent<HTMLElement>}
      */
     const handleProfileMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(e.currentTarget);
     };
 
     /**
-     * handle profile close functionality
-     * @returns {any}
+     * TODO: handle profile close functionality
      */
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
 
     /**
-     * handle user logout
-     * @returns {any}
+     * TODO: handle user logout
      */
     const handleLogout = () => {
         dispatch(logout());
@@ -62,19 +60,22 @@ export default function PrimarySearchAppBar() {
         navigate(ROUTES.HOME, { replace: true });
     };
 
+    /**
+     * TODO: redirect to orders page
+     */
     const handleOrders = () => {
-        //handle orders part
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        navigate(ROUTES.ORDER);
     };
 
     const userId = useTypeSelector((state) => state.auth.user?.userId);
 
     /**
-     * navigate to cart page
-     * @returns {any}
+     * TODO: navigate to cart page
      */
     const cartHandler = () => {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        navigate(`/dashboard/cart/${userId}`);
+        navigate(ROUTES.CART(userId ?? ROUTES.ERROR));
     };
 
     const menuId = 'primary-search-account-menu';
@@ -97,7 +98,7 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
             sx={{
                 '& .MuiMenuItem-root': {
-                    fontSize: { sm: FONT_SIZE.LG, md: FONT_SIZE.XL },
+                    fontSize: { xs: FONT_SIZE.LG, md: FONT_SIZE.XL },
                 },
             }}
         >
@@ -117,7 +118,7 @@ export default function PrimarySearchAppBar() {
                         variant="h5"
                         component={RouterLink}
                         noWrap
-                        to="/dashboard"
+                        to={ROUTES.HOME}
                         sx={(theme) => ({
                             ml: theme.spacing(1),
                             textDecoration: 'none',
@@ -126,7 +127,14 @@ export default function PrimarySearchAppBar() {
                     >
                         Meishi
                     </Typography>
-                    <Box sx={{ flexGrow: 1 }} />{' '}
+                    {onSearchChange && (
+                        <Searchbar
+                            value={searchValue}
+                            placeholder={searchPlaceholder}
+                            onChange={onSearchChange}
+                        />
+                    )}
+                    <Box sx={{ flexGrow: 1 }} />
                     {/* Act as justify content: space between(provided by mui itself) */}
                     <StyledUserBox>
                         {role === 'customer' && (
@@ -156,4 +164,4 @@ export default function PrimarySearchAppBar() {
             {renderMenu}
         </Box>
     );
-}
+};
