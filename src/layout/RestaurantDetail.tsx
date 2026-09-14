@@ -1,20 +1,18 @@
 import { useState } from 'react';
 
-import { AlertColor, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import ReusableButton from 'components/Button.component';
 import ReusableDialog, {
     ReusableDialogActions,
     ReusableDialogContent,
     ReusableDialogTitle,
 } from 'components/Dialog.component';
-import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
 import ReusableWrapper from 'components/Wrapper.component';
 import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import RestaurantCard from 'layout/RestaurantCard';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { useTypeDispatch, useTypeSelector } from 'store/hooks';
-import { add } from 'store/restaurantSlice';
+import { useTypeSelector } from 'store/hooks';
 import {
     CustomCardGrid,
     CustomGridWrapper,
@@ -24,34 +22,24 @@ import {
     StyledCategoryTextfield,
     StyledMenuItem,
 } from 'styles/Restaurant.styles';
-import { RestaurantAutoGridProps, RestaurantFormData } from 'types';
 
-import { MESSAGES } from '../constants';
+export interface RestaurantFormData {
+    img: string;
+    alt: string;
+    heading: string;
+    location: string;
+    description: string;
+    category: string;
+}
 
-export default function AutoGrid({ data }: RestaurantAutoGridProps) {
+export default function AutoGrid() {
+    const data = useTypeSelector((state) => state.restaurant);
     const [addOpen, setAddOpen] = useState(false); //for add restaurant dialog box
     const methods = useForm<RestaurantFormData>();
-    const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
-
-    //set snackbar
-    const [snackbar, setSnackbar] = useState({
-        open: false,
-        message: '',
-        severity: 'success' as AlertColor,
-    });
 
     const handleClose = () => {
         setAddOpen(false);
-    };
-    const onSubmit = (addFormData: RestaurantFormData) => {
-        dispatch(add(addFormData));
-        setAddOpen(false);
-        setSnackbar({
-            open: true,
-            message: MESSAGES.ADD,
-            severity: 'success',
-        });
     };
 
     return (
@@ -86,7 +74,11 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                                 >
                                     <StyledAddIcon />
 
-                                    <Typography variant="h4" component="div">
+                                    <Typography
+                                        variant="h4"
+                                        component="div"
+                                        color="text.secondary"
+                                    >
                                         Add More Item
                                     </Typography>
                                 </StyledCardContent>
@@ -102,11 +94,7 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                 maxWidth="sm"
             >
                 <FormProvider {...methods}>
-                    <form
-                        onSubmit={(e) => {
-                            void methods.handleSubmit(onSubmit)(e);
-                        }}
-                    >
+                    <form>
                         <ReusableDialogTitle>
                             Edit Restaurant
                         </ReusableDialogTitle>
@@ -202,17 +190,6 @@ export default function AutoGrid({ data }: RestaurantAutoGridProps) {
                     </form>
                 </FormProvider>
             </ReusableDialog>
-            <CustomizedSnackbar
-                severity={snackbar.severity}
-                message={snackbar.message}
-                state={snackbar.open}
-                onClose={() =>
-                    setSnackbar((prev) => ({
-                        ...prev,
-                        open: false,
-                    }))
-                }
-            />
         </>
     );
 }

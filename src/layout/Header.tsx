@@ -28,7 +28,6 @@ export default function PrimarySearchAppBar() {
 
     const dispatch = useTypeDispatch();
     const navigate = useNavigate();
-    const quantity = 0;
 
     const handleProfileMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(e.currentTarget);
@@ -43,17 +42,6 @@ export default function PrimarySearchAppBar() {
         setAnchorEl(null);
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         navigate(ROUTES.HOME, { replace: true });
-    };
-
-    const handleOrders = () => {
-        //handle orders part
-    };
-
-    const userId = useTypeSelector((state) => state.auth.user?.userId);
-
-    const cartHandler = () => {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        navigate(`/dashboard/cart/${userId}`);
     };
 
     const menuId = 'primary-search-account-menu';
@@ -80,11 +68,13 @@ export default function PrimarySearchAppBar() {
                 },
             }}
         >
-            <MenuItem onClick={handleOrders}>Orders</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );
-
+    const cartHandler = () => {
+        //handle cart logic
+    };
     //to display/hide cart
     const role = useTypeSelector((state) => state?.auth?.user?.role);
 
@@ -111,7 +101,7 @@ export default function PrimarySearchAppBar() {
                         {role === 'customer' && (
                             <IconButton aria-label="cart" onClick={cartHandler}>
                                 <StyledBadge
-                                    badgeContent={quantity}
+                                    //badgeContent={quantity}
                                     color="success"
                                 >
                                     <StyledShoppingCartIcon />

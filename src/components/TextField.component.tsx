@@ -1,6 +1,13 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, RegisterOptions, useFormContext } from 'react-hook-form';
 import { CustomTextField } from 'styles/TextField.styles';
-import { LabelProps } from 'types';
+
+//defining props for the text field component
+interface LabelProps {
+    name: string;
+    rules: RegisterOptions;
+    id: string;
+    defaultVal?: string;
+}
 
 export default function FromTextField({
     name,

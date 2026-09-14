@@ -2,19 +2,17 @@ import { InputLabel, styled } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { type OutlinedInputProps } from '@mui/material/OutlinedInput';
 
-import { FONT_SIZE, FONT_WEIGHT } from '@constant';
+import { FONT_SIZE } from '@constant';
 
 //Styling Password box component
 export const CustomTextField = styled(OutlinedInput)<OutlinedInputProps>(
     ({ theme }) => ({
-        borderRadius: 11,
-
         '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.faded?.light,
+            borderColor: theme.palette.grey[700],
         },
 
         '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.grey[700],
+            borderColor: theme.palette.common.black,
         },
 
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
@@ -31,10 +29,8 @@ export const CustomTextField = styled(OutlinedInput)<OutlinedInputProps>(
 //Styling password textfield label
 export const CustomInputLabel = styled(InputLabel)(({ theme }) => ({
     color: theme.palette.grey[700],
-
     '&.MuiInputLabel-root': {
         fontSize: FONT_SIZE.XL,
-        fontWeight: FONT_WEIGHT.MEDIUM,
     },
     '&.Mui-focused': {
         color: theme.palette.common.black,

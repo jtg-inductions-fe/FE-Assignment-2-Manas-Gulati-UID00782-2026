@@ -1,6 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
 import {
-    Box,
     CardActionArea,
     CardContent,
     MenuItem,
@@ -13,12 +12,11 @@ import Grid from '@mui/material/Grid2';
 
 import { FONT_SIZE } from '@constant';
 
-export const StyledCard = styled(Card)(({ theme }) => ({
+export const StyledCard = styled(Card)(({}) => ({
     width: '100%',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    border: `1px solid ${theme.palette.faded?.light}`,
     borderRadius: 3,
     transition: 'transform 180ms ease, box-shadow 180ms ease',
     '&:hover': {
@@ -105,10 +103,7 @@ export const StyledAddMoreCard = styled(Card)(({ theme }) => ({
     filter: 'grayscale(100%)',
     opacity: 0.7,
     transition: '0.3s',
-    border: `2px dashed ${theme.palette.faded?.main}`,
     borderRadius: 3,
-    color: theme.palette.faded?.main,
-    backgroundColor: theme.palette.faded?.light,
 
     '&:hover': {
         opacity: 1,
@@ -122,19 +117,4 @@ export const StyledAddMoreCard = styled(Card)(({ theme }) => ({
 export const StyledAddIcon = styled(AddIcon)(({ theme }) => ({
     fontSize: 60,
     marginBottom: theme.spacing(1),
-}));
-
-export const StyledDashboardWrapper = styled(Box)({
-    maxWidth: '2000px',
-    margin: '0 auto',
-});
-
-export const StyledRestaurantDetailWrapper = styled(Box)(({ theme }) => ({
-    width: '100%',
-    maxWidth: 1700,
-    margin: '0 auto',
-    padding: `${theme.spacing(7)} ${theme.spacing(5)} ${theme.spacing(10)}`,
-    [theme.breakpoints.up('md')]: {
-        paddingBottom: theme.spacing(14),
-    },
 }));

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
-import { AlertColor, Box, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ReusableButton from 'components/Button.component';
@@ -10,17 +10,12 @@ import ReusableDialog, {
     ReusableDialogContent,
     ReusableDialogTitle,
 } from 'components/Dialog.component';
-import CustomizedSnackbar from 'components/Snackbar.component';
 import FromTextField from 'components/TextField.component';
-import { MESSAGES } from 'constants/restaurantSnackbarConstant';
 import { RESTAURANT_VALIDATION } from 'constants/restaurantValidationConstants';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { get } from 'store/fooditemSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { del, edit } from 'store/restaurantSlice';
-import { selectRestaurant } from 'store/selectRestaurantSlice';
 import {
     StyledCard,
     StyledCardActionArea,
@@ -30,26 +25,40 @@ import {
     StyledDescription,
     StyledMenuItem,
 } from 'styles/Restaurant.styles';
-import { RestaurantCardProps, RestaurantFormData } from 'types';
 
 import { FONT_SIZE } from '@constant';
 
-export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
+interface CardData {
+    restaurantId: number;
+    img: string;
+    alt: string;
+    heading: string;
+    location: string;
+    description: string;
+    category: string;
+}
+
+interface EditFormData {
+    img: string;
+    alt: string;
+    heading: string;
+    location: string;
+    description: string;
+    category: string;
+}
+
+interface CardProps {
+    data: CardData;
+}
+
+export default function MultiActionAreaCard({ data }: CardProps) {
     //handle open/close modals
     const [open, setOpen] = useState(false);
     const [delOpen, setDelOpen] = useState(false);
 
-    const methods = useForm<RestaurantFormData>();
-    const navigate = useNavigate();
+    const methods = useForm<EditFormData>();
     const dispatch = useTypeDispatch();
     const role = useTypeSelector((state) => state?.auth?.user?.role);
-
-    //set snackbar
-    const [snackbar, setSnackbar] = useState({
-        open: false,
-        message: '',
-        severity: 'success' as AlertColor,
-    });
 
     //set initial form state for adding new restaurant
     const [formData, setFormData] = useState({
@@ -80,11 +89,6 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
 
     const confirmDeleteHandler = () => {
         dispatch(del(data.restaurantId));
-        setSnackbar({
-            open: true,
-            message: MESSAGES.DELETE,
-            severity: 'success',
-        });
         setDelOpen(false);
     };
 
@@ -95,34 +99,20 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
         setDelOpen(false);
     };
 
-    const onSubmit = (editFormData: RestaurantFormData) => {
+    const onSubmit = (editFormData: EditFormData) => {
         dispatch(
             edit({
                 id: data.restaurantId,
                 data: editFormData,
             }),
         );
-        setSnackbar({
-            open: true,
-            message: MESSAGES.EDIT,
-            severity: 'success',
-        });
+
         setOpen(false);
     };
-
-    const selectRestaurantHandler = () => {
-        dispatch(
-            selectRestaurant({ id: data.restaurantId, name: data.heading }),
-        );
-        dispatch(get(data.restaurantId));
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        navigate(`/dashboard/${data.restaurantId}`);
-    };
-
     return (
         <>
             <StyledCard>
-                <StyledCardActionArea onClick={selectRestaurantHandler}>
+                <StyledCardActionArea>
                     <CardMedia
                         component="img"
                         height="250"
@@ -157,14 +147,7 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                                 />
                             )}
                         </Stack>
-                        <Stack
-                            direction="row"
-                            alignItems="center"
-                            gap={1}
-                            sx={(theme) => ({
-                                color: theme.palette.faded?.main,
-                            })}
-                        >
+                        <Stack direction="row" alignItems="center" gap={1}>
                             <PlaceOutlinedIcon
                                 sx={{ fontSize: FONT_SIZE.LG }}
                             />
@@ -365,17 +348,6 @@ export default function MultiActionAreaCard({ data }: RestaurantCardProps) {
                     </ReusableButton>
                 </ReusableDialogActions>
             </ReusableDialog>
-            <CustomizedSnackbar
-                severity={snackbar.severity}
-                message={snackbar.message}
-                state={snackbar.open}
-                onClose={() =>
-                    setSnackbar((prev) => ({
-                        ...prev,
-                        open: false,
-                    }))
-                }
-            />
         </>
     );
 }

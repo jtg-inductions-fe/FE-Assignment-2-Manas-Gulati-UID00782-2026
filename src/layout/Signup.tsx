@@ -17,11 +17,19 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { signin } from 'store/authSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { CustomRadio } from 'styles/Radio.styles';
-import { SignupFormData } from 'types';
 
-import { FONT_SIZE, FONT_WEIGHT } from '@constant';
+import { FONT_SIZE } from '@constant';
 
 import { SUCCESSMESSAGES, VALIDATION } from '../constants';
+
+//signup form data schema
+interface SignupFormData {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    role: string;
+}
 
 function Signup() {
     //setup initial snackbar state
@@ -62,15 +70,23 @@ function Signup() {
 
     return (
         <>
-            <Stack spacing={4}>
+            <Stack
+                spacing={6}
+                sx={{
+                    justifyContent: 'center',
+                    alignItems: 'stretch',
+                }}
+            >
                 <FormProvider {...methods}>
+                    <h3>SignUp Form</h3>
+
                     <form
                         className="signupForm"
                         onSubmit={(e) => {
                             void methods.handleSubmit(onSubmit)(e);
                         }}
                     >
-                        <Stack spacing={5}>
+                        <Stack spacing={4}>
                             <FormTextField
                                 name="name"
                                 id="signupName"
@@ -146,8 +162,7 @@ function Signup() {
                                             color: theme.palette.common.black,
                                         },
                                         '&.MuiFormLabel-root': {
-                                            fontSize: FONT_SIZE['XL'],
-                                            fontWeight: FONT_WEIGHT.REGULAR,
+                                            fontSize: FONT_SIZE['2XL'],
                                         },
                                     })}
                                 >
