@@ -1,5 +1,7 @@
-import { Alert, Box, Snackbar, SnackbarCloseReason } from '@mui/material';
+import { Alert, Snackbar, SnackbarCloseReason } from '@mui/material';
 import { SnackbarProps } from 'types';
+
+import { FONT_SIZE } from '@constant';
 
 export const CustomizedSnackbar = ({
     severity,
@@ -9,7 +11,7 @@ export const CustomizedSnackbar = ({
 }: SnackbarProps) => {
     /**
      * TODO: handle closing of snackbar
-     * @param _event - {any}
+     * @param _event - {Event}
      * @param reason - {SnackbarCloseReason}
      */
     const handleClose = (
@@ -24,21 +26,20 @@ export const CustomizedSnackbar = ({
     };
 
     return (
-        <Box>
-            <Snackbar
-                open={state}
-                autoHideDuration={6000}
+        <Snackbar open={state} autoHideDuration={6000} onClose={handleClose}>
+            <Alert
                 onClose={handleClose}
+                severity={severity}
+                variant="filled"
+                sx={{
+                    alignItems: 'center',
+                    '&.MuiAlert-icon': {
+                        fontSize: FONT_SIZE['3XL'],
+                    },
+                }}
             >
-                <Alert
-                    onClose={handleClose}
-                    severity={severity}
-                    variant="filled"
-                    sx={{ width: '100%' }}
-                >
-                    {message}
-                </Alert>
-            </Snackbar>
-        </Box>
+                {message}
+            </Alert>
+        </Snackbar>
     );
 };

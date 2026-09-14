@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { StyledNullState } from 'styles/Nullstate.styles';
 import { NullStateProps } from 'types/null.types';
 
@@ -6,6 +6,15 @@ import { FONT_WEIGHT } from '@constant';
 
 export const NullState = ({ title, description }: NullStateProps) => (
     <StyledNullState>
+        <Box
+            component="img"
+            src="/Assets/null.webp"
+            alt="null state"
+            sx={{
+                minHeight: 280,
+                objectFit: 'cover',
+            }}
+        />
         <Typography variant="body1" sx={{ fontWeight: FONT_WEIGHT.SEMIBOLD }}>
             {title}
         </Typography>

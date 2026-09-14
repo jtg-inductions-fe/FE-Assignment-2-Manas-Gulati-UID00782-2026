@@ -24,8 +24,7 @@ import { RestaurantCardProps, RestaurantFormData } from 'types';
 import { CustomizedSnackbar, FormTextField, ReusableButton } from '@components';
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
-import { MESSAGES, RESTAURANT_VALIDATION } from '../constants';
-import { ROUTES } from '../constants';
+import { MESSAGES, RESTAURANT_VALIDATION, ROUTES } from '../constants';
 
 export const MultiActionAreaCard = ({ data }: RestaurantCardProps) => {
     //handle open/close modals
@@ -180,7 +179,7 @@ export const MultiActionAreaCard = ({ data }: RestaurantCardProps) => {
                         </StyledDescription>
                         <Box display="flex" mt="auto" justifyContent="flex-end">
                             {role === 'owner' && (
-                                <Stack direction="row" spacing={4}>
+                                <Stack direction="row" spacing={2}>
                                     <ReusableButton
                                         variant="contained"
                                         size="small"

@@ -5,3 +5,4 @@ export { FormPassword } from './Password.component';
 export { CustomizedSnackbar } from './Snackbar.component';
 export { FormTextField } from './TextField.component';
 export { ReusableWrapper } from './Wrapper.component';
+export { NullState } from './Nullstate.component';

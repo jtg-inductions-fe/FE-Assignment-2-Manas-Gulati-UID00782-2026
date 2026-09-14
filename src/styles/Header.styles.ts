@@ -24,8 +24,10 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
 }));
 
 export const StyledToolbar = styled(Toolbar)(({ theme }) => ({
-    padding: theme.spacing(1.5),
+    maxWidth: 1700,
+    margin: '0 auto',
     width: '100%',
+    padding: `${theme.spacing(2)} ${theme.spacing(5)}`,
 }));
 
 export const StyledUserBox = styled(Box)(({ theme }) => ({

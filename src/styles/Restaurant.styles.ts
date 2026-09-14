@@ -19,11 +19,11 @@ export const StyledCard = styled(Card)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     border: `1px solid ${theme.palette.faded?.light}`,
-    borderRadius: 3,
+    borderRadius: 19,
     transition: 'transform 180ms ease, box-shadow 180ms ease',
     '&:hover': {
         transform: 'translateY(-4px)',
-        boxShadow: '0px 4px 4px 4px rgba(28, 35, 40, 0.10)',
+        boxShadow: '0px 6px 10px 10px rgba(28, 35, 40, 0.20)',
     },
 }));
 
@@ -83,11 +83,12 @@ export const StyledMenuItem = styled(MenuItem)({
 
 export const CustomCardGrid = styled(Grid)({
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'stretch',
 });
 
 export const CustomGridWrapper = styled(Grid)(({ theme }) => ({
+    width: '100%',
     margin: `${theme.spacing(5)} auto 0`,
     alignItems: 'stretch',
 }));
@@ -95,7 +96,6 @@ export const CustomGridWrapper = styled(Grid)(({ theme }) => ({
 export const StyledAddMoreCard = styled(Card)(({ theme }) => ({
     width: '100%',
     minHeight: 600,
-    minWidth: 300,
     display: 'flex',
     flexDirection: 'column',
     cursor: 'pointer',

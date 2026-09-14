@@ -22,7 +22,7 @@ export const FormSelectField = ({
                     id={id}
                     size="small"
                     select
-                    label={label}
+                    label={`*${label}`}
                     error={!!fieldState.error}
                     helperText={fieldState.error?.message}
                 >

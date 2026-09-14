@@ -4,7 +4,7 @@ import { alpha } from '@mui/material/styles';
 import { FONT_WEIGHT } from '@constant';
 
 export const StyledButton = styled(Button)(({ theme }) => ({
-    borderRadius: 11,
+    borderRadius: 15,
     fontWeight: FONT_WEIGHT.SEMIBOLD,
 
     '&.MuiButton-contained': {

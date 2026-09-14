@@ -10,6 +10,8 @@ import {
 } from 'styles/Restaurant.styles';
 import { StyledToggleButtonGroup } from 'styles/ToggleButton.styles';
 
+import { FONT_WEIGHT } from '@constant';
+
 import { PrimarySearchAppBar } from '../layout/Header';
 
 export const Dashboard = () => {
@@ -64,11 +66,14 @@ export const Dashboard = () => {
                     alignItems={{ xs: 'flex-start', md: 'flex-end' }}
                     gap={4}
                 >
-                    <Stack spacing={4}>
-                        <Typography variant="h2">
+                    <Stack spacing={1.5}>
+                        <Typography variant="h2" component="h1">
                             Welcome, {displayName}
                         </Typography>
-                        <Typography variant="h6">
+                        <Typography
+                            variant="h6"
+                            fontWeight={FONT_WEIGHT.SEMIBOLD}
+                        >
                             Discover Deliciousness
                         </Typography>
                         <Typography variant="body1">

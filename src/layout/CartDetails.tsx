@@ -7,7 +7,6 @@ import {
     Stack,
     Typography,
 } from '@mui/material';
-import { NullState } from 'components/Nullstate.component';
 import { removeFoodData } from 'store/cartSlice';
 import { useTypeDispatch, useTypeSelector } from 'store/hooks';
 import { initializeOrder } from 'store/orderSlice';
@@ -19,7 +18,7 @@ import {
 } from 'styles/Cart.styles';
 import { CartAutoGridProps } from 'types';
 
-import { CustomizedSnackbar } from '@components';
+import { CustomizedSnackbar, NullState } from '@components';
 import { FONT_SIZE, FONT_WEIGHT } from '@constant';
 
 import { ORDER } from '../constants';
